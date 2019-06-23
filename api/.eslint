@@ -1,0 +1,20 @@
+module.exports = {
+  env: {
+    commonjs: true,
+    es6: true,
+    "jest/globals": true,
+    node: true,
+  },
+  extends: 'airbnb-base',
+  globals: {
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+  },
+  plugins: ["jest"],
+  parserOptions: {
+    ecmaVersion: 2018,
+  },
+  rules: {
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}]
+  },
+};
