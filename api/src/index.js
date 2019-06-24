@@ -32,6 +32,22 @@ app.post('/nodes', async (req, res) => {
   return res.send('node registered');
 });
 
+app.post('/servers/:serverId/stop', async (req, res) => {
+  const { serverId } = req.params;
+  const nodeStmt = await db.prepare('UPDATE `servers` SET `running` = ? WHERE `id` = ?');
+  await nodeStmt.run(false, serverId);
+  await nodeStmt.finalize();
+  return res.send('server stopped');
+});
+
+app.post('/servers/:serverId/start', async (req, res) => {
+  const { serverId } = req.params;
+  const nodeStmt = await db.prepare('UPDATE `servers` SET `running` = ? WHERE `id` = ?');
+  await nodeStmt.run(true, serverId);
+  await nodeStmt.finalize();
+  return res.send('server stopped');
+});
+
 
 app.post('/purchase/cb', async (req, res) => {
   const { memory } = req.body;
@@ -50,8 +66,8 @@ app.post('/purchase/cb', async (req, res) => {
   await stmt.run(desiredNode.free_memory - memory, desiredNode.id);
   await stmt.finalize();
 
-  stmt = await db.prepare('INSERT INTO `servers` (`id`, `nodeId`, `port`, `memory`) VALUES (?, ?, ?, ?)');
-  await stmt.run(uuidv4(), desiredNode.id, freePort, memory);
+  stmt = await db.prepare('INSERT INTO `servers` (`id`, `nodeId`, `port`, `memory`, `running`) VALUES (?, ?, ?, ?, ?)');
+  await stmt.run(uuidv4(), desiredNode.id, freePort, memory, true);
   await stmt.finalize();
   res.send('server renting');
 });
@@ -63,6 +79,6 @@ sqlite.open('./database.sqlite').then((dbObj) => {
   db.run('DROP TABLE IF EXISTS `servers`');
   db.run('CREATE TABLE IF NOT EXISTS `users` (email TEXT)');
   db.run('CREATE TABLE IF NOT EXISTS `nodes` (`id` VARCHAR(255) PRIMARY KEY, `ip` VARCHAR(255), `total_memory` INT, `free_memory` INT)');
-  db.run('CREATE TABLE IF NOT EXISTS `servers` (`id` VARCHAR(255) PRIMARY KEY, `nodeId` INT NOT NULL, `port` INIT, `memory` INT)');
+  db.run('CREATE TABLE IF NOT EXISTS `servers` (`id` VARCHAR(255) PRIMARY KEY, `nodeId` INT NOT NULL, `port` INIT, `memory` INT, `running` BOOL)');
   app.listen(3333);
 });
