@@ -1,4 +1,7 @@
 FROM openjdk:8
 RUN mkdir -p /minecraft
 WORKDIR /minecraft
-CMD while sleep 1; do echo "yolo"; done
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN apt install nodejs
+RUN npm install -g http-server
+CMD http-server -p 25565 .

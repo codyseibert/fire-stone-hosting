@@ -36,11 +36,8 @@ const { spawn } = require('child_process');
 
 
     const { stdout: namesStdout } = await exec("docker ps --format '{{.Names}}'");
-    console.log('namesStdout', namesStdout);
     const names = namesStdout.trim().split('\n').filter(n => n.length);
-    console.log('names', names);
     const { stdout } = await exec('docker ps');
-    console.log(servers);
     for (const name of names) {
       if (!servers.find(server => server.id === name)) {
         await exec(`docker stop ${name}`);
