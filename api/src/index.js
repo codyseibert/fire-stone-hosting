@@ -1,8 +1,10 @@
 const express = require('express');
 const sqlite = require('sqlite');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 const uuidv4 = require('uuid/v4');
 
@@ -54,6 +56,9 @@ app.post('/purchase/cb', async (req, res) => {
   const nodes = await db.all('SELECT * from `nodes`');
   const desiredNode = nodes.find(node => node.free_memory > memory);
 
+  if (!desiredNode) {
+    return res.send('no avaiable nodes', 500);
+  }
 
   const servers = await db.all('SELECT * from `servers` WHERE nodeId = ?', desiredNode.id);
   let freePort = 25565;
@@ -69,7 +74,7 @@ app.post('/purchase/cb', async (req, res) => {
   stmt = await db.prepare('INSERT INTO `servers` (`id`, `nodeId`, `port`, `memory`, `running`) VALUES (?, ?, ?, ?, ?)');
   await stmt.run(uuidv4(), desiredNode.id, freePort, memory, true);
   await stmt.finalize();
-  res.send('server renting');
+  return res.send('server renting');
 });
 
 sqlite.open('./database.sqlite').then((dbObj) => {

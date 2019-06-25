@@ -10,7 +10,7 @@ class App extends React.Component {
         <div className="container-fluid">
           <ConnectedRouter history={this.props.history}>
             {routes}
-            </ConnectedRouter>
+          </ConnectedRouter>
         </div>
       </div>
     );
@@ -19,10 +19,9 @@ class App extends React.Component {
 
 const mapStateToProps = () => ({});
 
-const mapDispatchToProps = () => ({
-});
+const mapDispatchToProps = () => ({});
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(App);

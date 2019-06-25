@@ -9,7 +9,13 @@ module.exports = {
             version: '16.8.6',
         },
     },
-    'extends': ['eslint:recommended','plugin:react/recommended'],
+    'extends': [
+        'eslint:recommended', 
+        'plugin:prettier/recommended', 
+        'plugin:react/recommended', 
+        'prettier/react', 
+        'prettier/standard',
+    ],
     'globals': {
         'Atomics': 'readonly',
         'SharedArrayBuffer': 'readonly'
@@ -20,14 +26,13 @@ module.exports = {
         'sourceType': 'module',
     },
     'plugins': [
-        'react'
+        'react',
+        'prettier'
     ],
     'rules': {
+        'react/prop-types': [0],
+        'prettier/prettier': 'error',
         "react/jsx-indent-props": [2, 2],
-        'indent': [
-            'error',
-            2
-        ],
         'linebreak-style': [
             'error',
             'unix'
