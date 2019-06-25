@@ -1,11 +1,9 @@
 export default (state = {}, action) => {
   switch (action.type) {
-  case 'SET_SETTER':
-    return action.payload;
-  case 'UPDATE_SETTER':
+  case 'SET_FORM_KEY':
     return {
       ...state,
-      ...action.payload
+      [action.payload.key]: action.payload.value
     };
   default:
     return state;

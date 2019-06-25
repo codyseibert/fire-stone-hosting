@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Switch } from "react-router";
+import React from 'react';
+import { Route, Switch } from 'react-router';
 import Landing from './components/Landing';
 
 const routes = (

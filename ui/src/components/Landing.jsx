@@ -8,14 +8,20 @@ const Landing = props => (
   <div className="container">
     {/* Welcome to Red Stone Hosting */}
     {/* <button onClick={() => props.history.push("/register")}>Register</button> */}
-    <form onSubmit={() => purchase()}>
+    <form onSubmit={() => props.purchase()}>
       <div className="row">
         <div className="col-md-6">
-          <div class="form-group">
-            <label for="exampleFormControlSelect1">Memory</label>
-            <select class="form-control" id="exampleFormControlSelect1" value="1">
+          <div className="form-group">
+            <label htmlFor="exampleFormControlSelect1">Memory</label>
+            <select onChange={(e) => props.setFormKey({
+              name: e.target.name,
+              value: e.target.value,
+            })} className="form-control"
+            id="exampleFormControlSelect1"
+            value="1">
               <option value="0.5">0.5 GB</option>
-              <option default value="1">1 GB</option>
+              <option default
+                value="1">1 GB</option>
               <option value="2">2 GB</option>
               <option value="3">3 GB</option>
               <option value="4">4 GB</option>
@@ -25,17 +31,20 @@ const Landing = props => (
               <option value="8">8 GB</option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary">Purchase</button>
+          <button type="submit"
+            className="btn btn-primary">Purchase</button>
         </div>
 
         <div className="col-md-6">
-          <div class="alert alert-info" role="alert">
+          <div className="alert alert-info"
+            role="alert">
             <div className="row">
               <div className="col-md-1 text-center">
-                <FontAwesomeIcon size="lg" icon="arrow-circle-left" />
+                <FontAwesomeIcon size="lg"
+                  icon="arrow-circle-left" />
               </div>
               <div className="col-md-11">
-              You'll need more memory with more players and plugins.<br /> You can upgrade memory at any time.
+              You&apos;ll need more memory with more players and plugins.<br /> You can upgrade memory at any time.
               </div>
             </div>
           </div>
@@ -44,6 +53,10 @@ const Landing = props => (
     </form>
   </div>
 );
+
+const mapStateToProps = () => ({
+
+});
 
 const mapDispatchToProps = dispatch => ({
   setFormKey: event => {
