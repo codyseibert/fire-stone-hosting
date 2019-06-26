@@ -9,6 +9,7 @@ import App from './App';
 import rootReducer from './reducers/rootReducer';
 import history from './history';
 import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -30,6 +31,9 @@ import {
   faHeart,
   faCheck,
   faArrowCircleLeft,
+  faCogs,
+  faUpload,
+  faTerminal,
   faExclamationCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeartFar } from '@fortawesome/free-regular-svg-icons';
@@ -49,18 +53,22 @@ library.add(
   faTimes,
   farHeartFar,
   faHome,
+  faTerminal,
   faTh,
   faHeart,
   faRoute,
   faUsers,
+  faCogs,
   faSignOutAlt,
   faSearch,
+  faUpload,
 );
 
 const getInitialState = () => {
   return {
     form: {},
     error: '',
+    servers: [],
   };
 };
 

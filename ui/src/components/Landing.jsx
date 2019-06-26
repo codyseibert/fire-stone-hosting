@@ -33,7 +33,6 @@ const Landing = props => (
         <div className="col-md-6">
           <div className="form-group">
             <label htmlFor="select-memory">Memory</label>
-            GG
             <select
               name="memory"
               onChange={e => {

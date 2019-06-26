@@ -10,6 +10,10 @@ const uuidv4 = require('uuid/v4');
 
 let db;
 
+const persistence = {
+  getServersForUser: async ({ userId }) => db.all('SELECT * from `servers` JOIN `nodes` ON `servers`.`nodeId` = `nodes`.`id` WHERE `userId` = ?', [userId]),
+};
+
 app.get('/nodes', async (req, res) => {
   const rows = await db.all('SELECT * from `nodes`');
   return res.send(rows);
@@ -17,8 +21,17 @@ app.get('/nodes', async (req, res) => {
 
 app.get('/nodes/:nodeId/servers', async (req, res) => {
   const { nodeId } = req.params;
-  const rows = await db.all('SELECT * from `servers` WHERE nodeId = ?', [nodeId]);
+  const rows = await db.all('SELECT * from `servers` WHERE `nodeId` = ?', [nodeId]);
   return res.send(rows);
+});
+
+const getServersForUser = require('./getServersForUser.interactor');
+
+app.get('/users/:userId/servers', async (req, res) => {
+  const { userId } = req.params;
+  console.log('userId', userId);
+  const servers = await getServersForUser({ userId, persistence });
+  return res.send(servers);
 });
 
 app.post('/nodes', async (req, res) => {
@@ -52,6 +65,7 @@ app.post('/servers/:serverId/start', async (req, res) => {
 
 
 app.post('/purchase/cb', async (req, res) => {
+  const userId = 'abc';
   const { memory } = req.body;
   const nodes = await db.all('SELECT * from `nodes`');
   const desiredNode = nodes.find(node => node.free_memory > memory);
@@ -71,8 +85,8 @@ app.post('/purchase/cb', async (req, res) => {
   await stmt.run(desiredNode.free_memory - memory, desiredNode.id);
   await stmt.finalize();
 
-  stmt = await db.prepare('INSERT INTO `servers` (`id`, `nodeId`, `port`, `memory`, `running`) VALUES (?, ?, ?, ?, ?)');
-  await stmt.run(uuidv4(), desiredNode.id, freePort, memory, true);
+  stmt = await db.prepare('INSERT INTO `servers` (`id`, `nodeId`, `port`, `memory`, `running`, `userId`) VALUES (?, ?, ?, ?, ?, ?)');
+  await stmt.run(uuidv4(), desiredNode.id, freePort, memory, true, userId);
   await stmt.finalize();
   return res.send('server renting');
 });
@@ -84,6 +98,6 @@ sqlite.open('./database.sqlite').then((dbObj) => {
   db.run('DROP TABLE IF EXISTS `servers`');
   db.run('CREATE TABLE IF NOT EXISTS `users` (email TEXT)');
   db.run('CREATE TABLE IF NOT EXISTS `nodes` (`id` VARCHAR(255) PRIMARY KEY, `ip` VARCHAR(255), `total_memory` INT, `free_memory` INT)');
-  db.run('CREATE TABLE IF NOT EXISTS `servers` (`id` VARCHAR(255) PRIMARY KEY, `nodeId` INT NOT NULL, `port` INIT, `memory` INT, `running` BOOL)');
+  db.run('CREATE TABLE IF NOT EXISTS `servers` (`id` VARCHAR(255) PRIMARY KEY, `nodeId` INT NOT NULL, `port` INIT, `memory` INT, `running` BOOL, `userId` INT)');
   app.listen(3333);
 });
