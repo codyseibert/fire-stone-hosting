@@ -31,6 +31,7 @@ import {
   faHeart,
   faCheck,
   faArrowCircleLeft,
+  faInfoCircle,
   faCogs,
   faUpload,
   faTerminal,
@@ -45,6 +46,7 @@ library.add(
   faTape,
   faChartBar,
   faCaretLeft,
+  faInfoCircle,
   faArrowCircleLeft,
   faSpinner,
   faPaperPlane,
@@ -69,6 +71,17 @@ const getInitialState = () => {
     form: {},
     error: '',
     servers: [],
+    plan: {
+      memory: 1,
+      name: 'Wood',
+      details: 'unlimited players',
+      imageSrc:
+        'https://gamepedia.cursecdn.com/minecraft_gamepedia/1/11/Wooden_Axe.png?version=88435b952db3b497a300131c9577bc76',
+    },
+    configuration: {
+      maxPlayers: 10,
+      motd: 'Welcome to my server!',
+    },
   };
 };
 
@@ -81,6 +94,19 @@ const store = createStore(
   getInitialState(),
   composeEnhancer(applyMiddleware(thunk, routerMiddleware(history))),
 );
+
+history.listen((location, action) => {
+  console.log(
+    store.dispatch({
+      type: 'SET_ERROR',
+      payload: null,
+    }),
+  );
+  console.log(
+    `The current URL is ${location.pathname}${location.search}${location.hash}`,
+  );
+  console.log(`The last navigation action was ${action}`);
+});
 
 const render = () => {
   ReactDOM.render(

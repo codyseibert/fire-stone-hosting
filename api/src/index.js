@@ -9,6 +9,7 @@ const createNodeRoute = require('./routes/createNode.route');
 const startServerRoute = require('./routes/startServer.route');
 const stopServerRoute = require('./routes/stopServer.route');
 const purchaseServerRoute = require('./routes/purchaseServer.route');
+const registerRoute = require('./routes/register.route');
 
 const app = express();
 app.use(cors());
@@ -17,6 +18,7 @@ app.use(bodyParser.json());
 app.get('/nodes', getNodesRoute);
 app.get('/nodes/:nodeId/servers', getServersOnNodeRoute);
 app.get('/users/:userId/servers', getServersForUserRoute);
+app.post('/register', registerRoute);
 app.post('/nodes', createNodeRoute);
 app.post('/servers/:serverId/stop', stopServerRoute);
 app.post('/servers/:serverId/start', startServerRoute);

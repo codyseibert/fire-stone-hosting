@@ -5,7 +5,9 @@ module.exports = sqlite.open('./database.sqlite').then(dbObj => {
   db.run('DROP TABLE IF EXISTS `users`');
   db.run('DROP TABLE IF EXISTS `nodes`');
   db.run('DROP TABLE IF EXISTS `servers`');
-  db.run('CREATE TABLE IF NOT EXISTS `users` (email TEXT)');
+  db.run(
+    'CREATE TABLE IF NOT EXISTS `users` (id VARCHAR(255) PRIMARY KEY, email VARCHAR(255), password VARCHAR(255))',
+  );
   db.run(
     'CREATE TABLE IF NOT EXISTS `nodes` (`id` VARCHAR(255) PRIMARY KEY, `ip` VARCHAR(255), `total_memory` INT, `free_memory` INT)',
   );

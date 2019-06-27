@@ -1,11 +1,14 @@
 import history from '../history';
-import purchase from '../http/purchase.http';
+import register from '../http/register.http';
 
 export default () => async (dispatch, getState) => {
   const { form } = getState();
+
   try {
-    await purchase(form);
-    history.push('/dashboard');
+    await register({
+      account: form,
+    });
+    history.push('/purchase/payment-details');
   } catch (err) {
     dispatch({
       type: 'SET_ERROR',

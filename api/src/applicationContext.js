@@ -14,6 +14,8 @@ const stopServerInteractor = require('./interactors/stopServer.interactor');
 const startServerInteractor = require('./interactors/startServer.interactor');
 const stopServer = require('./persistence/sqlite/stopServer.persistence');
 const startServer = require('./persistence/sqlite/startServer.persistence');
+const createUser = require('./persistence/sqlite/createUser.persistence');
+const registerInteractor = require('./interactors/register.interactor');
 
 module.exports = () => ({
   persistence: {
@@ -25,6 +27,7 @@ module.exports = () => ({
     setFreeMemoryOnNode,
     startServer,
     stopServer,
+    createUser,
   },
   interactors: {
     stopServerInteractor,
@@ -33,6 +36,7 @@ module.exports = () => ({
     getNodesInteractor,
     getServersOnNodeInteractor,
     createNodeInteractor,
+    registerInteractor,
     purchaseServerInteractor,
   },
   db,
