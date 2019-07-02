@@ -1,10 +1,10 @@
 import history from '../history';
-import login from '../http/login.http';
+import purchase from '../http/createAccountAndPurchaseServer.http';
 
-export default () => async (dispatch, getState) => {
-  const { form } = getState();
+export default ({ source }) => async (dispatch, getState) => {
+  const { plan, form } = getState();
   try {
-    const { user, token } = await login(form);
+    const { token, user } = await purchase({ user: form, plan, source });
     dispatch({
       type: 'SET_USER',
       payload: user,

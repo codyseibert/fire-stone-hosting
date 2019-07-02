@@ -6,6 +6,8 @@ import ConfigureServer from './components/ConfigureServer';
 import ConfigurePlan from './components/ConfigurePlan';
 import CreateAccount from './components/CreateAccount';
 import PaymentDetails from './components/PaymentDetails';
+import Login from './components/Login';
+import PurchaseConfirm from './components/PurchaseConfirm';
 
 const routes = (
   <div>
@@ -20,7 +22,9 @@ const routes = (
       <Route exact path="/dashboard" component={Dashboard} />
       <Route exact path="/purchase/select-a-plan" component={Landing} />
       <Route exact path="/purchase/configure" component={ConfigurePlan} />
+      <Route exact path="/login" component={Login} />
       <Route exact path="/purchase/create-account" component={CreateAccount} />
+      <Route exact path="/purchase/confirm" component={PurchaseConfirm} />
       <Route
         exact
         path="/purchase/payment-details"

@@ -1,17 +1,18 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
-import { Elements } from 'react-stripe-elements';
-import CheckoutForm from './CheckoutForm';
+import purchaseServer from '../actions/purchaseServer.action';
 
 const PaymentDetails = props => {
   return (
     <div className="container mt-4">
       <div className="row">
-        <div className="col-md-6 mt-2">
-          <h1>Payment Details</h1>
+        <div className="col-md-12 mt-2">
+          <h1>Confirmation</h1>
         </div>
-        <div className="col-md-6">
+      </div>
+      <div className="row">
+        <div className="col-md-12">
           <div className="shadow-sm p-3 pt-4 bg-info text-white rounded">
             <h6>
               Selected Plan:{' '}
@@ -38,18 +39,35 @@ const PaymentDetails = props => {
         </div>
       </div>
 
-      <Elements>
-        <CheckoutForm />
-      </Elements>
+      <div className="row">
+        <div className="col-md-12">
+          <button
+            onClick={() => {
+              props.purchaseServer();
+            }}
+            type="button"
+            className="btn btn-success mt-4 mb-4"
+          >
+            Purchase Your Server
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = state => ({
+  form: state.form,
+  error: state.error,
   plan: state.plan,
+  configuration: state.configuration,
 });
 
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+  purchaseServer: () => {
+    dispatch(purchaseServer());
+  },
+});
 
 export default connect(
   mapStateToProps,

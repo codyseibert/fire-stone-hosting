@@ -3,28 +3,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import setFormKey from '../actions/setFormKey.action';
 import setPlan from '../actions/setPlan.action';
-import register from '../actions/register.action';
+import login from '../actions/login.action';
 
-const CreateAccount = props => {
+const Login = props => {
   return (
     <div className="container mt-4">
       <div className="row">
-        <div className="col-md-6 mt-2">
-          <h1>Account Creation</h1>
-        </div>
-        <div className="col-md-6">
-          <div className="shadow-sm p-3 pt-4 bg-info text-white rounded">
-            <h6>
-              Selected Plan:{' '}
-              <img src={props.plan.imageSrc} style={{ width: '30px' }} />{' '}
-              {props.plan.name}, {props.plan.memory} GB, ${' '}
-              {(props.plan.memory * 3).toFixed(2)} / month
-            </h6>
-          </div>
+        <div className="col-md-12 mt-2">
+          <h1>Login</h1>
         </div>
       </div>
 
-      <div className="row">
+      <div className="row mt-4">
         <div className="col-md-12">
           {props.error && (
             <div className="row">
@@ -46,7 +36,6 @@ const CreateAccount = props => {
             <input
               type="email"
               className="form-control"
-              placeholder="email"
               defaultValue={props.form.email}
               onChange={e => {
                 props.setFormKey({
@@ -72,28 +61,14 @@ const CreateAccount = props => {
             />
           </div>
 
-          <div className="form-group">
-            <label>Confirm Password</label>
-            <input
-              type="password"
-              className="form-control"
-              defaultValue={props.form.passwordConfirm}
-              onChange={e => {
-                props.setFormKey({
-                  key: 'passwordConfirm',
-                  value: e.currentTarget.value,
-                });
-              }}
-            />
-          </div>
           <button
             type="button"
             className="btn btn-primary"
             onClick={() => {
-              props.register();
+              props.login();
             }}
           >
-            Create
+            Login
           </button>
         </div>
       </div>
@@ -112,8 +87,8 @@ const mapDispatchToProps = dispatch => ({
   setFormKey: obj => {
     dispatch(setFormKey(obj));
   },
-  register: () => {
-    dispatch(register());
+  login: () => {
+    dispatch(login());
   },
   setPlan: plan => dispatch(setPlan(plan)),
 });
@@ -121,4 +96,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CreateAccount);
+)(Login);

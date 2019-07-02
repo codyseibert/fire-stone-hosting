@@ -1,17 +1,20 @@
 const applicationContextFactory = require('../applicationContext');
+const jwt = require('jsonwebtoken');
 
 module.exports = async (req, res) => {
-  const userId = 'abc';
-  const { memory } = req.body;
+  const { plan } = req.body;
   const applicationContext = applicationContextFactory();
-
+  const user = jwt.decode(
+    req.headers.authorization.split(' ')[1],
+    process.env.JWT_SECRET || 'testing',
+  );
   try {
-    await applicationContext.interactors.purchaseServerInteractor({
-      memory,
-      userId,
+    const ret = await applicationContext.interactors.purchaseServerInteractor({
+      plan,
+      user,
       applicationContext,
     });
-    return res.send('server purchased and starting up now');
+    return res.send(ret);
   } catch (err) {
     return res.status(500).send(err.message);
   }

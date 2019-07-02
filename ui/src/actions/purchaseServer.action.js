@@ -1,10 +1,10 @@
 import history from '../history';
-import purchase from '../http/purchase.http';
+import purchaseServer from '../http/purchaseServer.http';
 
 export default () => async (dispatch, getState) => {
-  const { form } = getState();
+  const { plan, token } = getState();
   try {
-    await purchase(form);
+    await purchaseServer({ plan }, token);
     history.push('/dashboard');
   } catch (err) {
     dispatch({

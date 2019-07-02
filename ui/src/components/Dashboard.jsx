@@ -7,17 +7,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const Dashboard = props => {
   useEffect(() => {
     props.getServersForUser({
-      userId: 'abc',
+      userId: props.user.id,
     });
   }, []);
 
   return (
     <div className="container">
+      <div className="row">
+        <div className="col-md-12">
+          <h1>Your Servers</h1>
+        </div>
+      </div>
+
       {props.servers.map(server => (
-        <div key={server.id} className="row">
-          <div className="col-md-12">
-            <h1>My Servers</h1>
-          </div>
+        <div key={server.id} className="row mt-4">
           <div className="col-md-12">
             <h3>
               {server.ip}:{server.port}
@@ -31,7 +34,9 @@ const Dashboard = props => {
             )}
           </div>
           <div className="col-md-12">
-            <span className="badge badge-secondary">{server.memory} GB</span>
+            <span className="badge badge-secondary">
+              {server.memory / 1024 / 1024 / 1024} GB
+            </span>
             <a href="#"> change</a>
           </div>
           <div className="col-md-12 mt-2">
@@ -66,7 +71,7 @@ const Dashboard = props => {
   );
 };
 
-const mapStateToProps = state => ({ servers: state.servers });
+const mapStateToProps = state => ({ servers: state.servers, user: state.user });
 
 const mapDispatchToProps = dispatch => ({
   getServersForUser: opts => dispatch(getServersForUser(opts)),

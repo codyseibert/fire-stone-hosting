@@ -1,10 +1,38 @@
+const jwt = require('jsonwebtoken');
+
 const uuidv4 = require('uuid/v4');
 
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 
-// const costPerGB = 3;
+module.exports = async ({ applicationContext, user, plan, source }) => {
+  let customer;
 
-module.exports = async ({ applicationContext, user, plan }) => {
+  if (!user.email) {
+    throw new Error('You must provide an email.');
+  }
+  if (!user.password) {
+    throw new Error('You must provide a password');
+  }
+  if (user.password !== user.passwordConfirm) {
+    throw new Error('Your password must match the verify password.');
+  }
+
+  const userId = uuidv4();
+
+  user.id = userId;
+
+  await applicationContext.persistence.createUser({
+    applicationContext,
+    user,
+  });
+  const token = jwt.sign(user, process.env.JWT_SECRET || 'testing');
+
+  customer = await stripe.customers.create({
+    email: user.email,
+    id: userId,
+    source,
+  });
+
   const planMemory = {
     plan_FM8EuuGF3C3pn3: 0.5 * 1024 * 1024 * 1024,
     plan_FM8E73TqKTZIWV: 1 * 1024 * 1024 * 1024,
@@ -15,7 +43,7 @@ module.exports = async ({ applicationContext, user, plan }) => {
   };
 
   await stripe.subscriptions.create({
-    customer: user.id,
+    customer: customer.id,
     items: [
       {
         plan: plan.plan,
@@ -52,18 +80,16 @@ module.exports = async ({ applicationContext, user, plan }) => {
     nodeId: desiredNode.id,
   });
 
-  const server = {
-    serverId: uuidv4(),
-    nodeId: desiredNode.id,
-    port: freePort,
-    memory,
-    userId: user.id,
-  };
-
   await applicationContext.persistence.createServer({
     applicationContext,
-    server,
+    server: {
+      serverId: uuidv4(),
+      nodeId: desiredNode.id,
+      port: freePort,
+      memory,
+      userId,
+    },
   });
 
-  return server;
+  return { token, user };
 };

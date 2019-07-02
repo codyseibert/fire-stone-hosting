@@ -2,11 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import setFormKey from '../actions/setFormKey.action';
-import purchase from '../actions/purchase.action';
 import setPlan from '../actions/setPlan.action';
 
 const Landing = props => {
-  const renderPlanCard = ({ imageSrc, memory, name, details }) => {
+  const renderPlanCard = ({ imageSrc, memory, name, details, plan }) => {
     return (
       <div className="shadow-sm p-3 mb-5 bg-white rounded">
         <div className="row">
@@ -17,14 +16,14 @@ const Landing = props => {
             <h3>{name}</h3>
             <h5>{memory} GB</h5>
             <h5>{details}</h5>
-            <h5>$ {(memory * 2.5).toFixed(2)} / month</h5>
+            <h5>$ {(memory * 3).toFixed(2)} / month</h5>
 
             <button
               type="button"
               onClick={() => {
-                props.setPlan({ imageSrc, memory, name, details });
+                props.setPlan({ imageSrc, memory, name, details, plan });
               }}
-              className="btn btn-primary mt-2 w-100"
+              className="btn btn-outline-primary mt-2 w-100"
             >
               Select
             </button>
@@ -72,6 +71,7 @@ const Landing = props => {
             imageSrc:
               'https://gamepedia.cursecdn.com/minecraft_gamepedia/6/6a/Spruce_Sapling.png?version=2b7b5743abbda34b45fa465c078b9edb',
             memory: 0.5,
+            plan: 'plan_FM8EuuGF3C3pn3',
             name: 'Sapling',
             details: 'unlimitied players',
           })}
@@ -81,6 +81,7 @@ const Landing = props => {
             imageSrc:
               'https://gamepedia.cursecdn.com/minecraft_gamepedia/1/11/Wooden_Axe.png?version=88435b952db3b497a300131c9577bc76',
             memory: 1,
+            plan: 'plan_FM8E73TqKTZIWV',
             name: 'Wood',
             details: 'unlimitied players',
           })}
@@ -90,6 +91,7 @@ const Landing = props => {
             imageSrc:
               'https://gamepedia.cursecdn.com/minecraft_gamepedia/4/40/Stone_Pickaxe.png?version=7ea86c614d826f39576a633fd8e30c3b',
             memory: 2,
+            plan: 'plan_FM8EHhCrxNZGhd',
             name: 'Stone',
             details: 'unlimitied players',
           })}
@@ -102,6 +104,7 @@ const Landing = props => {
               'https://gamepedia.cursecdn.com/minecraft_gamepedia/7/76/Iron_Shovel.png?version=9ad7401db7ae5b23ed6a148a9fc642c4',
             memory: 4,
             name: 'Iron',
+            plan: 'plan_FM8EvzJrRIYn5R',
             details: 'unlimitied players',
           })}
         </div>
@@ -110,6 +113,7 @@ const Landing = props => {
             imageSrc:
               'https://gamepedia.cursecdn.com/minecraft_gamepedia/c/c6/Golden_Helmet.png?version=c608c95421103de929ea974d933cda0b',
             memory: 6,
+            plan: 'plan_FM8ExZxKgKh22g',
             name: 'Gold',
             details: 'unlimitied players',
           })}
@@ -120,6 +124,7 @@ const Landing = props => {
               'https://gamepedia.cursecdn.com/minecraft_gamepedia/a/a0/Diamond_Sword.png?version=d3b1fbce65ce732c68aa8b544c1b081c',
             memory: 8,
             name: 'Diamond',
+            plan: 'plan_FM8En4JVkWZ43y',
             details: 'unlimitied players',
           })}
         </div>
@@ -136,12 +141,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setFormKey: obj => {
     dispatch(setFormKey(obj));
-  },
-  purchase: () => {
-    dispatch(purchase());
-  },
-  create: () => {
-    dispatch(createAccount());
   },
   setPlan: plan => dispatch(setPlan(plan)),
 });

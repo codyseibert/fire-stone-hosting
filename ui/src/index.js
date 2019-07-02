@@ -10,6 +10,7 @@ import rootReducer from './reducers/rootReducer';
 import history from './history';
 import 'bootstrap/dist/css/bootstrap.css';
 import './index.css';
+import { StripeProvider } from 'react-stripe-elements';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -66,10 +67,15 @@ library.add(
   faUpload,
 );
 
+const user = JSON.parse(window.localStorage.getItem('user') || 'null');
+const token = JSON.parse(window.localStorage.getItem('token') || 'null');
+
 const getInitialState = () => {
   return {
     form: {},
     error: '',
+    user: user,
+    token: token,
     servers: [],
     plan: {
       memory: 1,
@@ -96,23 +102,19 @@ const store = createStore(
 );
 
 history.listen((location, action) => {
-  console.log(
-    store.dispatch({
-      type: 'SET_ERROR',
-      payload: null,
-    }),
-  );
-  console.log(
-    `The current URL is ${location.pathname}${location.search}${location.hash}`,
-  );
-  console.log(`The last navigation action was ${action}`);
+  store.dispatch({
+    type: 'SET_ERROR',
+    payload: null,
+  });
 });
 
 const render = () => {
   ReactDOM.render(
-    <Provider store={store}>
-      <App history={history} />
-    </Provider>,
+    <StripeProvider apiKey="pk_test_tbzPQH0dOO05i8FOcf7nveCf00eG0yQADe">
+      <Provider store={store}>
+        <App history={history} />
+      </Provider>
+    </StripeProvider>,
     document.getElementById('root'),
   );
 };

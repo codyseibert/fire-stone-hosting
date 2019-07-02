@@ -8,7 +8,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Navigation />
+        <Navigation history={this.props.history} />
+
         <div className="container-fluid">
           <ConnectedRouter history={this.props.history}>
             {routes}

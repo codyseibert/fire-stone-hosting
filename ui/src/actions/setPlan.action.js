@@ -1,9 +1,14 @@
 import history from '../history';
 
-export default payload => async dispatch => {
+export default payload => async (dispatch, getState) => {
+  const { token } = getState();
   dispatch({
     type: 'SET_PLAN',
     payload,
   });
-  history.push('/purchase/configure');
+  if (token) {
+    history.push('/purchase/confirm');
+  } else {
+    history.push('/purchase/payment-details');
+  }
 };

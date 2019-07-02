@@ -2,7 +2,6 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import setFormKey from '../actions/setFormKey.action';
-import purchase from '../actions/purchase.action';
 import setPlan from '../actions/setPlan.action';
 
 const ConfigurePlan = props => {
@@ -18,7 +17,7 @@ const ConfigurePlan = props => {
               Selected Plan:{' '}
               <img src={props.plan.imageSrc} style={{ width: '30px' }} />{' '}
               {props.plan.name}, {props.plan.memory} GB, ${' '}
-              {(props.plan.memory * 2.5).toFixed(2)} / month
+              {(props.plan.memory * 3).toFixed(2)} / month
             </h6>
           </div>
         </div>
@@ -55,7 +54,7 @@ const ConfigurePlan = props => {
             </div>
             <button
               onClick={() => {
-                props.history.push('/purchase/create-account');
+                props.history.push('/purchase/payment-details');
               }}
               type="submit"
               className="btn btn-primary"
@@ -79,9 +78,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setFormKey: obj => {
     dispatch(setFormKey(obj));
-  },
-  purchase: () => {
-    dispatch(purchase());
   },
   setPlan: plan => dispatch(setPlan(plan)),
 });
