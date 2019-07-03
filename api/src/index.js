@@ -12,6 +12,8 @@ const createAccountAndPurchaseServerRoute = require('./routes/createAccountAndPu
 const purchaseServerRoute = require('./routes/purchaseServer.route');
 const registerRoute = require('./routes/register.route');
 const loginRoute = require('./routes/login.route');
+const runBackupRoute = require('./routes/runBackup.route');
+const backupCompleteRoute = require('./routes/backupComplete.route');
 
 const app = express();
 app.use(cors());
@@ -25,6 +27,8 @@ app.post('/login', loginRoute);
 app.post('/nodes', createNodeRoute);
 app.post('/servers/:serverId/stop', stopServerRoute);
 app.post('/servers/:serverId/start', startServerRoute);
+app.post('/servers/:serverId/run-backup', runBackupRoute);
+app.post('/servers/:serverId/backup-complete', backupCompleteRoute);
 app.post('/new-user-purchase', createAccountAndPurchaseServerRoute);
 app.post('/existing-user-purchase', purchaseServerRoute);
 

@@ -12,7 +12,7 @@ module.exports = sqlite.open('./database.sqlite').then(dbObj => {
     'CREATE TABLE IF NOT EXISTS `nodes` (`id` VARCHAR(255) PRIMARY KEY, `ip` VARCHAR(255), `total_memory` INT, `free_memory` INT)',
   );
   db.run(
-    'CREATE TABLE IF NOT EXISTS `servers` (`id` VARCHAR(255) PRIMARY KEY, `nodeId` INT NOT NULL, `port` INIT, `memory` INT, `running` BOOL, `userId` INT)',
+    'CREATE TABLE IF NOT EXISTS `servers` (`id` VARCHAR(255) PRIMARY KEY, `nodeId` INT NOT NULL, `port` INIT, `memory` INT, `running` BOOL, `runBackup` BOOL, `userId` INT)',
   );
   return db;
 });
