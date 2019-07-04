@@ -4,7 +4,6 @@
 const app = require('express')();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-const md5 = require('md5');
 const util = require('util');
 const { Tail } = require('tail');
 
@@ -15,9 +14,9 @@ const registerAgent = require('./registerAgent.http');
 const getServers = require('./getServers.http');
 const runBackup = require('./runBackup');
 const startServer = require('./startServer');
+const runCommand = require('./runCommand');
 const stopServer = require('./stopServer');
 const stopOrphanedServers = require('./stopOrphanedServers');
-
 
 io.on('connection', (socket) => {
   console.log('a user connected');
@@ -27,7 +26,15 @@ io.on('connection', (socket) => {
     socket.emit('logs', logs);
 
     tail.on('line', (line) => {
-      socket.emit('line', `${line  }\n`);
+      socket.emit('line', `${line}\n`);
+    });
+  });
+
+  socket.on('command', (command) => {
+    console.log('command', command);
+    runCommand({
+      serverId: '0cff1a3a-dfc0-4f47-a5db-4c2d2d7ca8a1',
+      command,
     });
   });
 

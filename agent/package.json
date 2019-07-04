@@ -12,7 +12,6 @@
   "license": "UNLICENSED",
   "dependencies": {
     "express": "^4.17.1",
-    "md5": "^2.2.1",
     "public-ip": "^3.1.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7",

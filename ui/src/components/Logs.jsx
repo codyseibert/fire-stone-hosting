@@ -1,17 +1,20 @@
 import io from 'socket.io-client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import getServersForUser from '../actions/getServersForUser.action';
 import gotoConfigureServer from '../actions/gotoConfigureServer.action';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import setLogs from '../actions/setLogs.action';
 
+let socket;
+
 const Logs = props => {
   const pane = useRef(null);
+  const [command, setCommand] = useState('');
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    socket = io('http://localhost:5000');
     let allLogs = '';
 
     socket.on('connect', () => {
@@ -31,6 +34,13 @@ const Logs = props => {
     });
   }, []);
 
+  const onKeyDown = e => {
+    if (e.key === 'Enter') {
+      socket.emit('command', command);
+      setCommand('');
+    }
+  };
+
   return (
     <div className="container">
       <div className="row">
@@ -46,6 +56,16 @@ const Logs = props => {
           >
             {props.logs}
           </span>
+          <div className="form-group">
+            <input
+              className="form-control"
+              onKeyDown={onKeyDown}
+              onChange={e => {
+                setCommand(e.currentTarget.value);
+              }}
+              value={command}
+            />
+          </div>
         </div>
       </div>
     </div>
