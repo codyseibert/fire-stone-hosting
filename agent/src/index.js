@@ -1,7 +1,15 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
+
+const app = require('express')();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
+const md5 = require('md5');
 const util = require('util');
+const { Tail } = require('tail');
+
 const exec = util.promisify(require('child_process').exec);
+const fs = require('fs');
 const getSystemSpecs = require('./getSystemSpecs');
 const registerAgent = require('./registerAgent.http');
 const getServers = require('./getServers.http');
@@ -9,6 +17,28 @@ const runBackup = require('./runBackup');
 const startServer = require('./startServer');
 const stopServer = require('./stopServer');
 const stopOrphanedServers = require('./stopOrphanedServers');
+
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  const tail = new Tail('../servers/0cff1a3a-dfc0-4f47-a5db-4c2d2d7ca8a1/logs/latest.log');
+
+  fs.readFile('../servers/0cff1a3a-dfc0-4f47-a5db-4c2d2d7ca8a1/logs/latest.log', 'utf-8', (err, logs) => {
+    socket.emit('logs', logs);
+
+    tail.on('line', (line) => {
+      socket.emit('line', `${line  }\n`);
+    });
+  });
+
+  socket.on('disconnect', () => {
+    tail.unwatch();
+  });
+});
+
+http.listen(5000, () => {
+  console.log('listening on *:5000');
+});
 
 const nodeId = process.env.NODE_ID || 'abc123';
 

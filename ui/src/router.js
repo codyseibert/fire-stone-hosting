@@ -6,6 +6,7 @@ import ConfigureServer from './components/ConfigureServer';
 import ConfigurePlan from './components/ConfigurePlan';
 import CreateAccount from './components/CreateAccount';
 import PaymentDetails from './components/PaymentDetails';
+import Logs from './components/Logs';
 import Login from './components/Login';
 import PurchaseConfirm from './components/PurchaseConfirm';
 
@@ -20,6 +21,7 @@ const routes = (
         )}
       />
       <Route exact path="/dashboard" component={Dashboard} />
+      <Route exact path="/logs" component={Logs} />
       <Route exact path="/purchase/select-a-plan" component={Landing} />
       <Route exact path="/purchase/configure" component={ConfigurePlan} />
       <Route exact path="/login" component={Login} />

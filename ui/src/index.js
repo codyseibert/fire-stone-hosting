@@ -77,6 +77,7 @@ const getInitialState = () => {
     user: user,
     token: token,
     servers: [],
+    logs: '',
     plan: {
       memory: 1,
       name: 'Wood',
