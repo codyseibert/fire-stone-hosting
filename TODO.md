@@ -4,3 +4,5 @@
 - mock stripe when running locally
 - force new account before purchase a server
 - put backend api routes in a routes file
+- look into why it is only remove servers one at a time when I delete them from the DB
+- stop using sqlite and just use postgres
