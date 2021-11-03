@@ -1,0 +1,6 @@
+- refactor to typescript
+- remove all this CA crap
+- ability to create an account without buying
+- mock stripe when running locally
+- force new account before purchase a server
+- put backend api routes in a routes file

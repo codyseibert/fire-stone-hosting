@@ -10,11 +10,7 @@ class App extends React.Component {
       <div>
         <Navigation history={this.props.history} />
 
-        <div className="container-fluid">
-          <ConnectedRouter history={this.props.history}>
-            {routes}
-          </ConnectedRouter>
-        </div>
+        <ConnectedRouter history={this.props.history}>{routes}</ConnectedRouter>
       </div>
     );
   }

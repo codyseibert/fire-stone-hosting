@@ -27,11 +27,11 @@ module.exports = async ({ applicationContext, user, plan, source }) => {
   });
   const token = jwt.sign(user, process.env.JWT_SECRET || 'testing');
 
-  customer = await stripe.customers.create({
-    email: user.email,
-    id: userId,
-    source,
-  });
+  // customer = await stripe.customers.create({
+  //   email: user.email,
+  //   id: userId,
+  //   source,
+  // });
 
   const planMemory = {
     plan_FM8EuuGF3C3pn3: 0.5 * 1024 * 1024 * 1024,
@@ -42,15 +42,15 @@ module.exports = async ({ applicationContext, user, plan, source }) => {
     plan_FM8En4JVkWZ43y: 8 * 1024 * 1024 * 1024,
   };
 
-  await stripe.subscriptions.create({
-    customer: customer.id,
-    items: [
-      {
-        plan: plan.plan,
-        quantity: 1,
-      },
-    ],
-  });
+  // await stripe.subscriptions.create({
+  //   customer: customer.id,
+  //   items: [
+  //     {
+  //       plan: plan.plan,
+  //       quantity: 1,
+  //     },
+  //   ],
+  // });
 
   const nodes = await applicationContext.persistence.getNodes({
     applicationContext,

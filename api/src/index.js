@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const getServersForUserRoute = require('./routes/getServersForUser.route');
+const getServerRoute = require('./routes/getServer.route');
 const getNodesRoute = require('./routes/getNodes.route');
 const getServersOnNodeRoute = require('./routes/getServersOnNode.route');
 const createNodeRoute = require('./routes/createNode.route');
@@ -14,6 +15,7 @@ const registerRoute = require('./routes/register.route');
 const loginRoute = require('./routes/login.route');
 const runBackupRoute = require('./routes/runBackup.route');
 const backupCompleteRoute = require('./routes/backupComplete.route');
+const setServerHealthRoute = require('./routes/setServerHealth.route');
 
 const app = express();
 app.use(cors());
@@ -25,8 +27,10 @@ app.get('/users/:userId/servers', getServersForUserRoute);
 app.post('/register', registerRoute);
 app.post('/login', loginRoute);
 app.post('/nodes', createNodeRoute);
+app.get('/servers/:serverId', getServerRoute);
 app.post('/servers/:serverId/stop', stopServerRoute);
 app.post('/servers/:serverId/start', startServerRoute);
+app.post('/servers/:serverId/health', setServerHealthRoute);
 app.post('/servers/:serverId/run-backup', runBackupRoute);
 app.post('/servers/:serverId/backup-complete', backupCompleteRoute);
 app.post('/new-user-purchase', createAccountAndPurchaseServerRoute);

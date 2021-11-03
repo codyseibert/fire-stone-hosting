@@ -14,15 +14,15 @@ module.exports = async ({ applicationContext, user, plan }) => {
     plan_FM8En4JVkWZ43y: 8 * 1024 * 1024 * 1024,
   };
 
-  await stripe.subscriptions.create({
-    customer: user.id,
-    items: [
-      {
-        plan: plan.plan,
-        quantity: 1,
-      },
-    ],
-  });
+  // await stripe.subscriptions.create({
+  //   customer: user.id,
+  //   items: [
+  //     {
+  //       plan: plan.plan,
+  //       quantity: 1,
+  //     },
+  //   ],
+  // });
 
   const nodes = await applicationContext.persistence.getNodes({
     applicationContext,

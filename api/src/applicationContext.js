@@ -23,6 +23,10 @@ const backupCompleteInteractor = require('./interactors/backupComplete.interacto
 const createAccountAndPurchaseServerInteractor = require('./interactors/createAccountAndPurchaseServer.interactor');
 const runBackup = require('./persistence/sqlite/runBackup.persistence');
 const backupComplete = require('./persistence/sqlite/backupComplete.persistence');
+const setServerHealthInteractor = require('./interactors/setServerHealth.interactor');
+const setServerHealth = require('./persistence/sqlite/setServerHealth.persistence');
+const getServerInteractor = require('./interactors/getServer.interactor');
+const getServer = require('./persistence/sqlite/getServer.persistence');
 
 module.exports = () => ({
   persistence: {
@@ -33,18 +37,22 @@ module.exports = () => ({
     getServersOnNode,
     setFreeMemoryOnNode,
     startServer,
+    getServer,
     stopServer,
     createUser,
     getUser,
     runBackup,
+    setServerHealth,
     backupComplete,
   },
   interactors: {
     loginInteractor,
     stopServerInteractor,
     runBackupInteractor,
+    setServerHealthInteractor,
     backupCompleteInteractor,
     startServerInteractor,
+    getServerInteractor,
     getServersForUserInteractor,
     getNodesInteractor,
     getServersOnNodeInteractor,

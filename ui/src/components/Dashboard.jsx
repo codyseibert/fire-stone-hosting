@@ -1,81 +1,217 @@
 import React, { useEffect } from 'react';
+import { Route, Switch, Link } from 'react-router';
 import { connect } from 'react-redux';
-import getServersForUser from '../actions/getServersForUser.action';
-import gotoConfigureServer from '../actions/gotoConfigureServer.action';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import ConfigureServer from './ConfigureServer';
+import Logs from './Logs';
+import ServerHealth from './ServerHealth';
+
+import stopServer from '../actions/stopServer.action';
+import startServer from '../actions/startServer.action';
+import getServer from '../actions/getServer.action';
 
 const Dashboard = props => {
   useEffect(() => {
-    props.getServersForUser({
-      userId: props.user.id,
+    props.getServer({
+      serverId: props.match.params.serverId,
     });
+
+    const interval = setInterval(() => {
+      props.getServer({
+        serverId: props.match.params.serverId,
+      });
+    }, 5000);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, []);
 
+  console.log('props', props);
+
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-12">
-          <h1>Your Servers</h1>
+    <>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-12 bg-info">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-6">
+                  <h1>Fun Server</h1>
+
+                  {props.server.running ? (
+                    <span className="badge badge-success">Online</span>
+                  ) : (
+                    <span className="badge badge-secondary">Offline</span>
+                  )}
+                </div>
+                <div className="col-md-6">
+                  {props.server.running && (
+                    <div>
+                      <button
+                        onClick={() =>
+                          props.stopServer({
+                            serverId: props.match.params.serverId,
+                          })
+                        }
+                        type="button"
+                        className="btn btn-outline-danger mr-2"
+                      >
+                        Stop
+                      </button>
+                    </div>
+                  )}
+                  {!props.server.running && (
+                    <button
+                      onClick={() =>
+                        props.startServer({
+                          serverId: props.match.params.serverId,
+                        })
+                      }
+                      type="button"
+                      className="btn btn-outline-success"
+                    >
+                      Start
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-      {props.servers.map(server => (
-        <div key={server.id} className="row mt-4">
-          <div className="col-md-12">
-            <h3>
-              {server.ip}:{server.port}
-            </h3>
-          </div>
-          <div className="col-md-12">
-            {server.running ? (
-              <span className="badge badge-success">Online</span>
-            ) : (
-              <span className="badge badge-secondary">Offline</span>
-            )}
-          </div>
-          <div className="col-md-12">
-            <span className="badge badge-secondary">
-              {server.memory / 1024 / 1024 / 1024} GB
-            </span>
-            <a href="#"> change</a>
-          </div>
-          <div className="col-md-12 mt-2">
-            <button
-              onClick={() => props.gotoConfigureServer({ serverId: server.id })}
-              type="button"
-              className="btn btn-outline-secondary mr-2"
+      <div className="container">
+        <div className="row">
+          <div className="col-md-2">
+            <a
+              onClick={e => {
+                e.preventDefault();
+                props.history.push(
+                  `/dashboard/${props.match.params.serverId}/configure`,
+                );
+              }}
+              href=""
             >
-              <FontAwesomeIcon className="mr-2" size="lg" icon="cogs" />
               Configure
-            </button>
-            {server.running && (
-              <>
-                <button type="button" className="btn btn-outline-danger mr-2">
-                  Stop
-                </button>
+            </a>
+            <br />
+            <a
+              onClick={e => {
+                e.preventDefault();
+                props.history.push(
+                  `/dashboard/${props.match.params.serverId}/health`,
+                );
+              }}
+              href=""
+            >
+              Health
+            </a>
+            <br />
+            <a
+              onClick={e => {
+                e.preventDefault();
+                props.history.push(
+                  `/dashboard/${props.match.params.serverId}/logs`,
+                );
+              }}
+              href=""
+            >
+              Logs
+            </a>
+            <br />
+            <a
+              onClick={e => {
+                e.preventDefault();
+                props.history.push(
+                  `/dashboard/${props.match.params.serverId}/backups`,
+                );
+              }}
+              href=""
+            >
+              Backups
+            </a>
+            <br />
+            <a
+              onClick={e => {
+                e.preventDefault();
+                props.history.push(
+                  `/dashboard/${props.match.params.serverId}/backups`,
+                );
+              }}
+              href=""
+            >
+              FTP
+            </a>
+            <br />
+            <a
+              onClick={e => {
+                e.preventDefault();
+                props.history.push(
+                  `/dashboard/${props.match.params.serverId}/backups`,
+                );
+              }}
+              href=""
+            >
+              Worlds
+            </a>
+            <br />
+            <a
+              onClick={e => {
+                e.preventDefault();
+                props.history.push(
+                  `/dashboard/${props.match.params.serverId}/backups`,
+                );
+              }}
+              href=""
+            >
+              Files
+            </a>
+            <br />
+            <a
+              onClick={e => {
+                e.preventDefault();
+                props.history.push(
+                  `/dashboard/${props.match.params.serverId}/backups`,
+                );
+              }}
+              href=""
+            >
+              Players
+            </a>
+          </div>
 
-                <button type="button" className="btn btn-outline-warning">
-                  Restart
-                </button>
-              </>
-            )}
-            {!server.running && (
-              <button type="button" className="btn btn-outline-success">
-                Start
-              </button>
-            )}
+          <div className="col-md-10">
+            <Switch>
+              <Route
+                exact
+                path="/dashboard/:serverId/configure"
+                render={props => (
+                  <ConfigureServer
+                    match={props.match}
+                    serverId={props.match.params.serverId}
+                  />
+                )}
+              />
+              <Route exact path="/dashboard/:serverId/logs" component={Logs} />
+              <Route
+                exact
+                path="/dashboard/:serverId/health"
+                component={ServerHealth}
+              />
+            </Switch>
           </div>
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 };
 
-const mapStateToProps = state => ({ servers: state.servers, user: state.user });
+const mapStateToProps = state => ({ server: state.server });
 
 const mapDispatchToProps = dispatch => ({
-  getServersForUser: opts => dispatch(getServersForUser(opts)),
-  gotoConfigureServer: opts => dispatch(gotoConfigureServer(opts)),
+  stopServer: opts => dispatch(stopServer(opts)),
+  startServer: opts => dispatch(startServer(opts)),
+  getServer: opts => dispatch(getServer(opts)),
 });
 
 export default connect(

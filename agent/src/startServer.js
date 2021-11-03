@@ -19,7 +19,7 @@ module.exports = async ({ serverId, memory, port }) => {
   await exec(`docker build -t minecraft -f ../minecraft.Dockerfile ../servers/${serverId}`);
   // eslint-disable-next-line no-param-reassign
   memory = 1 * 1024 * 1024 * 1024; // TODO: remove this
-  const subprocess = spawn('screen', [`-S ${serverId}`, '-d', '-m', 'docker', 'run', '--rm', '-t', '-i', `--name ${serverId}`, `-m ${memory}b`, `-e JAVA_OPTS:"-Xms${memory}b -Xmx${memory}b"`, `-p ${port}:25565`, `-v $(pwd)/../servers/${serverId}:/minecraft`, 'minecraft'], {
+  const subprocess = spawn('screen', [`-S ${serverId}`, '-d', '-m', 'docker', 'run', '--cpus="1"', '--rm', '-t', '-i', `--name ${serverId}`, `-m ${memory}b`, `-e JAVA_OPTS:"-Xms${memory}b -Xmx${memory}b"`, `-p ${port}:25565`, `-v $(pwd)/../servers/${serverId}:/minecraft`, 'minecraft'], {
     detached: true,
     stdio: ['ignore', out, err],
     shell: true,

@@ -14,15 +14,17 @@ const registerAgent = require('./registerAgent.http');
 const getServers = require('./getServers.http');
 const runBackup = require('./runBackup');
 const startServer = require('./startServer');
+const saveServerHealth = require('./saveServerHealth.http');
 const runCommand = require('./runCommand');
 const stopServer = require('./stopServer');
 const stopOrphanedServers = require('./stopOrphanedServers');
+const getServerHealth = require('./getServerHealth');
 
 io.on('connection', (socket) => {
   console.log('a user connected');
-  const tail = new Tail('../servers/0cff1a3a-dfc0-4f47-a5db-4c2d2d7ca8a1/logs/latest.log');
+  const tail = new Tail('../servers/c02f528d-52c3-42b9-82cb-7039d1e04a0c/logs/latest.log');
 
-  fs.readFile('../servers/0cff1a3a-dfc0-4f47-a5db-4c2d2d7ca8a1/logs/latest.log', 'utf-8', (err, logs) => {
+  fs.readFile('../servers/c02f528d-52c3-42b9-82cb-7039d1e04a0c/logs/latest.log', 'utf-8', (err, logs) => {
     socket.emit('logs', logs);
 
     tail.on('line', (line) => {
@@ -33,7 +35,7 @@ io.on('connection', (socket) => {
   socket.on('command', (command) => {
     console.log('command', command);
     runCommand({
-      serverId: '0cff1a3a-dfc0-4f47-a5db-4c2d2d7ca8a1',
+      serverId: 'c02f528d-52c3-42b9-82cb-7039d1e04a0c',
       command,
     });
   });
@@ -62,7 +64,18 @@ const nodeId = process.env.NODE_ID || 'abc123';
     });
   }, 5000);
 
-  const agentTick = async () => {
+  setInterval(async () => {
+    const servers = await getServers({ nodeId });
+
+    for (const server of servers) {
+      if (server.running) {
+        const { memoryPercent, cpuPercent } = await getServerHealth({ serverId: server.id });
+        await saveServerHealth({ serverId: server.id, cpuPercent, memoryPercent });
+      }
+    }
+  }, 5000);
+
+  setInterval(async () => {
     const servers = await getServers({ nodeId });
 
     await stopOrphanedServers({
@@ -94,9 +107,5 @@ const nodeId = process.env.NODE_ID || 'abc123';
         console.timeEnd(`backup for ${server.id}`);
       }
     }
-
-    setTimeout(agentTick, 5000);
-  };
-
-  setTimeout(agentTick, 5000);
+  }, 5000);
 }());

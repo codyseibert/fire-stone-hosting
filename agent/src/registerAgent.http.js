@@ -15,6 +15,6 @@ module.exports = async ({
       freeMemory,
     },
     json: true,
-    url: 'http://192.168.1.5:3333/nodes',
+    url: 'http://localhost:3333/nodes',
   });
 };

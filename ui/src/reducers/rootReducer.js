@@ -7,6 +7,7 @@ import configurationReducer from './configuration.reducer';
 import tokenReducer from './token.reducer';
 import userReducer from './user.reducer';
 import logsReducer from './logs.reducer';
+import serverReducer from './server.reducer';
 
 import { connectRouter } from 'connected-react-router';
 
@@ -19,6 +20,7 @@ export default history =>
     plan: planReducer,
     configuration: configurationReducer,
     token: tokenReducer,
+    server: serverReducer,
     user: userReducer,
     logs: logsReducer,
   });
