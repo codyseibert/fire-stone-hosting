@@ -1,22 +1,27 @@
 
+import { createServerPersistence } from '../persistence/sqlite/createServerPersistence';
 import { v4 as uuidv4 } from 'uuid';
 
-import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_KEY);
+// const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 import { ApplicationContext } from "../createApplicationContext";
+import { User } from '../persistence/sqlite/createUserPersistence';
+import { getServersOnNodePersistence } from '../persistence/sqlite/getServersOnNodePersistence';
 
 type purchaseServerInteractorOptions = {
-  user: Object;
-  plan: String;
+  user: User;
+  plan: {
+    plan: string;
+  };
   applicationContext: ApplicationContext;
 };
 
 // const costPerGB = 3;
 
 export const purchaseServerInteractor = async ({ applicationContext, user, plan }: purchaseServerInteractorOptions) => {
-  const planMemory = {
+  const planMemory: {
+    [key: string]: number
+  } = {
     plan_FM8EuuGF3C3pn3: 0.5 * 1024 * 1024 * 1024,
     plan_FM8E73TqKTZIWV: 1 * 1024 * 1024 * 1024,
     plan_FM8EHhCrxNZGhd: 2 * 1024 * 1024 * 1024,
@@ -40,13 +45,13 @@ export const purchaseServerInteractor = async ({ applicationContext, user, plan 
   });
 
   const memory = planMemory[plan.plan];
-  const desiredNode = nodes.find(node => true || node.free_memory > memory); // TODO: remove true
+  const desiredNode = nodes.find(node => true || node.freeMemory > memory); // TODO: remove true
 
   if (!desiredNode) {
     throw new Error('no available nodes');
   }
 
-  const servers = await applicationContext.persistence.getServersOnNode({
+  const servers = await getServersOnNodePersistence({
     applicationContext,
     nodeId: desiredNode.id,
   });
@@ -59,19 +64,19 @@ export const purchaseServerInteractor = async ({ applicationContext, user, plan 
 
   await applicationContext.persistence.setFreeMemoryOnNode({
     applicationContext,
-    freeMemory: desiredNode.free_memory - memory,
+    freeMemory: desiredNode.freeMemory - memory,
     nodeId: desiredNode.id,
   });
 
   const server = {
-    serverId: uuidv4(),
+    id: uuidv4(),
     nodeId: desiredNode.id,
     port: freePort,
     memory,
     userId: user.id,
   };
 
-  await applicationContext.persistence.createServer({
+  await createServerPersistence({
     applicationContext,
     server,
   });

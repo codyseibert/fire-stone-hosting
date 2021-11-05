@@ -9,7 +9,7 @@ module.exports = async ({ expectedServerIds }) => {
   for (const runningId of runningServerIds) {
     if (!expectedServerIds.find(expectedId => expectedId === runningId)) {
       // eslint-disable-next-line no-await-in-loop
-      await exec(`docker stop ${runningId}`);
+      exec(`docker stop ${runningId}`);
     }
   }
 };

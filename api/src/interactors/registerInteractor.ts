@@ -1,9 +1,7 @@
 
 import { v4 as uuidv4 } from 'uuid';
 
-import * as stripeFn from 'stripe';
-
-const strip = stripeFn(process.env.STRIPE_KEY);
+// const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 const costPerGB = 3;
 
@@ -37,7 +35,7 @@ export const registerInteractor = async ({ applicationContext, account }: regist
     applicationContext,
     user: {
       ...account,
-      stripeCustomerId: customer.id,
+      // stripeCustomerId: customer.id,
       id: userId,
     },
   });

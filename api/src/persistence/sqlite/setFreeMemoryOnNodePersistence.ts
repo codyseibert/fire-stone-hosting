@@ -8,7 +8,7 @@ type setFreeMemoryOnNodePersistenceOptions = {
 
 export const setFreeMemoryOnNodePersistence = async ({ applicationContext, freeMemory, nodeId }: setFreeMemoryOnNodePersistenceOptions) => {
   const statement = await (await applicationContext.db).prepare(
-    'UPDATE `nodes` SET `free_memory` = ? WHERE `id` = ?',
+    'UPDATE `nodes` SET `freeMemory` = ? WHERE `id` = ?',
   );
   await statement.run(freeMemory, nodeId);
   await statement.finalize();

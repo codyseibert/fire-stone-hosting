@@ -50,7 +50,7 @@ const Servers = props => {
     <div className="container">
       <div className="row">
         <div className="col-md-12">
-          <h1>Your Servers {JSON.stringify(props.user)}</h1>
+          <h1>Your Servers</h1>
         </div>
       </div>
 

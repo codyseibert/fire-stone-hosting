@@ -9,8 +9,8 @@ module.exports = async ({
   await request({
     method: 'post',
     body: {
-      nodeId,
       ip,
+      id: nodeId,
       totalMemory,
       freeMemory,
     },

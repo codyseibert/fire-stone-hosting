@@ -1,6 +1,7 @@
 import { ApplicationContext } from "../../createApplicationContext";
 
-type User = {
+export type User = {
+  id: string;
   accountId: String;
   email: String;
   password: String;

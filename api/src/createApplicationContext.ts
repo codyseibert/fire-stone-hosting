@@ -17,7 +17,7 @@ import {createAccountAndPurchaseServerInteractor} from './interactors/createAcco
 import {setServerHealthInteractor} from './interactors/setServerHealthInteractor';
 import {getServerInteractor} from './interactors/getServerInteractor';
 
-import {getNodesPersistence} from './persistence/sqlite/getNodesPersistence';
+import {getNodesInterface, getNodesPersistence} from './persistence/sqlite/getNodesPersistence';
 import {createNodePersistence} from './persistence/sqlite/createNodePersistence';
 import {getServersOnNodePersistence} from './persistence/sqlite/getServersOnNodePersistence';
 import {getServersForUserPersistence} from './persistence/sqlite/getServersForUserPersistence';
@@ -35,7 +35,7 @@ import {getServerPersistence} from './persistence/sqlite/getServerPersistence';
 export type ApplicationContext = {
   persistence: {
     getServersForUser: Function,
-    getNodes: Function,
+    getNodes: getNodesInterface,
     createNode: Function,
     createServer: Function,
     getServersOnNode: Function,
