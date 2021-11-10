@@ -20,12 +20,17 @@ const stopServer = require('./stopServer');
 const stopOrphanedServers = require('./stopOrphanedServers');
 const getServerHealth = require('./getServerHealth');
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  // TODO: work in progress
-  const tail = new Tail('../servers/c02f528d-52c3-42b9-82cb-7039d1e04a0c/logs/latest.log');
+const POLL_INTERVAL = 5000;
 
-  fs.readFile('../servers/c02f528d-52c3-42b9-82cb-7039d1e04a0c/logs/latest.log', 'utf-8', (err, logs) => {
+io.on('connection', (socket) => {
+
+
+  console.log('user connected')
+  const {serverId} = socket.handshake.query;
+
+  const tail = new Tail(`../servers/${serverId}/logs/latest.log`);
+
+  fs.readFile(`../servers/${serverId}/logs/latest.log`, 'utf-8', (err, logs) => {
     socket.emit('logs', logs);
 
     tail.on('line', (line) => {
@@ -36,14 +41,16 @@ io.on('connection', (socket) => {
   socket.on('command', (command) => {
     console.log('command', command);
     runCommand({
-      serverId: 'c02f528d-52c3-42b9-82cb-7039d1e04a0c',
+      serverId,
       command,
     });
   });
 
   socket.on('disconnect', () => {
+    console.log('user disconnected');
     tail.unwatch();
   });
+
 });
 
 http.listen(5000, () => {
@@ -123,5 +130,5 @@ const runAgentLogic = async () => {
 (async function main() {
   setIntervalAndRun(sendSystemSpecs, 5000);
   setIntervalAndRun(sendContainerHealth, 5000);
-  setIntervalAndRun(runAgentLogic, 5000);
+  setIntervalAndRun(runAgentLogic, POLL_INTERVAL);
 }());

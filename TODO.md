@@ -1,5 +1,6 @@
 - refactor to typescript
 - remove all this CA crap
+- redux toolkit instead of redux
 - ability to create an account without buying
 - mock stripe when running locally
 - force new account before purchase a server
@@ -10,3 +11,4 @@
 - rename server to MinecraftContainer
 - agent should register with master when started
 - maybe use MQ for starting and stopping servers instead of polling?
+- prevent server entry from re-creating if the server is deleted from sql

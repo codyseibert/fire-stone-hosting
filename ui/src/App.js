@@ -9,7 +9,6 @@ class App extends React.Component {
     return (
       <div>
         <Navigation history={this.props.history} />
-
         <ConnectedRouter history={this.props.history}>{routes}</ConnectedRouter>
       </div>
     );

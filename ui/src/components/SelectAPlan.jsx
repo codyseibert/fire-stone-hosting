@@ -4,7 +4,15 @@ import { connect } from 'react-redux';
 import setFormKey from '../actions/setFormKey.action';
 import setPlan from '../actions/setPlan.action';
 
-const Landing = props => {
+import saplingImg from '../images/sapling.png';
+import woodImg from '../images/wood.png';
+import stoneImg from '../images/stone.png';
+import ironImg from '../images/iron.png';
+import goldImg from '../images/gold.png';
+import diamondImg from '../images/diamond.png';
+import netheriteImg from '../images/netherite.png';
+
+const SelectAPlan = props => {
   const renderPlanCard = ({ imageSrc, memory, name, details, plan }) => {
     return (
       <div className="shadow-sm p-3 mb-5 bg-white rounded">
@@ -68,31 +76,28 @@ const Landing = props => {
       <div className="row">
         <div className="col-md-4">
           {renderPlanCard({
-            imageSrc:
-              'https://gamepedia.cursecdn.com/minecraft_gamepedia/6/6a/Spruce_Sapling.png?version=2b7b5743abbda34b45fa465c078b9edb',
+            imageSrc: woodImg,
             memory: 0.5,
             plan: 'plan_FM8EuuGF3C3pn3',
-            name: 'Sapling',
-            details: 'unlimitied players',
-          })}
-        </div>
-        <div className="col-md-4">
-          {renderPlanCard({
-            imageSrc:
-              'https://gamepedia.cursecdn.com/minecraft_gamepedia/1/11/Wooden_Axe.png?version=88435b952db3b497a300131c9577bc76',
-            memory: 1,
-            plan: 'plan_FM8E73TqKTZIWV',
             name: 'Wood',
             details: 'unlimitied players',
           })}
         </div>
         <div className="col-md-4">
           {renderPlanCard({
-            imageSrc:
-              'https://gamepedia.cursecdn.com/minecraft_gamepedia/4/40/Stone_Pickaxe.png?version=7ea86c614d826f39576a633fd8e30c3b',
+            imageSrc: stoneImg,
+            memory: 1,
+            plan: 'plan_FM8E73TqKTZIWV',
+            name: 'Stone',
+            details: 'unlimitied players',
+          })}
+        </div>
+        <div className="col-md-4">
+          {renderPlanCard({
+            imageSrc: ironImg,
             memory: 2,
             plan: 'plan_FM8EHhCrxNZGhd',
-            name: 'Stone',
+            name: 'Iron',
             details: 'unlimitied players',
           })}
         </div>
@@ -100,30 +105,27 @@ const Landing = props => {
       <div className="row">
         <div className="col-md-4">
           {renderPlanCard({
-            imageSrc:
-              'https://gamepedia.cursecdn.com/minecraft_gamepedia/7/76/Iron_Shovel.png?version=9ad7401db7ae5b23ed6a148a9fc642c4',
+            imageSrc: goldImg,
             memory: 4,
-            name: 'Iron',
+            name: 'Gold',
             plan: 'plan_FM8EvzJrRIYn5R',
             details: 'unlimitied players',
           })}
         </div>
         <div className="col-md-4">
           {renderPlanCard({
-            imageSrc:
-              'https://gamepedia.cursecdn.com/minecraft_gamepedia/c/c6/Golden_Helmet.png?version=c608c95421103de929ea974d933cda0b',
+            imageSrc: diamondImg,
             memory: 6,
             plan: 'plan_FM8ExZxKgKh22g',
-            name: 'Gold',
+            name: 'Diamond',
             details: 'unlimitied players',
           })}
         </div>
         <div className="col-md-4">
           {renderPlanCard({
-            imageSrc:
-              'https://gamepedia.cursecdn.com/minecraft_gamepedia/a/a0/Diamond_Sword.png?version=d3b1fbce65ce732c68aa8b544c1b081c',
+            imageSrc: netheriteImg,
             memory: 8,
-            name: 'Diamond',
+            name: 'Netherite',
             plan: 'plan_FM8En4JVkWZ43y',
             details: 'unlimitied players',
           })}
@@ -148,4 +150,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Landing);
+)(SelectAPlan);

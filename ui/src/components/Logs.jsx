@@ -14,11 +14,11 @@ const Logs = props => {
   const [command, setCommand] = useState('');
 
   useEffect(() => {
-    socket = io('http://localhost:5000');
+    socket = io('http://localhost:5000', {query: `serverId=${props.match.params.serverId}`});
     let allLogs = '';
 
-    socket.on('connect', () => {
-      console.log('connected');
+    socket.on('connect', (event) => {
+      console.log('connected', event);
     });
 
     socket.on('logs', logs => {
@@ -32,6 +32,10 @@ const Logs = props => {
       props.setLogs(allLogs);
       pane.current.scrollTop = pane.current.scrollHeight;
     });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   const onKeyDown = e => {
