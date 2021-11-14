@@ -1,8 +1,10 @@
-export default (state = {}, action) => {
+import { Action } from "./configuration.reducer";
+
+export default (state = {}, action: Action) => {
   switch (action.type) {
-    case 'SET_SETTER':
+    case "SET_SETTER":
       return action.payload;
-    case 'UPDATE_SETTER':
+    case "UPDATE_SETTER":
       return {
         ...state,
         ...action.payload,

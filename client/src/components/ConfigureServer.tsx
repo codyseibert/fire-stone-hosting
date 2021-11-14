@@ -9,9 +9,7 @@ const ConfigureServer = ({
   server,
   history,
   configuration,
-  serverId,
 }: {
-  serverId: string;
   history: History;
   server: {
     id: string;

@@ -108,9 +108,7 @@ const DashboardPage = (props: {
               <Route
                 exact
                 path="/dashboard/:serverId/configure"
-                render={(props) => (
-                  <ConfigureServer serverId={props.match.params.serverId} />
-                )}
+                render={(props) => <ConfigureServer history={props.history} />}
               />
               <Route exact path="/dashboard/:serverId/logs" component={Logs} />
               <Route
