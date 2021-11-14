@@ -15,3 +15,4 @@
 - agent should register with master when started
 - maybe use MQ for starting and stopping servers instead of polling?
 - prevent server entry from re-creating if the server is deleted from sql
+- fix web sockets

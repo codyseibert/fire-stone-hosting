@@ -34,8 +34,8 @@ const ServerHealth = props => {
                 role="progressbar"
                 style={{ width: props.server.cpuPercent }}
                 aria-valuenow={(props.server.cpuPercent || '').replace('%', '')}
-                aria-valuemin="0"
-                aria-valuemax="100"
+                aria-valuemin={0}
+                aria-valuemax={100}
               >
                 CPU: {props.server.cpuPercent}
               </div>
@@ -51,8 +51,8 @@ const ServerHealth = props => {
                   '%',
                   '',
                 )}
-                aria-valuemin="0"
-                aria-valuemax="100"
+                aria-valuemin={0}
+                aria-valuemax={100}
               >
                 MEM: {props.server.memoryPercent}{' '}
                 {((parseInt(

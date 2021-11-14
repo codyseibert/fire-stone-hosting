@@ -3,19 +3,18 @@ import { ConnectedRouter } from 'connected-react-router';
 import { AppRouter } from './AppRouter';
 import { connect } from 'react-redux';
 import Navigation from './components/Navigation';
+import { History } from 'history';
 
-class App extends React.Component {
-  render() {
-    return (
-      <div>
-        <Navigation history={this.props.history} />
-        <ConnectedRouter history={this.props.history}>
-          <AppRouter />
-        </ConnectedRouter>
-      </div>
-    );
-  }
-}
+export const App = ({ history }: { history: History }) => {
+  return (
+    <div>
+      <Navigation history={history} />
+      <ConnectedRouter history={history}>
+        <AppRouter />
+      </ConnectedRouter>
+    </div>
+  );
+};
 
 const mapStateToProps = () => ({});
 

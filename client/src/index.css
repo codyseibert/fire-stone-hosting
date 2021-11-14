@@ -1,0 +1,56 @@
+body {
+  background-color: #f8f9fa;
+  font-family: "Righteous", cursive;
+  font-family: "Ubuntu", sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Orbitron", sans-serif;
+  font-family: "Indie Flower", cursive;
+  font-family: "Righteous", cursive;
+  /* font-family: 'Gloria Hallelujah', cursive; */
+  /* font-family: 'Fredoka One', cursive; */
+  /* font-family: 'Unica One', cursive; */
+  font-family: "Ubuntu", sans-serif;
+}
+
+nav {
+  height: 60px;
+  font-size: 20px;
+  font-family: "Gloria Hallelujah", cursive;
+  font-family: "Righteous", cursive;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.StripeElement {
+  box-sizing: border-box;
+
+  height: 40px;
+
+  padding: 10px 12px;
+
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background-color: white;
+
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}

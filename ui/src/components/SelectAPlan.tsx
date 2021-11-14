@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import setFormKey from '../actions/setFormKey.action';
 import setPlan from '../actions/setPlan.action';
 
-import saplingImg from '../images/sapling.png';
 import woodImg from '../images/wood.png';
 import stoneImg from '../images/stone.png';
 import ironImg from '../images/iron.png';

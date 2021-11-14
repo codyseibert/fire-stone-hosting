@@ -4,7 +4,6 @@ import setFormKey from '../actions/setFormKey.action';
 import createAccountAndPurchaseServer from '../actions/createAccountAndPurchaseServer.action';
 import setPlan from '../actions/setPlan.action';
 import { CardElement } from 'react-stripe-elements';
-
 import { injectStripe } from 'react-stripe-elements';
 
 const CheckoutForm = props => {

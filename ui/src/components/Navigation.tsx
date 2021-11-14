@@ -1,5 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import setFormKey from '../actions/setFormKey.action';
 import setPlan from '../actions/setPlan.action';
