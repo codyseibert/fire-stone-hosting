@@ -1,22 +1,31 @@
-/* eslint-disable no-await-in-loop */
-/* eslint-disable no-restricted-syntax */
-const { spawn } = require('child_process');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-const fs = require('fs');
+import fs from 'fs'
+import util from 'util';
+import cp from 'child_process';
+import { spawn }from 'child_process';
+const exec = util.promisify(cp.exec);
 
 const out = fs.openSync('./out.log', 'a');
 const err = fs.openSync('./out.log', 'a');
 
-module.exports = async ({ serverId, memory, port }) => {
+type startServerOptions = {
+  serverId: string,
+  port: number,
+  memory: number,
+}
+
+interface startServerInterface {
+  (opts: startServerOptions): Promise<any>
+}
+
+export const startServer: startServerInterface = async ({ serverId, memory, port }) => {
   // TODO: make a user for FTP
   // await exec('useradd bob');
   // await exec('echo bob:123 | chpasswd');
 
   // TODO: we should actually be using the user's FTP folder for all of this
   try {
-    await new Promise((resolve, reject) => {
-      fs.access(`../servers/${serverId}`, fs.F_OK, (error) => {
+    await new Promise<void>((resolve, reject) => {
+      fs.access(`../servers/${serverId}`, fs.constants.F_OK, (error: Error) => {
         return error ? reject(error) : resolve();
       });
     });

@@ -1,6 +1,8 @@
 
 import { createServerPersistence } from '../persistence/sqlite/createServerPersistence';
 import { v4 as uuidv4 } from 'uuid';
+import { Server } from '../models/Server';
+
 
 // const stripe = require('stripe')(process.env.STRIPE_KEY);
 
@@ -51,7 +53,7 @@ export const purchaseServerInteractor = async ({ applicationContext, user, plan 
     throw new Error('no available nodes');
   }
 
-  const servers = await getServersOnNodePersistence({
+  const servers: Server[] = await getServersOnNodePersistence({
     applicationContext,
     nodeId: desiredNode.id,
   });
@@ -68,12 +70,14 @@ export const purchaseServerInteractor = async ({ applicationContext, user, plan 
     nodeId: desiredNode.id,
   });
 
-  const server = {
+  const server: Server = {
     id: uuidv4(),
     nodeId: desiredNode.id,
     port: freePort,
     memory,
     userId: user.id,
+    running: true,
+    runBackup: false
   };
 
   await createServerPersistence({

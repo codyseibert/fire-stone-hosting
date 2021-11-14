@@ -1,9 +1,19 @@
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
-const backupComplete = require('./backupComplete.http');
+import util from 'util';
+import cp from 'child_process';
+import {backupCompleteProxy} from './proxies/backupCompleteProxy';
 
-module.exports = async ({ serverId }) => {
-// disable minecraft auto save
+const exec = util.promisify(cp.exec);
+
+type runBackupOptions = {
+  serverId: string,
+}
+
+interface runBackupInterface {
+  (opts: runBackupOptions): Promise<any>
+}
+
+export const runBackup: runBackupInterface = async ({ serverId }) => {
+  // disable minecraft auto save
   await exec(`screen -S "${serverId}" -p 0 -X stuff "/save-off\r"`);
 
   // save the world
@@ -22,7 +32,7 @@ module.exports = async ({ serverId }) => {
   await exec(`screen -S "${serverId}" -p 0 -X stuff "/save-on\r"`);
 
   // set runBackup back to false
-  await backupComplete({
+  await backupCompleteProxy({
     serverId,
   });
 };

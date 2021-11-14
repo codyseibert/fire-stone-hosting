@@ -1,5 +1,5 @@
 import { ApplicationContext } from "../../createApplicationContext";
-import { Server } from "./createServerPersistence";
+import { Server } from "../../models/Server";
 
 type getServersOnNodePersistenceOptions = {
   nodeId: String;

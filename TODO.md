@@ -1,3 +1,6 @@
+- update all packages
+- convert UI to typescript
+- add proptypes to react components?
 - refactor to typescript
 - remove all this CA crap
 - redux toolkit instead of redux

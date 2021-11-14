@@ -1,18 +1,10 @@
+import { Server } from "../../models/Server";
 import { ApplicationContext } from "../../createApplicationContext";
-
-export type Server = {
-  id: string;
-  nodeId: string;
-  port: number;
-  memory: number;
-  userId: string;
-}
 
 type createServerPersistenceOptions = {
   server: Server;
   applicationContext: ApplicationContext;
 };
-
 
 export const createServerPersistence = async ({ applicationContext, server }: createServerPersistenceOptions) => {
   const { id, nodeId, port, memory, userId } = server;

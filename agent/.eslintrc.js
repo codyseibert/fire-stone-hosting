@@ -1,17 +1,39 @@
 module.exports = {
-  env: {
-    commonjs: true,
-    es6: true,
-    node: true,
+  'env': {
+      'browser': false,
+      'es6': true,
+      node: true,
   },
-  extends: 'airbnb-base',
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+  'extends': [
+      'eslint:recommended', 
+      'plugin:prettier/recommended', 
+      'prettier/standard',
+  ],
+  'globals': {
+      'Atomics': 'readonly',
+      'SharedArrayBuffer': 'readonly'
   },
-  parserOptions: {
-    ecmaVersion: 2018,
+  'parserOptions': {
+      'ecmaVersion': 9,
+      'jsx': false,
+      'sourceType': 'module',
   },
-  rules: {
-  },
+  'plugins': [
+      'prettier'
+  ],
+  'rules': {
+      'prettier/prettier': 'error',
+      'linebreak-style': [
+          'error',
+          'unix'
+      ],
+      'quotes': [
+          'error',
+          'single'
+      ],
+      'semi': [
+          'error',
+          'always'
+      ]
+  }
 };

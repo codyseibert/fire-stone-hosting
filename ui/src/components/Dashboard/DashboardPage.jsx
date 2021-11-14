@@ -1,15 +1,16 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, Link } from 'react-router';
+import { Route, Switch } from 'react-router';
 import { connect } from 'react-redux';
-import ConfigureServer from './ConfigureServer';
-import Logs from './Logs';
-import ServerHealth from './ServerHealth';
+import ConfigureServer from '../ConfigureServer';
+import Logs from '../Logs';
+import ServerHealth from '../ServerHealth';
 
-import stopServer from '../actions/stopServer.action';
-import startServer from '../actions/startServer.action';
-import getServer from '../actions/getServer.action';
+import stopServer from '../../actions/stopServer.action';
+import startServer from '../../actions/startServer.action';
+import getServer from '../../actions/getServer.action';
+import { SideNavigation } from './SideNavigation';
 
-const Dashboard = props => {
+const DashboardPage = props => {
   useEffect(() => {
     props.getServer({
       serverId: props.match.params.serverId,
@@ -25,8 +26,6 @@ const Dashboard = props => {
       clearInterval(interval);
     };
   }, []);
-
-  console.log('props', props);
 
   return (
     <>
@@ -83,101 +82,10 @@ const Dashboard = props => {
       <div className="container">
         <div className="row">
           <div className="col-md-2">
-            <a
-              onClick={e => {
-                e.preventDefault();
-                props.history.push(
-                  `/dashboard/${props.match.params.serverId}/configure`,
-                );
-              }}
-              href=""
-            >
-              Configure
-            </a>
-            <br />
-            <a
-              onClick={e => {
-                e.preventDefault();
-                props.history.push(
-                  `/dashboard/${props.match.params.serverId}/health`,
-                );
-              }}
-              href=""
-            >
-              Health
-            </a>
-            <br />
-            <a
-              onClick={e => {
-                e.preventDefault();
-                props.history.push(
-                  `/dashboard/${props.match.params.serverId}/logs`,
-                );
-              }}
-              href=""
-            >
-              Logs
-            </a>
-            <br />
-            <a
-              onClick={e => {
-                e.preventDefault();
-                props.history.push(
-                  `/dashboard/${props.match.params.serverId}/backups`,
-                );
-              }}
-              href=""
-            >
-              Backups
-            </a>
-            <br />
-            <a
-              onClick={e => {
-                e.preventDefault();
-                props.history.push(
-                  `/dashboard/${props.match.params.serverId}/backups`,
-                );
-              }}
-              href=""
-            >
-              FTP
-            </a>
-            <br />
-            <a
-              onClick={e => {
-                e.preventDefault();
-                props.history.push(
-                  `/dashboard/${props.match.params.serverId}/backups`,
-                );
-              }}
-              href=""
-            >
-              Worlds
-            </a>
-            <br />
-            <a
-              onClick={e => {
-                e.preventDefault();
-                props.history.push(
-                  `/dashboard/${props.match.params.serverId}/backups`,
-                );
-              }}
-              href=""
-            >
-              Files
-            </a>
-            <br />
-            <a
-              onClick={e => {
-                e.preventDefault();
-                props.history.push(
-                  `/dashboard/${props.match.params.serverId}/backups`,
-                );
-              }}
-              href=""
-            >
-              Players
-            </a>
+            <SideNavigation
+              history={props.history}
+              serverId={props.match.params.serverId}
+            />
           </div>
 
           <div className="col-md-10">
@@ -217,4 +125,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Dashboard);
+)(DashboardPage);
