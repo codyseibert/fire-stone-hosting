@@ -2,14 +2,16 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { State } from "..";
 import { Server } from "../../../api/src/models/Server";
-import getServer from "../actions/getServer.action";
+import getServerAction, {
+  getServerActionInterface,
+} from "../actions/getServerAction";
 
 const ServerHealth = ({
   match,
   server,
-  getServer,
+  getServerAction,
 }: {
-  getServer: Function;
+  getServerAction: getServerActionInterface;
   match: {
     params: {
       serverId: string;
@@ -18,11 +20,11 @@ const ServerHealth = ({
   server: Server;
 }) => {
   useEffect(() => {
-    getServer({
+    getServerAction({
       serverId: match.params.serverId,
     });
     const interval = setInterval(() => {
-      getServer({
+      getServerAction({
         serverId: match.params.serverId,
       });
     }, 5000);
@@ -42,12 +44,14 @@ const ServerHealth = ({
           <div className="col-md-12">
             <h2>Server Health</h2>
 
-            <div className="progress">
+            {/* <div className="progress">
               <div
                 className="progress-bar bg-info"
                 role="progressbar"
                 style={{ width: server.cpuPercent }}
-                aria-valuenow={(server.cpuPercent || "").replace("%", "")}
+                aria-valuenow={parseInt(
+                  (server.cpuPercent || "0").replace("%", "")
+                )}
                 aria-valuemin={0}
                 aria-valuemax={100}
               >
@@ -61,7 +65,9 @@ const ServerHealth = ({
                 className="progress-bar bg-info"
                 role="progressbar"
                 style={{ width: server.memoryPercent }}
-                aria-valuenow={(server.memoryPercent || "").replace("%", "")}
+                aria-valuenow={parseInt(
+                  (server.cpuPercent || "0").replace("%", "")
+                )}
                 aria-valuemin={0}
                 aria-valuemax={100}
               >
@@ -74,7 +80,7 @@ const ServerHealth = ({
                   1024}{" "}
                 / {server.memory / 1024 / 1024 / 1024} GB
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       )}
@@ -85,7 +91,7 @@ const ServerHealth = ({
 const mapStateToProps = (state: State) => ({ server: state.server });
 
 const mapDispatchToProps = {
-  getServer,
+  getServerAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ServerHealth);

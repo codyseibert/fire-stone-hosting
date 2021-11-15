@@ -5,7 +5,7 @@ import stopServer from "../http/stopServer.http";
 export default ({ serverId }: { serverId: string }) =>
   async (dispatch: Dispatch<object>, getState: () => State) => {
     try {
-      await stopServer({ serverId }, null);
+      await stopServer({ serverId }, "");
     } catch (err: any) {
       dispatch({
         type: "SET_ERROR",

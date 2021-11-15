@@ -7,7 +7,7 @@ import { CardElement } from "react-stripe-elements";
 import { Dispatch } from "redux";
 
 import { injectStripe } from "react-stripe-elements";
-import { State, store } from "..";
+import { State } from "..";
 
 const CheckoutForm = (props: {
   createAccountAndPurchaseServer: Function;

@@ -1,22 +1,24 @@
-import React, { Dispatch } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { connect } from "react-redux";
-import setFormKey from "../actions/setFormKey.action";
-import setPlan from "../actions/setPlan.action";
-import login from "../actions/login.action";
-import { State } from "..";
+import { login } from "../features/authentication/authenticationSlice";
+import { useAppDispatch, useAppSelector } from "../hooks";
 
-const Login = ({
-  error,
-  form,
-}: {
-  error: string;
-  login: Function;
-  form: {
-    email: string;
-    password: string;
+const Login = () => {
+  const dispatch = useAppDispatch();
+  const error = useAppSelector((state) => state.authenticationReducer.error);
+
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const setFormKey = ({ key, value }: { key: string; value: string }) => {
+    setForm({
+      ...form,
+      [key]: value,
+    });
   };
-}) => {
+
   return (
     <div className="container mt-4">
       <div className="row">
@@ -35,7 +37,7 @@ const Login = ({
                     <div className="col-md-1 text-center">
                       <FontAwesomeIcon size="lg" icon="exclamation-circle" />
                     </div>
-                    <div className="col-md-11">{error}</div>
+                    <div className="col-md-11">{}</div>
                   </div>
                 </div>
               </div>
@@ -76,7 +78,7 @@ const Login = ({
             type="button"
             className="btn btn-primary"
             onClick={() => {
-              login();
+              dispatch(login(form));
             }}
           >
             Login
@@ -87,17 +89,19 @@ const Login = ({
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  form: state.form,
-  error: state.error,
-  plan: state.plan,
-  configuration: state.configuration,
-});
+// const mapStateToProps = (state: State) => ({
+//   form: state.form,
+//   error: state.error,
+//   plan: state.plan,
+//   configuration: state.configuration,
+// });
 
-const mapDispatchToProps = {
-  setFormKey,
-  login,
-  setPlan,
-};
+// const mapDispatchToProps = (dispatch: Dispatch<any>) => ({
+//   setFormKey: (props: any) => dispatch(setFormKey(props)),
+//   login: (props: any) => dispatch(login()),
+//   setPlan: (props: any) => dispatch(setPlan(props)),
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default Login;
+
+// export default connect(mapStateToProps, mapDispatchToProps)(Login);

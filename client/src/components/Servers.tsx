@@ -38,9 +38,7 @@ const Servers = ({
   const renderServerRow = (server: Server) => (
     <tr key={server.id}>
       <td>Fun Server</td>
-      <td>
-        {server.ip}:{server.port}
-      </td>
+      <td>:{server.port}</td>
       <td>funserver.firestonehosting.com</td>
       <td>
         {server.running ? (

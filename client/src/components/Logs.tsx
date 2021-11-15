@@ -1,4 +1,5 @@
-import { io, Socket } from "socket.io-client";
+import { io } from "socket.io-client";
+import { Socket } from "socket.io-client";
 
 import React, { useEffect, useRef, useState } from "react";
 import { connect } from "react-redux";
@@ -7,12 +8,14 @@ import gotoConfigureServer from "../actions/gotoConfigureServer.action";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import setLogs from "../actions/setLogs.action";
 import { State } from "..";
+import { Server } from "../../../api/src/models/Server";
 
 let socket: Socket;
 
 const Logs = ({
   match,
   setLogs,
+  servers,
   logs,
 }: {
   match: {
@@ -20,32 +23,39 @@ const Logs = ({
       serverId: string;
     };
   };
+  servers: Server[];
   setLogs: Function;
-  logs: string;
+  logs: string[];
 }) => {
-  const pane = useRef(null);
+  const pane = useRef<HTMLDivElement>(null);
   const [command, setCommand] = useState("");
 
   useEffect(() => {
     socket = io("http://localhost:5000", {
-      query: `serverId=${match.params.serverId}`,
+      query: {
+        serverId: match.params.serverId,
+      },
     });
     let allLogs = "";
 
-    socket.on("connect", (event: any) => {
-      console.log("connected", event);
+    socket.on("connect", () => {
+      // console.log("connected", event);
     });
 
     socket.on("logs", (logs) => {
       setLogs(logs);
       allLogs = logs;
-      pane.current.scrollTop = pane.current.scrollHeight;
+      if (pane.current) {
+        pane.current.scrollTop = pane.current.scrollHeight;
+      }
     });
 
     socket.on("line", (line) => {
       allLogs += line;
       setLogs(allLogs);
-      pane.current.scrollTop = pane.current.scrollHeight;
+      if (pane.current) {
+        pane.current.scrollTop = pane.current.scrollHeight;
+      }
     });
 
     return () => {

@@ -1,12 +1,10 @@
-
 import { createServerPersistence } from '../persistence/sqlite/createServerPersistence';
 import { v4 as uuidv4 } from 'uuid';
 import { Server } from '../models/Server';
 
-
 // const stripe = require('stripe')(process.env.STRIPE_KEY);
 
-import { ApplicationContext } from "../createApplicationContext";
+import { ApplicationContext } from '../createApplicationContext';
 import { User } from '../persistence/sqlite/createUserPersistence';
 import { getServersOnNodePersistence } from '../persistence/sqlite/getServersOnNodePersistence';
 
@@ -20,9 +18,13 @@ type purchaseServerInteractorOptions = {
 
 // const costPerGB = 3;
 
-export const purchaseServerInteractor = async ({ applicationContext, user, plan }: purchaseServerInteractorOptions) => {
+export const purchaseServerInteractor = async ({
+  applicationContext,
+  user,
+  plan,
+}: purchaseServerInteractorOptions) => {
   const planMemory: {
-    [key: string]: number
+    [key: string]: number;
   } = {
     plan_FM8EuuGF3C3pn3: 0.5 * 1024 * 1024 * 1024,
     plan_FM8E73TqKTZIWV: 1 * 1024 * 1024 * 1024,
@@ -77,7 +79,6 @@ export const purchaseServerInteractor = async ({ applicationContext, user, plan 
     memory,
     userId: user.id,
     running: true,
-    runBackup: false
   };
 
   await createServerPersistence({

@@ -1,16 +1,18 @@
-import "babel-polyfill";
 import React from "react";
-import { applyMiddleware, compose, createStore } from "redux";
-import { routerMiddleware } from "connected-react-router";
-import { Provider } from "react-redux";
+import { applyMiddleware, compose, createStore, Action } from "redux";
+// import { routerMiddleware, RouterState } from "connected-react-router";
 import thunk from "redux-thunk";
 import ReactDOM from "react-dom";
 import App from "./App";
-import rootReducer from "./reducers/rootReducer";
+import rootReducer, { IAction } from "./reducers/rootReducer";
 import history from "./history";
+import { History } from "history";
 import "bootstrap/dist/css/bootstrap.css";
 import "./index.css";
 import { StripeProvider } from "react-stripe-elements";
+
+import { store } from "./store";
+import { Provider } from "react-redux";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -71,21 +73,17 @@ library.add(
 const user = JSON.parse(window.localStorage.getItem("user") || "null");
 const token = JSON.parse(window.localStorage.getItem("token") || "null");
 
-export type State = {
+export interface State {
   form: any;
+  // router: RouterState;
   error: string;
   user: {
     id: string;
   };
   token: string;
   servers: Server[];
-  server: {
-    running: boolean;
-    id: string;
-    ip: string;
-    port: number;
-  };
-  logs: string;
+  server: Server;
+  logs: string[];
   plan: {
     memory: number;
     name: string;
@@ -96,22 +94,25 @@ export type State = {
     maxPlayers: number;
     motd: string;
   };
-};
+}
 
 const getInitialState = (): State => {
   return {
     form: {},
+    // router: undefined as any as RouterState,
     error: "",
     server: {
       running: false,
       id: "",
-      ip: "",
+      nodeId: "",
+      userId: "",
+      memory: 0,
       port: 10000,
     },
     user: user,
     token: token,
     servers: [],
-    logs: "",
+    logs: [],
     plan: {
       memory: 1,
       name: "Wood",
@@ -127,16 +128,17 @@ const getInitialState = (): State => {
 };
 
 /* eslint-disable no-underscore-dangle */
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancer =
+  (window as any)["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] || compose;
 
 /* eslint-enable */
-export const store = createStore(
-  rootReducer(history),
-  getInitialState(),
-  composeEnhancer(applyMiddleware(thunk, routerMiddleware(history)))
-);
+// export const store = createStore<State, IAction, any, any>(
+//   rootReducer(history),
+//   getInitialState(),
+//   composeEnhancer(applyMiddleware(thunk, routerMiddleware(history)))
+// );
 
-history.listen((location: string, action: string) => {
+history.listen(() => {
   store.dispatch({
     type: "SET_ERROR",
     payload: null,

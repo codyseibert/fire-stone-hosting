@@ -1,6 +1,10 @@
-import { Action } from "./configuration.reducer";
+import { IAction } from "./rootReducer";
 
-export default (state = {}, action: Action) => {
+export interface IFormReducer {
+  (state: any, action: IAction): any;
+}
+
+const formReducer: IFormReducer = (state = {}, action): any => {
   switch (action.type) {
     case "SET_FORM_KEY":
       return {
@@ -11,3 +15,5 @@ export default (state = {}, action: Action) => {
       return state;
   }
 };
+
+export default formReducer;

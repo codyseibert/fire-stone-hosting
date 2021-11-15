@@ -1,6 +1,10 @@
-import { Action } from "./configuration.reducer";
+import { IAction } from "./rootReducer";
 
-export default (state = "", action: Action) => {
+export interface ITokenReducer {
+  (state: string | undefined, action: IAction): string;
+}
+
+const tokenReducer: ITokenReducer = (state = "", action: IAction) => {
   switch (action.type) {
     case "SET_TOKEN":
       return action.payload;
@@ -8,3 +12,5 @@ export default (state = "", action: Action) => {
       return state;
   }
 };
+
+export default tokenReducer;

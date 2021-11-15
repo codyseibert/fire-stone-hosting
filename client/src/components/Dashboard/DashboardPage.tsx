@@ -7,7 +7,7 @@ import ServerHealth from "../ServerHealth";
 
 import stopServer from "../../actions/stopServer.action";
 import startServer from "../../actions/startServer.action";
-import getServer from "../../actions/getServer.action";
+import getServerAction from "../../actions/getServerAction";
 import { SideNavigation } from "./SideNavigation";
 import { State } from "../..";
 import { History } from "history";
@@ -135,7 +135,7 @@ const mapStateToProps = (
 const mapDispatchToProps = {
   stopServer,
   startServer,
-  getServer,
+  getServerAction,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

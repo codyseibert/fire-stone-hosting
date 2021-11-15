@@ -4,6 +4,7 @@ import setFormKey from "../actions/setFormKey.action";
 import setPlan from "../actions/setPlan.action";
 import { State } from "..";
 import { History } from "history";
+import { Server } from "../../../api/src/models/Server";
 
 const ConfigureServer = ({
   server,
@@ -11,11 +12,7 @@ const ConfigureServer = ({
   configuration,
 }: {
   history: History;
-  server: {
-    id: string;
-    ip: string;
-    port: number;
-  };
+  server: Server;
   configuration: {
     motd: string;
     maxPlayers: number;
@@ -40,7 +37,7 @@ const ConfigureServer = ({
             <label>Address</label>
             <input
               className="form-control"
-              value={`${server.ip}:${server.port}`}
+              value={`:${server.port}`}
               readOnly={true}
             />
           </div>

@@ -8,12 +8,19 @@ import tokenReducer from "./token.reducer";
 import userReducer from "./user.reducer";
 import logsReducer from "./logs.reducer";
 import serverReducer from "./server.reducer";
+import { History } from "history";
 
-import { connectRouter } from "connected-react-router";
+// import { connectRouter } from "connected-react-router";
+import { State } from "..";
 
-export default (history: History) =>
-  combineReducers({
-    router: connectRouter(history),
+export type IAction = {
+  type: string;
+  payload: any;
+};
+
+const rootReducer = (history: History) =>
+  combineReducers<State, IAction>({
+    // router: connectRouter(history),
     form: formReducer,
     error: errorReducer,
     servers: serversReducer,
@@ -24,3 +31,5 @@ export default (history: History) =>
     user: userReducer,
     logs: logsReducer,
   });
+
+export default rootReducer;

@@ -10,6 +10,7 @@ export type LoginForm = {
 
 export default () =>
   async (dispatch: Dispatch<object>, getState: () => State) => {
+    console.log("login");
     const { form } = getState();
     try {
       const { user, token } = await login(form as LoginForm);

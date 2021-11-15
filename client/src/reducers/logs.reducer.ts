@@ -1,6 +1,10 @@
-import { Action } from "./configuration.reducer";
+import { IAction } from "./rootReducer";
 
-export default (state = "", action: Action) => {
+export interface ILogsReducer {
+  (state: string[] | undefined, action: IAction): string[];
+}
+
+const logsReducer: ILogsReducer = (state = [], action: IAction) => {
   switch (action.type) {
     case "SET_LOGS":
       return action.payload;
@@ -8,3 +12,5 @@ export default (state = "", action: Action) => {
       return state;
   }
 };
+
+export default logsReducer;
