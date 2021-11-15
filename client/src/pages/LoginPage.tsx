@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { login } from "../features/authentication/authenticationSlice";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import { useNavigate } from "react-router-dom";
 
-const Login = () => {
+const LoginPage = () => {
   const dispatch = useAppDispatch();
   const error = useAppSelector((state) => state.authenticationReducer.error);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
@@ -44,8 +46,8 @@ const Login = () => {
             </div>
           )}
 
-          <div className="form-group">
-            <label>Email</label>
+          <div className="mb-2">
+            <label className="form-label">Email</label>
             <input
               type="email"
               className="form-control"
@@ -59,8 +61,8 @@ const Login = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label>Password</label>
+          <div className="mb-3">
+            <label className="form-label">Password</label>
             <input
               type="password"
               className="form-control"
@@ -78,7 +80,7 @@ const Login = () => {
             type="button"
             className="btn btn-primary"
             onClick={() => {
-              dispatch(login(form));
+              dispatch(login({ form, navigate }));
             }}
           >
             Login
@@ -102,6 +104,6 @@ const Login = () => {
 //   setPlan: (props: any) => dispatch(setPlan(props)),
 // });
 
-export default Login;
+export default LoginPage;
 
 // export default connect(mapStateToProps, mapDispatchToProps)(Login);

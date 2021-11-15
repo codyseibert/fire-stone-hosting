@@ -1,38 +1,16 @@
 import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import getServersForUser from "../actions/getServersForUser.action";
-import gotoConfigureServer from "../actions/gotoConfigureServer.action";
-import stopServer from "../actions/stopServer.action";
-import startServer from "../actions/startServer.action";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { State } from "..";
-import { History } from "history";
-
+import history from "../history";
 import { Server } from "../../../api/src/models/Server";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import { getServersForUser } from "../features/servers/serversSlice";
 
-const Servers = ({
-  user,
-  getServersForUser,
-  history,
-  servers,
-}: {
-  getServersForUser: Function;
-  history: History;
-  servers: Server[];
-  user: {
-    id: string;
-  };
-}) => {
+const ServersPage = () => {
+  const userId = useAppSelector((state) => state.authenticationReducer.user);
+  const servers = useAppSelector((state) => state.serversReducer.servers);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    getServersForUser({
-      userId: user.id,
-    });
-
-    // setInterval(() => {
-    //   props.getServersForUser({
-    //     userId: props.user.id,
-    //   });
-    // }, 5000);
+    dispatch(getServersForUser(userId));
   }, []);
 
   const renderServerRow = (server: Server) => (
@@ -89,16 +67,4 @@ const Servers = ({
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  servers: state.servers,
-  user: state.user,
-});
-
-const mapDispatchToProps = {
-  stopServer,
-  startServer,
-  getServersForUser,
-  gotoConfigureServer,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Servers);
+export default ServersPage;

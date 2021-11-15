@@ -127,17 +127,6 @@ const getInitialState = (): State => {
   };
 };
 
-/* eslint-disable no-underscore-dangle */
-const composeEnhancer =
-  (window as any)["__REDUX_DEVTOOLS_EXTENSION_COMPOSE__"] || compose;
-
-/* eslint-enable */
-// export const store = createStore<State, IAction, any, any>(
-//   rootReducer(history),
-//   getInitialState(),
-//   composeEnhancer(applyMiddleware(thunk, routerMiddleware(history)))
-// );
-
 history.listen(() => {
   store.dispatch({
     type: "SET_ERROR",
@@ -149,7 +138,7 @@ const render = () => {
   ReactDOM.render(
     <StripeProvider apiKey="pk_test_tbzPQH0dOO05i8FOcf7nveCf00eG0yQADe">
       <Provider store={store}>
-        <App history={history} />
+        <App />
       </Provider>
     </StripeProvider>,
     document.getElementById("root")

@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Route, Switch } from "react-router";
 import { connect } from "react-redux";
-import ConfigureServer from "../ConfigureServer";
-import Logs from "../Logs";
-import ServerHealth from "../ServerHealth";
+import ConfigureServer from "../../components/ConfigureServer";
+import Logs from "../../components/Logs";
+import ServerHealth from "../../components/ServerHealth";
 
 import stopServer from "../../actions/stopServer.action";
 import startServer from "../../actions/startServer.action";
