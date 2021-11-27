@@ -5,4 +5,5 @@ export type Server = {
   userId: string;
   memory: number;
   running: boolean;
+  runBackup: boolean;
 };

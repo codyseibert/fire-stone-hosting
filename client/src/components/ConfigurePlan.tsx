@@ -1,11 +1,31 @@
-import React, { Dispatch } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { connect } from "react-redux";
 import setFormKey from "../actions/setFormKey.action";
 import setPlan from "../actions/setPlan.action";
 import { State } from "..";
+import axios from "axios";
+import getServer from "../http/getServer.http";
+import { useNavigate, useParams } from "react-router-dom";
+import { setServers } from "dns";
+import { Server } from "../../../api/src/models/Server";
 
-const ConfigurePlan = (props: any) => {
+const ConfigurePlan = () => {
+  const [server, setServer] = useState<Server>();
+  const params = useParams();
+  const serverId = params.serverId!;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const init = async () => {
+      const serverFromBackend = await getServer({ serverId });
+      setServer(serverFromBackend);
+    };
+    init();
+  }, []);
+
+  if (!server) return null;
+
   return (
     <div className="container mt-4">
       <div className="row">
@@ -16,9 +36,8 @@ const ConfigurePlan = (props: any) => {
           <div className="shadow-sm p-3 pt-4 bg-info text-white rounded">
             <h6>
               Selected Plan:{" "}
-              <img src={props.plan.imageSrc} style={{ width: "30px" }} />{" "}
-              {props.plan.name}, {props.plan.memory} GB, ${" "}
-              {(props.plan.memory * 3).toFixed(2)} / month
+              {/* <img src={props.plan.imageSrc} style={{ width: "30px" }} />{" "} */}
+              {server.memory} GB, $ {(server.memory * 3).toFixed(2)} / month
             </h6>
           </div>
         </div>
@@ -42,7 +61,7 @@ const ConfigurePlan = (props: any) => {
               <label>Max players</label>
               <input
                 className="form-control"
-                defaultValue={props.configuration.maxPlayers}
+                // defaultValue={props.configuration.maxPlayers}
               />
             </div>
 
@@ -50,12 +69,12 @@ const ConfigurePlan = (props: any) => {
               <label>Message of the day</label>
               <input
                 className="form-control"
-                defaultValue={props.configuration.motd}
+                // defaultValue={props.configuration.motd}
               />
             </div>
             <button
               onClick={() => {
-                props.history.push("/purchase/payment-details");
+                navigate("/purchase/payment-details");
               }}
               type="submit"
               className="btn btn-primary"
@@ -69,16 +88,4 @@ const ConfigurePlan = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  form: state.form,
-  error: state.error,
-  plan: state.plan,
-  configuration: state.configuration,
-});
-
-const mapDispatchToProps = {
-  setFormKey,
-  setPlan,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigurePlan);
+export default ConfigurePlan;

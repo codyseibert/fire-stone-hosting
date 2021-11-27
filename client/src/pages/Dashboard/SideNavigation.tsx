@@ -1,19 +1,16 @@
 import React from "react";
 import { History } from "history";
+import { useNavigate } from "react-router-dom";
 
-export const SideNavigation = ({
-  history,
-  serverId,
-}: {
-  history: History;
-  serverId: string;
-}) => {
+export const SideNavigation = ({ serverId }: { serverId: string }) => {
+  const navigate = useNavigate();
+
   return (
     <>
       <a
         onClick={(e) => {
           e.preventDefault();
-          history.push(`/dashboard/${serverId}/configure`);
+          navigate(`/dashboard/${serverId}/configure`);
         }}
         href=""
       >
@@ -23,7 +20,7 @@ export const SideNavigation = ({
       <a
         onClick={(e) => {
           e.preventDefault();
-          history.push(`/dashboard/${serverId}/health`);
+          navigate(`/dashboard/${serverId}/health`);
         }}
         href=""
       >
@@ -33,7 +30,7 @@ export const SideNavigation = ({
       <a
         onClick={(e) => {
           e.preventDefault();
-          history.push(`/dashboard/${serverId}/logs`);
+          navigate(`/dashboard/${serverId}/logs`);
         }}
         href=""
       >
@@ -43,7 +40,7 @@ export const SideNavigation = ({
       {/* <a
         onClick={e => {
           e.preventDefault();
-          history.push(`/dashboard/${serverId}/backups`);
+          navigate(`/dashboard/${serverId}/backups`);
         }}
         href=""
       >
@@ -53,7 +50,7 @@ export const SideNavigation = ({
       <a
         onClick={e => {
           e.preventDefault();
-          history.push(`/dashboard/${serverId}/backups`);
+          navigate(`/dashboard/${serverId}/backups`);
         }}
         href=""
       >
@@ -63,7 +60,7 @@ export const SideNavigation = ({
       <a
         onClick={e => {
           e.preventDefault();
-          history.push(`/dashboard/${serverId}/backups`);
+          navigate(`/dashboard/${serverId}/backups`);
         }}
         href=""
       >
@@ -73,7 +70,7 @@ export const SideNavigation = ({
       <a
         onClick={e => {
           e.preventDefault();
-          history.push(`/dashboard/${serverId}/backups`);
+          navigate(`/dashboard/${serverId}/backups`);
         }}
         href=""
       >
@@ -83,7 +80,7 @@ export const SideNavigation = ({
       <a
         onClick={e => {
           e.preventDefault();
-          history.push(`/dashboard/${serverId}/backups`);
+          navigate(`/dashboard/${serverId}/backups`);
         }}
         href=""
       >

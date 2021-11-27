@@ -1,18 +1,30 @@
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { connect } from "react-redux";
-import purchaseServer from "../actions/purchaseServer.action";
-import { State } from "..";
+import { useEffect, useState } from "react";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { plans } from "../data/plans";
+import { useAppSelector } from "../hooks";
+import purchaseServerHttp from "../http/purchaseServer.http";
 
-const PaymentDetails = ({
-  plan,
-  error,
-  purchaseServer,
-}: {
-  error: string;
-  plan: { name: string; memory: number; imageSrc: string };
-  purchaseServer: Function;
-}) => {
+const PaymentDetails = () => {
+  const params = useParams();
+  const [plan, setPlan] = useState<any>({});
+  const planId: string = params.planId!;
+  const token: string = useAppSelector(
+    (state) => state.authenticationReducer.token
+  )!;
+  const navigate = useNavigate();
+  const error = null;
+
+  useEffect(() => {
+    setPlan(plans.find((p) => p.plan === params.planId));
+    // axios.get("");
+  }, []);
+
+  const purchaseServer = async () => {
+    await purchaseServerHttp(planId, token);
+    navigate("/dashboard");
+  };
+
   return (
     <div className="container mt-4">
       <div className="row">
@@ -64,15 +76,4 @@ const PaymentDetails = ({
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  form: state.form,
-  error: state.error,
-  plan: state.plan,
-  configuration: state.configuration,
-});
-
-const mapDispatchToProps = {
-  purchaseServer,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PaymentDetails);
+export default PaymentDetails;

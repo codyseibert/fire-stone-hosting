@@ -8,10 +8,8 @@
     "sourceMap": true,
     "outDir": "dist",
     "baseUrl": ".",
-    "paths": {
-      "*": ["node_modules/*"]
-    }
+    "typeRoots": ["@types", "./node_modules/@types"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "@types/express/custom.d.ts"],
   "exclude": ["node_modules"]
 }

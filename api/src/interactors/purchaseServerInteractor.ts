@@ -7,6 +7,8 @@ import { Server } from '../models/Server';
 import { ApplicationContext } from '../createApplicationContext';
 import { User } from '../persistence/sqlite/createUserPersistence';
 import { getServersOnNodePersistence } from '../persistence/sqlite/getServersOnNodePersistence';
+import { getNodesPersistence } from '../persistence/sqlite/getNodesPersistence';
+import { plans } from '../data/plans';
 
 type purchaseServerInteractorOptions = {
   user: User;
@@ -16,24 +18,11 @@ type purchaseServerInteractorOptions = {
   applicationContext: ApplicationContext;
 };
 
-// const costPerGB = 3;
-
 export const purchaseServerInteractor = async ({
-  applicationContext,
   user,
   plan,
+  applicationContext,
 }: purchaseServerInteractorOptions) => {
-  const planMemory: {
-    [key: string]: number;
-  } = {
-    plan_FM8EuuGF3C3pn3: 0.5 * 1024 * 1024 * 1024,
-    plan_FM8E73TqKTZIWV: 1 * 1024 * 1024 * 1024,
-    plan_FM8EHhCrxNZGhd: 2 * 1024 * 1024 * 1024,
-    plan_FM8EvzJrRIYn5R: 4 * 1024 * 1024 * 1024,
-    plan_FM8ExZxKgKh22g: 6 * 1024 * 1024 * 1024,
-    plan_FM8En4JVkWZ43y: 8 * 1024 * 1024 * 1024,
-  };
-
   // await stripe.subscriptions.create({
   //   customer: user.id,
   //   items: [
@@ -44,11 +33,11 @@ export const purchaseServerInteractor = async ({
   //   ],
   // });
 
-  const nodes = await applicationContext.persistence.getNodes({
+  const nodes = await getNodesPersistence({
     applicationContext,
   });
 
-  const memory = planMemory[plan.plan];
+  const memory = plans.find(p => p.plan === plan.plan).memory * 1024;
   const desiredNode = nodes.find(node => true || node.freeMemory > memory); // TODO: remove true
 
   if (!desiredNode) {
@@ -79,7 +68,9 @@ export const purchaseServerInteractor = async ({
     memory,
     userId: user.id,
     running: true,
+    runBackup: false,
   };
+  console.log('creating server', server);
 
   await createServerPersistence({
     applicationContext,

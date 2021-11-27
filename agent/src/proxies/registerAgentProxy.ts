@@ -1,16 +1,16 @@
 import request from 'request-promise-native';
+import { Specs } from 'src/getSystemSpecs';
 
-type registerAgentOptions = {
-  nodeId: string,
-  ip: string,
-  totalMemory: string,
-  freeMemory: string,
-}
+// type registerAgentOptions = {
+//   nodeId: string;
+//   ip: string;
+//   totalMemory: string;
+//   freeMemory: string;
+// };
 
 interface registerAgentInterface {
-  (opts: registerAgentOptions): Promise<any>
+  (opts: Specs): Promise<any>;
 }
-
 
 export const registerAgentProxy: registerAgentInterface = async ({
   nodeId,

@@ -1,24 +1,15 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { connect } from "react-redux";
-import setFormKey from "../actions/setFormKey.action";
-import setPlan from "../actions/setPlan.action";
 
-import woodImg from "../images/wood.png";
-import stoneImg from "../images/stone.png";
-import ironImg from "../images/iron.png";
-import goldImg from "../images/gold.png";
-import diamondImg from "../images/diamond.png";
-import netheriteImg from "../images/netherite.png";
-import { State } from "..";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { setPlan } from "../features/plans/planSlice";
+import { useNavigate } from "react-router-dom";
+import { plans } from "../data/plans";
 
-const SelectAPlan = ({
-  setPlan,
-  error,
-}: {
-  setPlan: Function;
-  error: string;
-}) => {
+const SelectAPlan = () => {
+  const error = null;
+  const navigate = useNavigate();
+
   const renderPlanCard = ({
     imageSrc,
     memory,
@@ -47,7 +38,7 @@ const SelectAPlan = ({
             <button
               type="button"
               onClick={() => {
-                setPlan({ imageSrc, memory, name, details, plan });
+                navigate(`/plans/${plan}/purchase`);
               }}
               className="btn btn-outline-primary mt-2 w-100"
             >
@@ -92,75 +83,17 @@ const SelectAPlan = ({
       )}
 
       <div className="row">
-        <div className="col-md-4">
-          {renderPlanCard({
-            imageSrc: woodImg,
-            memory: 0.5,
-            plan: "plan_FM8EuuGF3C3pn3",
-            name: "Wood",
-            details: "unlimitied players",
-          })}
-        </div>
-        <div className="col-md-4">
-          {renderPlanCard({
-            imageSrc: stoneImg,
-            memory: 1,
-            plan: "plan_FM8E73TqKTZIWV",
-            name: "Stone",
-            details: "unlimitied players",
-          })}
-        </div>
-        <div className="col-md-4">
-          {renderPlanCard({
-            imageSrc: ironImg,
-            memory: 2,
-            plan: "plan_FM8EHhCrxNZGhd",
-            name: "Iron",
-            details: "unlimitied players",
-          })}
-        </div>
+        <div className="col-md-4">{renderPlanCard(plans[0])}</div>
+        <div className="col-md-4">{renderPlanCard(plans[1])}</div>
+        <div className="col-md-4">{renderPlanCard(plans[2])}</div>
       </div>
       <div className="row">
-        <div className="col-md-4">
-          {renderPlanCard({
-            imageSrc: goldImg,
-            memory: 4,
-            name: "Gold",
-            plan: "plan_FM8EvzJrRIYn5R",
-            details: "unlimitied players",
-          })}
-        </div>
-        <div className="col-md-4">
-          {renderPlanCard({
-            imageSrc: diamondImg,
-            memory: 6,
-            plan: "plan_FM8ExZxKgKh22g",
-            name: "Diamond",
-            details: "unlimitied players",
-          })}
-        </div>
-        <div className="col-md-4">
-          {renderPlanCard({
-            imageSrc: netheriteImg,
-            memory: 8,
-            name: "Netherite",
-            plan: "plan_FM8En4JVkWZ43y",
-            details: "unlimitied players",
-          })}
-        </div>
+        <div className="col-md-4">{renderPlanCard(plans[3])}</div>
+        <div className="col-md-4">{renderPlanCard(plans[4])}</div>
+        <div className="col-md-4">{renderPlanCard(plans[5])}</div>
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  form: state.form,
-  error: state.error,
-});
-
-const mapDispatchToProps = {
-  setFormKey,
-  setPlan,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SelectAPlan);
+export default SelectAPlan;

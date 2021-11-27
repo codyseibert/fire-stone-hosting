@@ -37,7 +37,7 @@ const Navigation = () => {
               )}
 
               <button
-                onClick={() => navigate("/purchase/pick-a-plan")}
+                onClick={() => navigate("/")}
                 type="button"
                 className="btn btn-outline-success me-2"
               >

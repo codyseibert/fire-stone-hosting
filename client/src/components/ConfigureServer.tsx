@@ -1,23 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import setFormKey from "../actions/setFormKey.action";
 import setPlan from "../actions/setPlan.action";
 import { State } from "..";
 import { History } from "history";
 import { Server } from "../../../api/src/models/Server";
+import getServer from "../http/getServer.http";
+import { useNavigate, useParams } from "react-router-dom";
 
-const ConfigureServer = ({
-  server,
-  history,
-  configuration,
-}: {
-  history: History;
-  server: Server;
-  configuration: {
-    motd: string;
-    maxPlayers: number;
-  };
-}) => {
+const ConfigureServer = () => {
+  const params = useParams();
+  const navigate = useNavigate();
+  const serverId = params.serverId!;
+  const [server, setServer] = useState<Server>();
+
+  useEffect(() => {
+    const initialize = async () => {
+      const serverFromApi = await getServer({
+        serverId,
+      });
+      setServer(serverFromApi);
+    };
+
+    initialize();
+
+    // return () => {
+    //   clearInterval(interval);
+    // };
+  }, []);
+
+  if (!server) return null;
+
   return (
     <div className="container">
       <div className="row">
@@ -51,7 +64,7 @@ const ConfigureServer = ({
               <label>Max players</label>
               <input
                 className="form-control"
-                defaultValue={configuration.maxPlayers}
+                // defaultValue={configuration.maxPlayers}
               />
             </div>
 
@@ -59,7 +72,7 @@ const ConfigureServer = ({
               <label>Message of the day</label>
               <input
                 className="form-control"
-                defaultValue={configuration.motd}
+                // defaultValue={configuration.motd}
               />
             </div>
 
@@ -73,7 +86,7 @@ const ConfigureServer = ({
             </div>
             <button
               onClick={() => {
-                history.push("/purchase/payment-details");
+                navigate("/purchase/payment-details");
               }}
               type="submit"
               className="btn btn-primary"
@@ -87,17 +100,4 @@ const ConfigureServer = ({
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  form: state.form,
-  error: state.error,
-  plan: state.plan,
-  server: state.server,
-  configuration: state.configuration,
-});
-
-const mapDispatchToProps = {
-  setFormKey,
-  setPlan,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ConfigureServer);
+export default ConfigureServer;

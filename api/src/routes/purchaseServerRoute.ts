@@ -1,22 +1,25 @@
 import { createApplicationContext } from '../createApplicationContext';
-const jwt = require('jsonwebtoken');
-import { Request, Response } from 'express';
+import { plans } from '../data/plans';
 
-export const purchaseServerRoute = async (req: Request, res: Response) => {
-  const { plan } = req.body;
+import { Request, Response } from 'express';
+import { purchaseServerInteractor } from '../interactors/purchaseServerInteractor';
+export interface IAuthRequest extends Request {
+  user: any;
+}
+
+export const purchaseServerRoute = async (req: IAuthRequest, res: Response) => {
+  const { planId } = req.body;
+  const plan = plans.find(p => p.plan === planId);
   const applicationContext = createApplicationContext();
-  const user = jwt.decode(
-    req.headers.authorization.split(' ')[1],
-    process.env.JWT_SECRET || 'testing',
-  );
   try {
-    const ret = await applicationContext.interactors.purchaseServerInteractor({
+    const ret = await purchaseServerInteractor({
       plan,
-      user,
+      user: req.user,
       applicationContext,
     });
     return res.send(ret);
   } catch (err) {
+    console.error(err);
     return res.status(500).send(err.message);
   }
 };

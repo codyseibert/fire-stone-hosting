@@ -57,6 +57,7 @@ const PaymentDetails = ({
 
 const mapStateToProps = (state: State) => ({
   plan: state.plan,
+  error: state.error,
 });
 
 const mapDispatchToProps = () => ({});

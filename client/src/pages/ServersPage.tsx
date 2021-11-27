@@ -1,16 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import history from "../history";
 import { Server } from "../../../api/src/models/Server";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import { getServersForUser } from "../features/servers/serversSlice";
+import getServersForUserHttp from "../http/getServersForUser.http";
+import { useNavigate } from "react-router-dom";
 
 const ServersPage = () => {
-  const userId = useAppSelector((state) => state.authenticationReducer.user);
-  const servers = useAppSelector((state) => state.serversReducer.servers);
-  const dispatch = useAppDispatch();
+  const { id: userId } = useAppSelector(
+    (state) => state.authenticationReducer.user
+  );
+  // const servers = useAppSelector((state) => state.serversReducer.servers);
+  // const dispatch = useAppDispatch();
+  const [servers, setServers] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getServersForUser(userId));
+    const getServers = async () => {
+      const serversForCurrentUser = await getServersForUserHttp({ userId });
+      setServers(serversForCurrentUser);
+    };
+    getServers();
   }, []);
 
   const renderServerRow = (server: Server) => (
@@ -20,15 +30,15 @@ const ServersPage = () => {
       <td>funserver.firestonehosting.com</td>
       <td>
         {server.running ? (
-          <span className="badge badge-success">Online</span>
+          <span className="badge bg-success">Online</span>
         ) : (
-          <span className="badge badge-secondary">Offline</span>
+          <span className="badge bg-secondary">Offline</span>
         )}
       </td>
       <td>12</td>
       <td>
         <button
-          onClick={() => history.push(`dashboard/${server.id}/configure`)}
+          onClick={() => navigate(`/dashboard/${server.id}/configure`)}
           type="button"
           className="btn btn-outline-primary mr-2"
         >

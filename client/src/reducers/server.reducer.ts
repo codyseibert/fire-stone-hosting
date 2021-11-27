@@ -12,6 +12,7 @@ const initialState: Server = {
   userId: "",
   memory: 0,
   port: 10000,
+  runBackup: false,
 };
 
 const serverReducer: IServerReducer = (state = initialState, action) => {

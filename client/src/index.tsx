@@ -107,6 +107,7 @@ const getInitialState = (): State => {
       nodeId: "",
       userId: "",
       memory: 0,
+      runBackup: false,
       port: 10000,
     },
     user: user,
