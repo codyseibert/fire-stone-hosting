@@ -1,58 +1,41 @@
 import { io } from "socket.io-client";
 import { Socket } from "socket.io-client";
-
 import React, { useEffect, useRef, useState } from "react";
-import { connect } from "react-redux";
-import getServersForUser from "../actions/getServersForUser.action";
-import gotoConfigureServer from "../actions/gotoConfigureServer.action";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import setLogs from "../actions/setLogs.action";
-import { State } from "..";
-import { Server } from "../../../api/src/models/Server";
+import { useParams } from "react-router-dom";
 
 let socket: Socket;
 
-const Logs = ({
-  match,
-  setLogs,
-  servers,
-  logs,
-}: {
-  match: {
-    params: {
-      serverId: string;
-    };
-  };
-  servers: Server[];
-  setLogs: Function;
-  logs: string[];
-}) => {
+const Logs = () => {
   const pane = useRef<HTMLDivElement>(null);
   const [command, setCommand] = useState("");
+  const params = useParams();
+  const serverId = params.serverId!;
+  const [logs, setLogs] = useState("");
 
   useEffect(() => {
-    socket = io("http://localhost:5000", {
+    // this agent url / port shouldn't be hard coded and instead configured based on the
+    // where the agent is
+    socket = io("ws://localhost:5000", {
       query: {
-        serverId: match.params.serverId,
+        serverId,
       },
     });
-    let allLogs = "";
+    // let allLogs = "";
 
     socket.on("connect", () => {
-      // console.log("connected", event);
+      console.log("connected to agent");
     });
 
     socket.on("logs", (logs) => {
       setLogs(logs);
-      allLogs = logs;
+      // allLogs = logs;
       if (pane.current) {
         pane.current.scrollTop = pane.current.scrollHeight;
       }
     });
 
     socket.on("line", (line) => {
-      allLogs += line;
-      setLogs(allLogs);
+      setLogs((l) => l + line);
       if (pane.current) {
         pane.current.scrollTop = pane.current.scrollHeight;
       }
@@ -101,16 +84,4 @@ const Logs = ({
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  logs: state.logs,
-  servers: state.servers,
-  user: state.user,
-});
-
-const mapDispatchToProps = {
-  getServersForUser,
-  setLogs,
-  gotoConfigureServer,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Logs);
+export default Logs;

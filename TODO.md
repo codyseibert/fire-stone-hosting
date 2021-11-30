@@ -1,18 +1,12 @@
+- deleting server doesn't remove server from servers directory
 - update all packages
-- convert UI to typescript
-- add proptypes to react components?
-- refactor to typescript
 - remove all this CA crap
-- redux toolkit instead of redux
+- use context instead of redux
 - ability to create an account without buying
 - mock stripe when running locally
 - force new account before purchase a server
-- put backend api routes in a routes file
-- look into why it is only remove servers one at a time when I delete them from the DB
 - stop using sqlite and just use postgres
 - rename node to agent
 - rename server to MinecraftContainer
-- agent should register with master when started
-- maybe use MQ for starting and stopping servers instead of polling?
 - prevent server entry from re-creating if the server is deleted from sql
 - fix web sockets

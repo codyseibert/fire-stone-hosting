@@ -19,12 +19,20 @@ import { stopOrphanedServers } from './stopOrphanedServers';
 import { getServerHealth } from './getServerHealth';
 import dotenv from 'dotenv';
 import { Server } from '../../api/src/models/Server';
+// import cors from 'cors';
 
 dotenv.config();
 
-const app = express();
-const http = httpFn.createServer(app);
-const io = new SocketServer(http);
+// const app = express();
+// app.use(cors());
+
+// const http = httpFn.createServer(app);
+const io = new SocketServer(5000, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+});
 const exec = util.promisify(cp.exec);
 
 const POLL_INTERVAL = 5000;
@@ -48,7 +56,7 @@ io.on('connection', (socket: Socket) => {
   );
 
   socket.on('command', command => {
-    console.log('command', command);
+    console.log('command', command, serverId);
     runCommand({
       serverId,
       command,
@@ -61,9 +69,9 @@ io.on('connection', (socket: Socket) => {
   });
 });
 
-http.listen(5000, () => {
-  console.log('This agent is running and listening on port 5000');
-});
+// http.listen(5000, () => {
+//   console.log('This agent is running and listening on port 5000');
+// });
 
 const nodeId = process.env.NODE_ID;
 

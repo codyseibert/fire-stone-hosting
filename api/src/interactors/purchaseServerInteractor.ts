@@ -70,7 +70,6 @@ export const purchaseServerInteractor = async ({
     running: true,
     runBackup: false,
   };
-  console.log('creating server', server);
 
   await createServerPersistence({
     applicationContext,

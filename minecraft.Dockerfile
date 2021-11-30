@@ -7,4 +7,4 @@ ADD https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497
 # RUN wget -O minecraft.jar https://launcher.mojang.com/v1/objects/a16d67e5807f57fc4e550299cf20226194497dc2/server.jar
 RUN echo "eula=true" > eula.txt
 WORKDIR /minecraft
-CMD ["sh", "-c", "cp -R /minecraft-tmp/* . && java -jar minecraft.jar nogui"]
+CMD ["sh", "-c", "cp -R /minecraft-tmp/* . && java $JAVA_OPTS -jar minecraft.jar nogui"]

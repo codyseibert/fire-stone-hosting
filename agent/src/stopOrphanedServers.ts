@@ -3,23 +3,30 @@ import * as util from 'util';
 import * as cp from 'child_process';
 const exec = util.promisify(cp.exec);
 
-const {getRunningContainers} = require('./getRunningContainers');
+const { getRunningContainers } = require('./getRunningContainers');
 
 type stopOrphanedServersOptions = {
-  expectedServerIds: string[],
-}
+  expectedServerIds: string[];
+};
 
 interface stopOrphanedServersInterface {
-  (opts: stopOrphanedServersOptions): Promise<any>
+  (opts: stopOrphanedServersOptions): Promise<any>;
 }
 
-export const stopOrphanedServers: stopOrphanedServersInterface = async ({ expectedServerIds }) => {
+export const stopOrphanedServers: stopOrphanedServersInterface = async ({
+  expectedServerIds,
+}) => {
   const runningServerIds = await getRunningContainers();
-
+  const promises = [];
   for (const runningId of runningServerIds) {
     if (!expectedServerIds.find(expectedId => expectedId === runningId)) {
       // eslint-disable-next-line no-await-in-loop
-      exec(`docker stop ${runningId}`);
+      promises.push(
+        exec(`docker stop ${runningId}`).then(() =>
+          exec(`rm -rf ../servers/${runningId}`),
+        ),
+      );
     }
   }
+  await Promise.all(promises);
 };

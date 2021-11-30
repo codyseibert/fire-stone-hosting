@@ -41,9 +41,6 @@ export const startServer: startServerInterface = async ({
     );
   }
 
-  // eslint-disable-next-line no-param-reassign
-  // memory = 1024; // TODO: remove this
-  const containerMemory = memory + 128;
   const subprocess = spawn(
     'screen',
     [
@@ -58,7 +55,11 @@ export const startServer: startServerInterface = async ({
       '-i',
       `--name ${serverId}`,
       `-m ${memory}m`,
-      `-e JAVA_OPTS:"-Xms${memory}M -Xmx${memory}M"`,
+      `-e JAVA_OPTS="-Xmn${Math.ceil(
+        memory / 4,
+      )}M -Xms${memory}M -Xmx${memory}M -XX:SoftMaxHeapSize=${Math.ceil(
+        memory / 2,
+      )}M"`,
       `-p ${port}:25565`,
       `-v $(pwd)/../servers/${serverId}:/minecraft`,
       'minecraft',

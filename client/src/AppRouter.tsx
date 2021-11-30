@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import PurchaseConfirm from "./components/PurchaseConfirm";
 import { Routes, Route, Link } from "react-router-dom";
 import ConfigureServer from "./components/ConfigureServer";
+import Logs from "./pages/Dashboard/Logs";
 
 export const AppRouter = () => {
   return (
@@ -17,6 +18,7 @@ export const AppRouter = () => {
       <Route path="dashboard" element={<ServersPage />} />
       <Route path="dashboard/:serverId" element={<DashboardPage />}>
         <Route path="configure" element={<ConfigureServer />} />
+        <Route path="logs" element={<Logs />} />
       </Route>
       {/* <Route path="/purchase/select-a-plan" element={<SelectAPlan />} /> */}
       <Route path="purchase/configure" element={<ConfigurePlan />} />
