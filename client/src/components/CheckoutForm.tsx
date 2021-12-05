@@ -1,43 +1,53 @@
-import React, { FormEventHandler } from "react";
-import { connect } from "react-redux";
-import setFormKey from "../actions/setFormKey.action";
-import createAccountAndPurchaseServer from "../actions/createAccountAndPurchaseServer.action";
-import setPlan from "../actions/setPlan.action";
+import React, { useState } from "react";
 import { CardElement } from "react-stripe-elements";
-import { Dispatch } from "redux";
 
-import { injectStripe } from "react-stripe-elements";
-import { State } from "..";
+type CheckoutFormState = {
+  email: string;
+  password: string;
+  passwordConfirm: string;
+  name: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+}
 
-const CheckoutForm = (props: {
-  createAccountAndPurchaseServer: Function;
-  stripe: {
-    createSource: Function;
-  };
-  form: {
-    email: string;
-    password: string;
-    passwordConfirm: string;
-    name: string;
-    phone: string;
-    address: string;
-    city: string;
-    state: string;
-  };
-  setFormKey: Function;
-}) => {
+const CheckoutForm = () => {
+  const [form, setForm] = useState<CheckoutFormState>({
+    email: '',
+    passwordConfirm: '',
+    password: '',
+    name: '',
+    phone: '',
+    address: '',
+    state: '',
+    city: '',
+  });
+
+  const setFormKey = ({key, value}: {key: string, value: any}) => {
+    setForm({
+      ...form,
+      [key]: value,
+    })
+  }
+
+  const createAccountAndPurchaseServer = () => null;
+  const stripe = {createSource: () => {
+    return {source: {}}
+  }}
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const { source } = await props.stripe.createSource({
-      type: "card",
-      owner: {
-        name: "Bob Sagot",
-      },
-    });
+    // const { source } = await stripe.createSource({
+    //   type: "card",
+    //   owner: {
+    //     name: "Bob Sagot",
+    //   },
+    // });
 
-    props.createAccountAndPurchaseServer({
-      source: source.id,
-    });
+    // createAccountAndPurchaseServer({
+    //   source: source.id,
+    // });
   };
 
   return (
@@ -49,9 +59,9 @@ const CheckoutForm = (props: {
             <input
               type="email"
               className="form-control"
-              defaultValue={props.form.email}
+              defaultValue={form.email}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "email",
                   value: e.currentTarget.value,
                 });
@@ -68,9 +78,9 @@ const CheckoutForm = (props: {
             <input
               type="password"
               className="form-control"
-              defaultValue={props.form.password}
+              defaultValue={form.password}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "password",
                   value: e.currentTarget.value,
                 });
@@ -83,9 +93,9 @@ const CheckoutForm = (props: {
             <input
               type="password"
               className="form-control"
-              defaultValue={props.form.passwordConfirm}
+              defaultValue={form.passwordConfirm}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "passwordConfirm",
                   value: e.currentTarget.value,
                 });
@@ -104,9 +114,9 @@ const CheckoutForm = (props: {
             <input
               type="name"
               className="form-control"
-              defaultValue={props.form.name}
+              defaultValue={form.name}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "name",
                   value: e.currentTarget.value,
                 });
@@ -121,9 +131,9 @@ const CheckoutForm = (props: {
             <input
               type="phone"
               className="form-control"
-              defaultValue={props.form.phone}
+              defaultValue={form.phone}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "phone",
                   value: e.currentTarget.value,
                 });
@@ -140,9 +150,9 @@ const CheckoutForm = (props: {
             <input
               type="address"
               className="form-control"
-              defaultValue={props.form.address}
+              defaultValue={form.address}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "address",
                   value: e.currentTarget.value,
                 });
@@ -158,9 +168,9 @@ const CheckoutForm = (props: {
             <label>City</label>
             <input
               className="form-control"
-              defaultValue={props.form.city}
+              defaultValue={form.city}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "city",
                   value: e.currentTarget.value,
                 });
@@ -174,9 +184,9 @@ const CheckoutForm = (props: {
             <label>State</label>
             <input
               className="form-control"
-              defaultValue={props.form.state}
+              defaultValue={form.state}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "state",
                   value: e.currentTarget.value,
                 });
@@ -190,9 +200,9 @@ const CheckoutForm = (props: {
             <label>City</label>
             <input
               className="form-control"
-              defaultValue={props.form.city}
+              defaultValue={form.city}
               onChange={(e) => {
-                props.setFormKey({
+                setFormKey({
                   key: "city",
                   value: e.currentTarget.value,
                 });
@@ -218,22 +228,4 @@ const CheckoutForm = (props: {
   );
 };
 
-const mapStateToProps = (state: State) => ({
-  form: state.form,
-  error: state.error,
-  plan: state.plan,
-  user: state.user,
-  configuration: state.configuration,
-});
-
-const mapDispatchToProps = {
-  setFormKey,
-  createAccountAndPurchaseServer,
-  setPlan,
-};
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-  // )(injectStripe(CheckoutForm));
-)(CheckoutForm);
+export default CheckoutForm;

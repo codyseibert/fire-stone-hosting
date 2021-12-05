@@ -1,8 +1,5 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { setPlan } from "../features/plans/planSlice";
 import { useNavigate } from "react-router-dom";
 import { plans } from "../data/plans";
 
@@ -14,13 +11,11 @@ const SelectAPlan = () => {
     imageSrc,
     memory,
     name,
-    details,
     plan,
   }: {
     imageSrc: string;
     memory: number;
     name: string;
-    details: any;
     plan: any;
   }) => {
     return (
@@ -32,7 +27,6 @@ const SelectAPlan = () => {
           <div className="col-md-8">
             <h3>{name}</h3>
             <h5>{memory} GB</h5>
-            <h5>{details}</h5>
             <h5>$ {(memory * 3).toFixed(2)} / month</h5>
 
             <button
