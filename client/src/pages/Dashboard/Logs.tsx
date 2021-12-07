@@ -1,32 +1,32 @@
-import { io } from "socket.io-client";
-import { Socket } from "socket.io-client";
-import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { io } from 'socket.io-client';
+import { Socket } from 'socket.io-client';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 let socket: Socket;
 
 const Logs = () => {
   const pane = useRef<HTMLDivElement>(null);
-  const [command, setCommand] = useState("");
+  const [command, setCommand] = useState('');
   const params = useParams();
   const serverId = params.serverId!;
-  const [logs, setLogs] = useState("");
+  const [logs, setLogs] = useState('');
 
   useEffect(() => {
     // this agent url / port shouldn't be hard coded and instead configured based on the
     // where the agent is
-    socket = io("ws://localhost:5000", {
+    socket = io('ws://localhost:5000', {
       query: {
         serverId,
       },
     });
     // let allLogs = "";
 
-    socket.on("connect", () => {
-      console.log("connected to agent");
+    socket.on('connect', () => {
+      console.log('connected to agent');
     });
 
-    socket.on("logs", (logs) => {
+    socket.on('logs', (logs) => {
       setLogs(logs);
       // allLogs = logs;
       if (pane.current) {
@@ -34,7 +34,7 @@ const Logs = () => {
       }
     });
 
-    socket.on("line", (line) => {
+    socket.on('line', (line) => {
       setLogs((l) => l + line);
       if (pane.current) {
         pane.current.scrollTop = pane.current.scrollHeight;
@@ -47,23 +47,23 @@ const Logs = () => {
   }, []);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      socket.emit("command", command);
-      setCommand("");
+    if (e.key === 'Enter') {
+      socket.emit('command', command);
+      setCommand('');
     }
   };
 
   return (
-    <div className="container">
+    <>
       <div className="row">
         <div className="col-md-12">
           <span
             ref={pane}
             style={{
-              height: "300px",
-              overflowY: "scroll",
-              whiteSpace: "pre-line",
-              display: "inline-block",
+              height: '300px',
+              overflowY: 'scroll',
+              whiteSpace: 'pre-line',
+              display: 'inline-block',
             }}
           >
             {logs}
@@ -80,7 +80,7 @@ const Logs = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

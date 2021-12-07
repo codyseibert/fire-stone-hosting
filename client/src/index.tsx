@@ -1,11 +1,11 @@
-import "bootstrap/dist/css/bootstrap.css";
-import "./index.css";
+import 'bootstrap/dist/css/bootstrap.css';
+import './index.css';
 
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import { StripeProvider } from "react-stripe-elements";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import { StripeProvider } from 'react-stripe-elements';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faIgloo,
   faSync,
@@ -17,6 +17,7 @@ import {
   faChartBar,
   faUsers,
   faSignOutAlt,
+  faPowerOff,
   faSearch,
   faTape,
   faTimes,
@@ -30,19 +31,29 @@ import {
   faUpload,
   faTerminal,
   faExclamationCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { faHeart as farHeartFar } from "@fortawesome/free-regular-svg-icons";
+  faShippingFast,
+  faDatabase,
+  faShieldAlt,
+  faFolderOpen,
+  faPlug,
+  faNetworkWired,
+  faGlobe,
+  faChartLine,
+} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeartFar } from '@fortawesome/free-regular-svg-icons';
 
 library.add(
   faIgloo,
   faSync,
   faExclamationCircle,
   faTape,
+  faPowerOff,
   faChartBar,
   faCaretLeft,
   faInfoCircle,
   faArrowCircleLeft,
   faSpinner,
+  faShippingFast,
   faPaperPlane,
   faCheck,
   faArchive,
@@ -53,7 +64,16 @@ library.add(
   faTh,
   faHeart,
   faRoute,
+  faShippingFast,
   faUsers,
+  faDatabase,
+  faShieldAlt,
+  faFolderOpen,
+  faChartLine,
+  faTerminal,
+  faPlug,
+  faNetworkWired,
+  faGlobe,
   faCogs,
   faSignOutAlt,
   faSearch,
@@ -65,7 +85,7 @@ const render = () => {
     <StripeProvider apiKey="pk_test_tbzPQH0dOO05i8FOcf7nveCf00eG0yQADe">
       <App />
     </StripeProvider>,
-    document.getElementById("root")
+    document.getElementById('root')
   );
 };
 

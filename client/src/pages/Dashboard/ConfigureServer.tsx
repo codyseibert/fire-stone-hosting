@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import getServer from "../http/getServer.http";
-import { useNavigate, useParams } from "react-router-dom";
-import { Server } from "../../../api/src/models/Server";
+import React, { useEffect, useState } from 'react';
+import getServer from '../../http/getServer.http';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Server } from '../../../../api/src/models/Server';
 
 const ConfigureServer = () => {
   const params = useParams();
@@ -18,16 +18,18 @@ const ConfigureServer = () => {
     };
 
     initialize();
-
-    // return () => {
-    //   clearInterval(interval);
-    // };
   }, []);
 
   if (!server) return null;
 
   return (
-    <div className="container">
+    <>
+      <div className="row">
+        <div className="col">
+          <h4>Server Configuration</h4>
+        </div>
+      </div>
+
       <div className="row">
         <div className="col-md-6">
           <div className="form-group">
@@ -81,7 +83,7 @@ const ConfigureServer = () => {
             </div>
             <button
               onClick={() => {
-                navigate("/purchase/payment-details");
+                navigate('/purchase/payment-details');
               }}
               type="submit"
               className="btn btn-primary"
@@ -91,7 +93,7 @@ const ConfigureServer = () => {
           </form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

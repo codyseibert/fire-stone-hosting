@@ -6,6 +6,10 @@ html,
   font-family: 'Open Sans', sans-serif;
 }
 
+.header-offset {
+  margin-top: 54px;
+}
+
 h1,
 h2,
 h3,

@@ -1,14 +1,17 @@
 import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { createAccountAndPurchaseServerInteractor } from '../interactors/createAccountAndPurchaseServerInteractor';
 
 export const createAccountAndPurchaseServerRoute = async (req: Request, res: Response) => {
-  const { plan, user, source } = req.body;
+  const { email, password, passwordConfirm, planId, source } = req.body;
   const applicationContext = createApplicationContext();
   try {
-    const ret = await applicationContext.interactors.createAccountAndPurchaseServerInteractor(
+    const ret = await createAccountAndPurchaseServerInteractor(
       {
-        plan,
-        user,
+        planId,
+        password,
+        passwordConfirm,
+        email,
         source,
         applicationContext,
       },

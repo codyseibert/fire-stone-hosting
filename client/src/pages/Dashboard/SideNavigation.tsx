@@ -1,22 +1,51 @@
-import React from "react";
-import { History } from "history";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export const SideNavigation = ({ serverId }: { serverId: string }) => {
+import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+const NavigationLink = styled.a`
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  text-decoration: none;
+
+  :hover {
+    color: red;
+  }
+`;
+
+export const SideNavigation = ({
+  serverId,
+}: {
+  serverId: string;
+}) => {
   const navigate = useNavigate();
 
   return (
     <>
-      <a
+      <NavigationLink
+        onClick={(e) => {
+          e.preventDefault();
+          navigate(`/dashboard/${serverId}/overview`);
+        }}
+        href=""
+      >
+        <FontAwesomeIcon icon="power-off" />
+        <span className="ps-2">overview</span>
+      </NavigationLink>
+      <NavigationLink
         onClick={(e) => {
           e.preventDefault();
           navigate(`/dashboard/${serverId}/configure`);
         }}
         href=""
       >
-        Configure
-      </a>
-      <br />
+        <FontAwesomeIcon icon="cogs" />
+        <span className="ps-2">configure</span>
+      </NavigationLink>
+      {/* <br />
       <a
         onClick={(e) => {
           e.preventDefault();
@@ -25,18 +54,17 @@ export const SideNavigation = ({ serverId }: { serverId: string }) => {
         href=""
       >
         Health
-      </a>
-      <br />
-      <a
+      </a> */}
+      <NavigationLink
         onClick={(e) => {
           e.preventDefault();
           navigate(`/dashboard/${serverId}/logs`);
         }}
         href=""
       >
-        Terminal
-      </a>
-      <br />
+        <FontAwesomeIcon icon="terminal" />
+        <span className="ps-2">terminal</span>
+      </NavigationLink>
       {/* <a
         onClick={e => {
           e.preventDefault();

@@ -1,5 +1,5 @@
-import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const CreateAccount = () => {
   return null;
@@ -97,6 +97,5 @@ const CreateAccount = () => {
   //   </div>
   // );
 };
-
 
 export default CreateAccount;

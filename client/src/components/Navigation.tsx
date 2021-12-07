@@ -1,14 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthenticationContext } from '../context/AuthenticationContext';
 
 const Navigation = () => {
-  // const token = useAppSelector((state) => state.authenticationReducer.token);
-  const token = false;
+  const { authentication, setAuthentication } = useContext(
+    AuthenticationContext
+  )!;
+
+  const token = authentication?.token;
   const navigate = useNavigate();
+
+  const logout = () => {
+    setAuthentication(undefined);
+    navigate('/');
+  };
 
   return (
     <nav
-      style={{ zIndex: 1000 }}
+      style={{
+        zIndex: 1000,
+        top: 0,
+      }}
       className="position-fixed w-100 bg-light pt-2 pb-2"
     >
       <div className="container">
@@ -17,7 +29,9 @@ const Navigation = () => {
             <div className="d-flex">
               <span
                 className="me-auto"
-                // onClick={() => navigate(token ? "/dashboard" : "/")}
+                onClick={() =>
+                  navigate(token ? '/dashboard' : '/')
+                }
               >
                 FireStoneHosting
               </span>
@@ -32,17 +46,19 @@ const Navigation = () => {
                 </button>
               )}
 
-              <button
-                onClick={() => navigate('/')}
-                type="button"
-                className="btn btn-outline-success me-2"
-              >
-                Rent a Server
-              </button>
+              {token && (
+                <button
+                  onClick={() => navigate('/')}
+                  type="button"
+                  className="btn btn-outline-success me-2"
+                >
+                  Rent Another Server
+                </button>
+              )}
 
               {token && (
                 <button
-                  // onClick={() => dispatch(logout(navigate))}
+                  onClick={() => logout()}
                   type="button"
                   className="btn btn-outline-danger me-2"
                 >

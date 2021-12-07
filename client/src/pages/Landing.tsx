@@ -2,6 +2,8 @@ import React from 'react';
 import worldImg from '../images/world.jpg';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 
 const HeroBanner = styled.div`
   color: white;
@@ -10,17 +12,7 @@ const HeroBanner = styled.div`
 `;
 
 const Glass = styled.div`
-  position: relative;
-  background: rgba(171, 210, 255, 0.322);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: #f8f9fa;
-  color: black;
-  padding: 20px;
-  margin-top: 140px;
+  margin-top: 160px;
 `;
 
 const SpecialOffer = styled.h4`
@@ -29,6 +21,19 @@ const SpecialOffer = styled.h4`
 
 const PrimaryButton = styled.div`
   background: rgba(171, 210, 255);
+`;
+
+const Footer = styled.footer`
+  background: rgba(171, 210, 255);
+  padding-top: 40px;
+  padding-bottom: 40px;
+`;
+
+const List = styled.ul`
+  list-style: none;
+  padding-left: 0px;
+  line-height: 32px;
+  font-size: 14px;
 `;
 
 const Landing = () => {
@@ -41,21 +46,21 @@ const Landing = () => {
           <div className="row">
             <div className="col-md-6">
               <Glass>
-                <h1>Quality Minecraft Hosting</h1>
-                <SpecialOffer>
+                <h1>Performant Minecraft Hosting</h1>
+                {/* <SpecialOffer>
                   SPECIAL OFFER! 50% off the first month!
-                </SpecialOffer>
+                </SpecialOffer> */}
                 <p>
                   Our servers start at $3.00 / GB, are fully
-                  customizable, contain automatted backups,
-                  easily scale up and down, and your own
+                  customizable, run automated backups,
+                  easily scale up and down, your own
                   subdomain is included, and more...
                 </p>
                 <PrimaryButton
                   className="btn"
                   onClick={() => navigate('/plans')}
                 >
-                  Create Your Server
+                  Rent a Server
                 </PrimaryButton>
               </Glass>
             </div>
@@ -63,131 +68,198 @@ const Landing = () => {
         </div>
       </HeroBanner>
 
-      <div className="container">
+      <div className="container mb-5">
         <h2 className="text-center mt-5 mb-5">
-          Our Features
+          All Our Servers Include...
         </h2>
-        <div className="row mb-4">
-          <div className="col">
-            <h2>INSTANT SETUP</h2>
+        <div className="row mb-5">
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="shipping-fast"
+            />
+            <h2>Speedy Setup</h2>
             <p>
-              After purchasing your server, you will be able
-              to connect in minutes after the server full
-              initializes your new world.
+              Your server will be fully operational within
+              minutes after your initial purchase.
             </p>
           </div>
-          <div className="col">
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="database"
+            />
             <h2>Automated Backups</h2>
             <p>
-              What happens if your server dies after you
-              have spent many hours modding it and then
-              playing Minecraft? Do you have to start all
-              over from scratch? Of course not, we take
-              regular offsite backups of every Minecraft
-              server. We can restore your server from these
-              backups if you need us to.
+              We automatically backup your server
+              configuration and installed modifications to
+              allow easy restoration in the future if
+              needed.
             </p>
           </div>
 
-          <div className="col">
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="shield-alt"
+            />
             <h2>DDoS protection</h2>
             <p>
-              We understand that you expect your Minecraft
-              server to be available to play all the time.
-              We proactively monitor for DDoS attacks, even
-              the smallest attacks, and then we
-              automatically take steps to mitigate the
-              attack. This means your server will not be
-              forced offline by somebody who is randomly
-              sending out DDoS attacks to public-facing
-              servers.
+              Our services will mitigate DDoS attacks to
+              help your server stay operational if someone
+              wants to try taking down your server.
             </p>
           </div>
         </div>
 
-        <div className="row mb-4">
-          <div className="col">
+        <div className="row mb-5">
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="folder-open"
+            />
             <h2>Full Access to Files</h2>
             <p>
-              All of our servers run Ubuntu 18.04, one of
-              the most robust and stable Linux
-              distributions. You are provided wit full
-              access to the server, enabling to administer
-              your server via our control panel, and to
-              access other services such as MySQL and
-              connect via FTP to transfer files.
+              Easily upload, download, and modify your
+              server files via FTP. You can also do it from
+              our website if installing a FTP client is not
+              your cup of tea.
             </p>
           </div>
-          <div className="col">
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="plug"
+            />
             <h2>Mod & Plugin support</h2>
             <p>
-              You can play using any possible plugin that is
-              available using Paper, Sponge, Spigot and
-              Bukkit. You can use the forge to create your
-              own modpacks, combining your favourite mods.
-              You can also install one of the many popular
-              modpacks we have available such as SkyFactory,
-              FTB Infinity, StoneBlock and many others.
+              We provide support for most major mod systems
+              including Paper, Sponge, Spigot and Bukkit.
+              Upload any custom modpacks, or use our web
+              interface to easily install modpacks on the
+              fly.
             </p>
           </div>
 
-          <div className="col">
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="network-wired"
+            />
             <h2>Ultra-Low Latency</h2>
             <p>
-              Ask any online gamer what’s is most important
-              when it comes to online gameplay, and they
-              will say its all about the ping. The better
-              your latency the faster your access to the
-              server, and the more responsive gameplay will
-              be. We provide a number of locations around
-              the globe, so you can choose the server
-              location closest to you, to keep your ping
-              times as low as possible.
+              Low ping means fun times. We provide locations
+              around the globe to provide your players with
+              the lowest possible ping possible.
             </p>
           </div>
         </div>
 
         <div className="row">
-          <div className="col">
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="globe"
+            />
             <h2>Free Subdomain</h2>
             <p>
-              Every server we rent comes with its own free
-              subdomain of yoursubdomain.ourdomain.com. This
-              makes it easier for you and your players to
-              connect to your server. If you have your own
-              top-level domain, or would like to buy a new
-              one from us, then you can use that too.
+              We provide a free subdomain that points to
+              your server so all your friend can easily join
+              in on the fun.
             </p>
           </div>
-          <div className="col">
-            <h2>Automated Backups</h2>
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="chart-line"
+            />
+            <h2>Monitoring</h2>
             <p>
-              What happens if your server dies after you
-              have spent many hours modding it and then
-              playing Minecraft? Do you have to start all
-              over from scratch? Of course not, we take
-              regular offsite backups of every Minecraft
-              server. We can restore your server from these
-              backups if you need us to.
+              We have monitoring setup so you can tell when
+              you server is about to reach it's limits.
+              Beautiful graphs displaying CPU and memory
+              usage help you make educated decisions about
+              memory size. backups if you need us to.
             </p>
           </div>
 
-          <div className="col">
-            <h2>DDoS protection</h2>
+          <div className="col text-center">
+            <FontAwesomeIcon
+              className="mb-4"
+              size="3x"
+              icon="terminal"
+            />
+            <h2>Terminal Access</h2>
             <p>
-              We understand that you expect your Minecraft
-              server to be available to play all the time.
-              We proactively monitor for DDoS attacks, even
-              the smallest attacks, and then we
-              automatically take steps to mitigate the
-              attack. This means your server will not be
-              forced offline by somebody who is randomly
-              sending out DDoS attacks to public-facing
-              servers.
+              Easily view your server logs and run commands
+              directly from our web interface.
             </p>
           </div>
         </div>
       </div>
+
+      <Footer>
+        <div className="container">
+          <div className="row">
+            <div className="col">
+              © 2021 Fire Stone Hosting
+            </div>
+            <div className="col">
+              <h5>Support</h5>
+              <List>
+                <li>
+                  <Link to="contact">Contact Us</Link>
+                </li>
+                <li>
+                  <Link to="tickets">Tickets</Link>
+                </li>
+                <li>
+                  <Link to="dashboard">Dashboard</Link>
+                </li>
+              </List>
+            </div>
+            <div className="col">
+              <h5>Information</h5>
+              <List>
+                <li>
+                  <Link to="faq">FAQ</Link>
+                </li>
+                <li>
+                  <Link to="tutorials">Tutorials</Link>
+                </li>
+                <li>
+                  <Link to="blog">Blog</Link>
+                </li>
+              </List>
+            </div>
+            <div className="col">
+              <h5>About</h5>
+              <List>
+                <li>
+                  <Link to="about">About</Link>
+                </li>
+                <li>
+                  <Link to="tos">Terms of Service</Link>
+                </li>
+                <li>
+                  <Link to="privacy">Privacy Policy</Link>
+                </li>
+                <li>
+                  <Link to="sla">SLA Policy</Link>
+                </li>
+              </List>
+            </div>
+          </div>
+        </div>
+      </Footer>
     </>
   );
 };

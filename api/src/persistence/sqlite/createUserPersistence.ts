@@ -2,7 +2,6 @@ import { ApplicationContext } from "../../createApplicationContext";
 
 export type User = {
   id: string;
-  accountId: String;
   email: String;
   password: String;
 }
@@ -14,10 +13,10 @@ type createUserPersistenceOptions = {
 
 
 export const createUserPersistence = async ({ applicationContext, user }: createUserPersistenceOptions) => {
-  const { accountId, email, password } = user;
+  const { id, email, password } = user;
   const statement = await (await applicationContext.db).prepare(
     'INSERT INTO `users` (`id`, `email`, `password`) VALUES (?, ?, ?)',
   );
-  await statement.run(accountId, email, password);
+  await statement.run(id, email, password);
   await statement.finalize();
 };

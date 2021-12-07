@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { CardElement } from "react-stripe-elements";
+import React, { useContext, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  CardElement,
+  injectStripe,
+} from 'react-stripe-elements';
+import { AuthenticationContext } from '../context/AuthenticationContext';
+import createAccountAndPurchaseServerHttp from '../http/createAccountAndPurchaseServer.http';
+import loginProxy from '../http/login.http';
 
 type CheckoutFormState = {
   email: string;
@@ -10,9 +17,25 @@ type CheckoutFormState = {
   address: string;
   city: string;
   state: string;
-}
+};
 
-const CheckoutForm = () => {
+type CheckoutFormProps = {
+  stripe: {
+    createSource: (opts: any) => { source: { id: string } };
+  } | null;
+  planId: string;
+};
+
+const CheckoutForm = ({
+  stripe,
+  planId,
+}: CheckoutFormProps) => {
+  const navigate = useNavigate();
+
+  const { setAuthentication } = useContext(
+    AuthenticationContext
+  )!;
+
   const [form, setForm] = useState<CheckoutFormState>({
     email: '',
     passwordConfirm: '',
@@ -24,30 +47,42 @@ const CheckoutForm = () => {
     city: '',
   });
 
-  const setFormKey = ({key, value}: {key: string, value: any}) => {
+  const setFormKey = ({
+    key,
+    value,
+  }: {
+    key: string;
+    value: any;
+  }) => {
     setForm({
       ...form,
       [key]: value,
-    })
-  }
-
-  const createAccountAndPurchaseServer = () => null;
-  const stripe = {createSource: () => {
-    return {source: {}}
-  }}
+    });
+  };
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
-    // const { source } = await stripe.createSource({
-    //   type: "card",
-    //   owner: {
-    //     name: "Bob Sagot",
-    //   },
-    // });
-
-    // createAccountAndPurchaseServer({
-    //   source: source.id,
-    // });
+    const { source } = await stripe!.createSource({
+      type: 'card',
+      owner: {
+        name: 'Bob Sagot',
+      },
+    });
+    await createAccountAndPurchaseServerHttp({
+      source: source.id,
+      email: form.email,
+      password: form.password,
+      passwordConfirm: form.passwordConfirm,
+      planId,
+    });
+    const { token, user } = await loginProxy({
+      ...form,
+    });
+    setAuthentication({
+      user,
+      token,
+    });
+    navigate('/dashboard');
   };
 
   return (
@@ -62,7 +97,7 @@ const CheckoutForm = () => {
               defaultValue={form.email}
               onChange={(e) => {
                 setFormKey({
-                  key: "email",
+                  key: 'email',
                   value: e.currentTarget.value,
                 });
               }}
@@ -81,7 +116,7 @@ const CheckoutForm = () => {
               defaultValue={form.password}
               onChange={(e) => {
                 setFormKey({
-                  key: "password",
+                  key: 'password',
                   value: e.currentTarget.value,
                 });
               }}
@@ -96,7 +131,7 @@ const CheckoutForm = () => {
               defaultValue={form.passwordConfirm}
               onChange={(e) => {
                 setFormKey({
-                  key: "passwordConfirm",
+                  key: 'passwordConfirm',
                   value: e.currentTarget.value,
                 });
               }}
@@ -117,7 +152,7 @@ const CheckoutForm = () => {
               defaultValue={form.name}
               onChange={(e) => {
                 setFormKey({
-                  key: "name",
+                  key: 'name',
                   value: e.currentTarget.value,
                 });
               }}
@@ -134,7 +169,7 @@ const CheckoutForm = () => {
               defaultValue={form.phone}
               onChange={(e) => {
                 setFormKey({
-                  key: "phone",
+                  key: 'phone',
                   value: e.currentTarget.value,
                 });
               }}
@@ -153,7 +188,7 @@ const CheckoutForm = () => {
               defaultValue={form.address}
               onChange={(e) => {
                 setFormKey({
-                  key: "address",
+                  key: 'address',
                   value: e.currentTarget.value,
                 });
               }}
@@ -171,7 +206,7 @@ const CheckoutForm = () => {
               defaultValue={form.city}
               onChange={(e) => {
                 setFormKey({
-                  key: "city",
+                  key: 'city',
                   value: e.currentTarget.value,
                 });
               }}
@@ -187,7 +222,7 @@ const CheckoutForm = () => {
               defaultValue={form.state}
               onChange={(e) => {
                 setFormKey({
-                  key: "state",
+                  key: 'state',
                   value: e.currentTarget.value,
                 });
               }}
@@ -203,7 +238,7 @@ const CheckoutForm = () => {
               defaultValue={form.city}
               onChange={(e) => {
                 setFormKey({
-                  key: "city",
+                  key: 'city',
                   value: e.currentTarget.value,
                 });
               }}
@@ -216,16 +251,21 @@ const CheckoutForm = () => {
         <div className="col-md-12">
           <div className="form-group">
             <label>Card Details</label>
-            <CardElement style={{ base: { fontSize: "18px" } }} />
+            <CardElement
+              style={{ base: { fontSize: '18px' } }}
+            />
           </div>
         </div>
       </div>
 
-      <button type="submit" className="btn btn-success mt-4 mb-4">
+      <button
+        type="submit"
+        className="btn btn-success mt-4 mb-4"
+      >
         Purchase Your Server
       </button>
     </form>
   );
 };
 
-export default CheckoutForm;
+export default injectStripe(CheckoutForm);

@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken';
+import { plans } from '../data/plans';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -6,42 +7,41 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ApplicationContext } from "../createApplicationContext";
 import { getServersOnNodePersistence } from '../persistence/sqlite/getServersOnNodePersistence';
+import { createUserPersistence } from '../persistence/sqlite/createUserPersistence';
+import { createServerPersistence } from '../persistence/sqlite/createServerPersistence';
 
-type UserPayload = {
-  id: string;
+type createAccountAndPurchaseServerInteractorOptions = {
   email: string;
   password: string;
   passwordConfirm: string;
-}
-
-type createAccountAndPurchaseServerInteractorOptions = {
-  user: UserPayload;
-  plan: {
-    plan: string;
-  };
+  planId: string;
   source: string;
   applicationContext: ApplicationContext;
 };
 
 
-export const createAccountAndPurchaseServerInteractor = async ({ applicationContext, user, plan, source }: createAccountAndPurchaseServerInteractorOptions) => {
+export const createAccountAndPurchaseServerInteractor = async ({ applicationContext, email, password, passwordConfirm, planId, source }: createAccountAndPurchaseServerInteractorOptions) => {
   let customer;
 
-  if (!user.email) {
+  if (!email) {
     throw new Error('You must provide an email.');
   }
-  if (!user.password) {
+  if (!password) {
     throw new Error('You must provide a password');
   }
-  if (user.password !== user.passwordConfirm) {
+  if (password !== passwordConfirm) {
     throw new Error('Your password must match the verify password.');
   }
 
   const userId = uuidv4();
 
-  user.id = userId;
+  const user = {
+    id: userId,
+    email,
+    password,
+  }
 
-  await applicationContext.persistence.createUser({
+  await createUserPersistence({
     applicationContext,
     user,
   });
@@ -53,16 +53,7 @@ export const createAccountAndPurchaseServerInteractor = async ({ applicationCont
   //   source,
   // });
 
-  const planMemory: {
-    [key: string]: number;
-  } = {
-    plan_FM8EuuGF3C3pn3: 0.5 * 1024 * 1024 * 1024,
-    plan_FM8E73TqKTZIWV: 1 * 1024 * 1024 * 1024,
-    plan_FM8EHhCrxNZGhd: 2 * 1024 * 1024 * 1024,
-    plan_FM8EvzJrRIYn5R: 4 * 1024 * 1024 * 1024,
-    plan_FM8ExZxKgKh22g: 6 * 1024 * 1024 * 1024,
-    plan_FM8En4JVkWZ43y: 8 * 1024 * 1024 * 1024,
-  };
+  const plan = plans.find(p => p.plan === planId)
 
   // await stripe.subscriptions.create({
   //   customer: customer.id,
@@ -78,7 +69,7 @@ export const createAccountAndPurchaseServerInteractor = async ({ applicationCont
     applicationContext,
   });
 
-  const memory = planMemory[plan.plan];
+  const memory = plan.memory;
   const desiredNode = nodes.find(node => true || node.freeMemory > memory); // TODO: remove true
 
   if (!desiredNode) {
@@ -102,12 +93,14 @@ export const createAccountAndPurchaseServerInteractor = async ({ applicationCont
     nodeId: desiredNode.id,
   });
 
-  await applicationContext.persistence.createServer({
+  await createServerPersistence({
     applicationContext,
     server: {
-      serverId: uuidv4(),
+      id: uuidv4(),
       nodeId: desiredNode.id,
       port: freePort,
+      running: true,
+      runBackup: false,
       memory,
       userId,
     },

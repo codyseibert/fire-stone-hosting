@@ -5,7 +5,14 @@ import goldImg from "../images/gold.png";
 import diamondImg from "../images/diamond.png";
 import netheriteImg from "../images/netherite.png";
 
-export const plans = [
+export type Plan = {
+  imageSrc: string;
+  memory: number;
+  plan: string;
+  name: string;
+}
+
+export const plans: Plan[] = [
   {
     imageSrc: woodImg,
     memory: 1,
