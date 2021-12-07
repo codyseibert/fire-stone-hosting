@@ -56,6 +56,12 @@ const Logs = () => {
   return (
     <>
       <div className="row">
+        <div className="col">
+          <h4>Terminal</h4>
+        </div>
+      </div>
+
+      <div className="row">
         <div className="col-md-12">
           <span
             ref={pane}

@@ -15,7 +15,7 @@ const PaymentDetails = () => {
   });
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-4 header-offset">
       <div className="row">
         <div className="col-md-6 mt-2">
           <h1>Payment Details</h1>
