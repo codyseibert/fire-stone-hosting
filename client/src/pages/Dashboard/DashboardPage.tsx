@@ -8,9 +8,9 @@ import { SideNavigation } from './SideNavigation';
 import getServer from '../../http/getServer.http';
 import { useParams } from 'react-router-dom';
 import { Server } from '../../../../api/src/models/Server';
-import deleteServerHttp from '../../http/deleteServer.http';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link } from 'react-router-dom';
+import { ServerContext } from './context/ServerContext';
 
 const DashboardPage = () => {
   const params = useParams();
@@ -37,7 +37,7 @@ const DashboardPage = () => {
   if (!server) return null;
 
   return (
-    <>
+    <ServerContext.Provider value={{ server, setServer }}>
       <div className="container header-offset">
         <div className="row mb-4">
           <div className="col-md-2"></div>
@@ -80,7 +80,7 @@ const DashboardPage = () => {
           </div>
         </div>
       </div>
-    </>
+    </ServerContext.Provider>
   );
 };
 

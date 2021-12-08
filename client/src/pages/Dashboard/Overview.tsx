@@ -11,19 +11,14 @@ import { useParams } from 'react-router-dom';
 import { Server } from '../../../../api/src/models/Server';
 
 import styled from 'styled-components';
-
-const RedBox = styled.div`
-  border: 1px solid red;
-
-  div {
-    border-bottom: 1px solid black;
-  }
-`;
+import stopServerHttp from '../../http/stopServer.http';
+import startServerHttp from '../../http/startServer.http';
+import { ServerContext } from './context/ServerContext';
 
 export const Overview = () => {
   const params = useParams();
   const serverId = params.serverId!;
-  const [server, setServer] = useState<Server>();
+  const { server, setServer } = useContext(ServerContext)!;
   const authentication = useContext(AuthenticationContext)
     ?.authentication!;
   const navigate = useNavigate();
@@ -56,6 +51,28 @@ export const Overview = () => {
   }, []);
 
   if (!server) return null;
+
+  const stopServer = async () => {
+    await stopServerHttp(
+      { serverId },
+      authentication.token
+    );
+    setServer({
+      ...server,
+      running: false,
+    });
+  };
+
+  const startServer = async () => {
+    await startServerHttp(
+      { serverId },
+      authentication.token
+    );
+    setServer({
+      ...server,
+      running: true,
+    });
+  };
 
   return (
     <>
@@ -93,8 +110,9 @@ export const Overview = () => {
           </p>
         </div>
         <div className="col-md-4">
-          {server.running && (
+          {!!server.running && (
             <button
+              onClick={stopServer}
               type="button"
               className="btn btn-outline-danger mr-2"
             >
@@ -103,6 +121,7 @@ export const Overview = () => {
           )}
           {!server.running && (
             <button
+              onClick={startServer}
               type="button"
               className="btn btn-outline-success"
             >
