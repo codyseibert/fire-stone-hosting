@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import SelectAPlan from './components/SelectAPlan';
 // import DashboardPage from "./pages/Dashboard/DashboardPage";
 // import ConfigurePlan from "./components/ConfigurePlan";
@@ -13,11 +13,17 @@ import DashboardPage from './pages/Dashboard/DashboardPage';
 import ConfigureServer from './pages/Dashboard/ConfigureServer';
 import Logs from './pages/Dashboard/Logs';
 import { Overview } from './pages/Dashboard/Overview';
+import { AuthenticationContext } from './context/AuthenticationContext';
 // import PaymentDetails from './components/PurchaseConfirm';
 // import ConfigureServer from "./components/ConfigureServer";
 // import Logs from "./pages/Dashboard/Logs";
+import RentAnotherDetails from './components/RentAnotherDetails';
 
 export const AppRouter = () => {
+  const { authentication } = useContext(
+    AuthenticationContext
+  )!;
+
   return (
     <Routes>
       {/* <Route path="dashboard" element={<ServersPage />} />
@@ -35,7 +41,13 @@ export const AppRouter = () => {
       /> */}
       <Route
         path="plans/:planId/purchase"
-        element={<PaymentDetails />}
+        element={
+          authentication ? (
+            <RentAnotherDetails />
+          ) : (
+            <PaymentDetails />
+          )
+        }
       />
       <Route path="dashboard" element={<ServersPage />} />
       <Route

@@ -14,6 +14,7 @@ import styled from 'styled-components';
 import stopServerHttp from '../../http/stopServer.http';
 import startServerHttp from '../../http/startServer.http';
 import { ServerContext } from './context/ServerContext';
+import restartServerHttp from '../../http/restartServer.http';
 
 export const Overview = () => {
   const params = useParams();
@@ -63,6 +64,17 @@ export const Overview = () => {
     });
   };
 
+  const restartServer = async () => {
+    await restartServerHttp(
+      { serverId },
+      authentication.token
+    );
+    setServer({
+      ...server,
+      restart: true,
+    });
+  };
+
   const startServer = async () => {
     await startServerHttp(
       { serverId },
@@ -93,7 +105,9 @@ export const Overview = () => {
         </div>
         <div className="col-md-4">
           <button
+            onClick={restartServer}
             type="button"
+            disabled={server.restart}
             className="btn btn-outline-danger mr-2"
           >
             Restart

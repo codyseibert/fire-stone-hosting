@@ -37,7 +37,7 @@ export const purchaseServerInteractor = async ({
     applicationContext,
   });
 
-  const memory = plans.find(p => p.plan === plan.plan).memory * 1024;
+  const memory = plans.find(p => p.plan === plan.plan).memory;
   const desiredNode = nodes.find(node => true || node.freeMemory > memory); // TODO: remove true
 
   if (!desiredNode) {
@@ -69,6 +69,7 @@ export const purchaseServerInteractor = async ({
     userId: user.id,
     running: true,
     runBackup: false,
+    restart: false
   };
 
   await createServerPersistence({

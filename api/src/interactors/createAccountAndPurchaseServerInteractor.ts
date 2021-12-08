@@ -101,6 +101,7 @@ export const createAccountAndPurchaseServerInteractor = async ({ applicationCont
       port: freePort,
       running: true,
       runBackup: false,
+      restart: false,
       memory,
       userId,
     },

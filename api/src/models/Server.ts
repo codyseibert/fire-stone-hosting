@@ -6,4 +6,5 @@ export type Server = {
   memory: number;
   running: boolean;
   runBackup: boolean;
+  restart: boolean;
 };

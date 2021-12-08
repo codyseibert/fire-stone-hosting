@@ -48,11 +48,11 @@ const Navigation = () => {
 
               {token && (
                 <button
-                  onClick={() => navigate('/')}
+                  onClick={() => navigate('/plans')}
                   type="button"
                   className="btn btn-outline-success me-2"
                 >
-                  Rent Another Server
+                  Rent Server
                 </button>
               )}
 

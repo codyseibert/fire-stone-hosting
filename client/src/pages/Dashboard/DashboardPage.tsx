@@ -57,7 +57,11 @@ const DashboardPage = () => {
             </nav>
             <h1>
               Fun Server
-              {server.running ? (
+              {!!server.restart ? (
+                <span className="ms-4 badge bg-warning">
+                  Restarting
+                </span>
+              ) : server.running ? (
                 <span className="ms-4 badge bg-success">
                   Online
                 </span>

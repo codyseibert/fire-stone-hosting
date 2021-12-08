@@ -1,18 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Elements } from 'react-stripe-elements';
 import { Plan, plans } from '../data/plans';
 import { useNavigate, useParams } from 'react-router-dom';
-import CheckoutForm from './CheckoutForm';
+import purchaseServerHttp from '../http/purchaseServer.http';
+import { AuthenticationContext } from '../context/AuthenticationContext';
 
 let error = '';
 
-const PaymentDetails = () => {
+const RentAnotherDetails = () => {
   const params = useParams();
   const planId = params.planId!;
   const [plan, setPlan] = useState<Plan>(() => {
     return plans.find((p) => p.plan === planId)!;
   });
+  const navigate = useNavigate();
+
+  const { authentication } = useContext(
+    AuthenticationContext
+  )!;
+
+  const handleSubmit = async () => {
+    await purchaseServerHttp(planId, authentication!.token);
+    navigate('/dashboard');
+  };
 
   return (
     <div className="container header-offset">
@@ -56,11 +66,13 @@ const PaymentDetails = () => {
         </div>
       </div>
 
-      <Elements>
-        <CheckoutForm stripe={null} planId={planId} />
-      </Elements>
+      <div className="row">
+        <div className="col">
+          <button onClick={handleSubmit}>Buy</button>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default PaymentDetails;
+export default RentAnotherDetails;

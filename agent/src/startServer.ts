@@ -34,12 +34,39 @@ export const startServer: startServerInterface = async ({
       });
     });
   } catch (error) {
+    console.log(`${serverId} - making directory`)
     await exec(`mkdir -p ../servers/${serverId}`);
+    console.log(`${serverId} - copying server.properties`)
     await exec(`cp ../server.properties ../servers/${serverId}`);
+    console.log(`${serverId} - building container`)
     await exec(
-      `docker build -t minecraft -f ../minecraft.Dockerfile ../servers/${serverId}`,
+      `docker build -t ${serverId} -f ../minecraft.Dockerfile ../servers/${serverId}`,
     );
   }
+
+  console.log(
+  [
+    'screen',
+    `-S ${serverId}`,
+    '-d',
+    '-m',
+    'docker',
+    'run',
+    '--cpus="1"',
+    '--rm',
+    '-t',
+    '-i',
+    `--name ${serverId}`,
+    `-m ${memory}m`,
+    `-e JAVA_OPTS="-Xmn${Math.ceil(
+      memory / 4,
+    )}M -Xms${memory}M -Xmx${memory}M -XX:SoftMaxHeapSize=${Math.ceil(
+      memory / 2,
+    )}M"`,
+    `-p ${port}:25565`,
+    `-v $(pwd)/../servers/${serverId}:/minecraft`,
+    'minecraft',
+  ].join(' '));
 
   const subprocess = spawn(
     'screen',

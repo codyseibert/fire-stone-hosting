@@ -15,6 +15,8 @@ import { setServerHealthRoute } from './routes/setServerHealthRoute';
 import { isAuthenticated } from './middleware/isAuthenticated';
 import { deleteServerRoute } from './routes/deleteServerRoute';
 import { getPlansRoute } from './routes/getPlansRoute';
+import { restartServerRoute } from './routes/restartServerRoute';
+import { restartServerDoneRoute } from './routes/restartServerRouteDone';
 
 export const setupRoutes = (app: any) => {
   app.get('/nodes', getNodesRoute);
@@ -28,6 +30,8 @@ export const setupRoutes = (app: any) => {
   app.delete('/servers/:serverId', isAuthenticated, deleteServerRoute);
   app.post('/servers/:serverId/stop', stopServerRoute);
   app.post('/servers/:serverId/start', startServerRoute);
+  app.post('/servers/:serverId/restart', restartServerRoute);
+  app.delete('/servers/:serverId/restart', restartServerDoneRoute);
   app.post('/servers/:serverId/health', setServerHealthRoute);
   app.post('/servers/:serverId/run-backup', runBackupRoute);
   app.post('/servers/:serverId/backup-complete', backupCompleteRoute);

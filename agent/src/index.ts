@@ -19,9 +19,14 @@ import { stopOrphanedServers } from './stopOrphanedServers';
 import { getServerHealth } from './getServerHealth';
 import dotenv from 'dotenv';
 import { Server } from '../../api/src/models/Server';
+import { restartServer } from './restartServer';
 // import cors from 'cors';
 
 dotenv.config();
+
+const serverMap: {
+  [key: string]: any
+} = {};
 
 // const app = express();
 // app.use(cors());
@@ -41,32 +46,36 @@ io.on('connection', (socket: Socket) => {
   console.log('user connected');
   const serverId: string = socket.handshake.query.serverId as string;
 
-  const tail = new Tail(`../servers/${serverId}/logs/latest.log`);
+  try {
+    const tail = new Tail(`../servers/${serverId}/logs/latest.log`);
 
-  fs.readFile(
-    `../servers/${serverId}/logs/latest.log`,
-    'utf-8',
-    (err, logs) => {
-      socket.emit('logs', logs);
+    fs.readFile(
+      `../servers/${serverId}/logs/latest.log`,
+      'utf-8',
+      (err, logs) => {
+        socket.emit('logs', logs);
 
-      tail.on('line', line => {
-        socket.emit('line', `${line}\n`);
+        tail.on('line', line => {
+          socket.emit('line', `${line}\n`);
+        });
+      },
+    );
+
+    socket.on('command', command => {
+      console.log('command', command, serverId);
+      runCommand({
+        serverId,
+        command,
       });
-    },
-  );
-
-  socket.on('command', command => {
-    console.log('command', command, serverId);
-    runCommand({
-      serverId,
-      command,
     });
-  });
 
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-    tail.unwatch();
-  });
+    socket.on('disconnect', () => {
+      console.log('user disconnected');
+      tail.unwatch();
+    });
+  } catch (err) {
+    socket.disconnect();
+  }
 });
 
 // http.listen(5000, () => {
@@ -116,6 +125,7 @@ const sendContainerHealth = async () => {
           serverId: server.id,
         }));
       } catch (e) {
+        delete serverMap[server.id]
         console.error(
           'expected container to be running, but it was not (maybe it is about to start?)',
         );
@@ -137,6 +147,7 @@ const sendContainerHealth = async () => {
   }
 };
 
+
 const runAgentLogic = async () => {
   let servers: Server[] = [];
   try {
@@ -154,7 +165,9 @@ const runAgentLogic = async () => {
   const { stdout } = await exec('docker ps');
 
   for (const server of servers) {
-    if (server.running && stdout.indexOf(server.id) === -1) {
+    const serverId: string = server.id;
+    if (server.running && stdout.indexOf(server.id) === -1 && !serverMap[serverId]) {
+      serverMap[serverId] = true;
       console.time(
         `starting server ${server.id}, ${server.memory}M, P ${server.port}`,
       );
@@ -167,12 +180,19 @@ const runAgentLogic = async () => {
           `starting server ${server.id}, ${server.memory}M, P ${server.port}`,
         );
       });
-    } else if (!server.running && stdout.indexOf(server.id) !== -1) {
+    } else if (!server.running && stdout.indexOf(server.id) !== -1 && !serverMap[serverId]) {
+      delete serverMap[serverId];
       console.time(`stopping server ${server.id}`);
       await stopServer({
         serverId: server.id,
       });
       console.timeEnd(`stopping server ${server.id}`);
+    } else if (server.restart && stdout.indexOf(server.id) !== -1) {
+      console.time(`restart server ${server.id}`);
+      await restartServer({
+        serverId: server.id,
+      });
+      console.timeEnd(`restart server ${server.id}`);
     } else if (
       server.running &&
       server.runBackup &&
