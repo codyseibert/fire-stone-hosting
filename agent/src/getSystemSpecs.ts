@@ -33,7 +33,7 @@ interface getSystemSpecsInterface {
 
 export const getSystemSpecs: getSystemSpecsInterface = async () => {
   const ip = await publicIp.v4();
-  const privateIp = results.en0[0];
+  const privateIp = results?.en0[0] || results?.enp10s0[0];
   const totalMemory = os.totalmem();
   const freeMemory = os.freemem();
 
