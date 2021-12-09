@@ -11,11 +11,15 @@ import { Server } from '../../../../api/src/models/Server';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link } from 'react-router-dom';
 import { ServerContext } from './context/ServerContext';
+import { ServerNode } from '../../../../api/src/persistence/sqlite/getNodesPersistence';
+import getNode from '../../http/getNode.http';
+import { NodeContext } from './context/NodeContext';
 
 const DashboardPage = () => {
   const params = useParams();
   const serverId = params.serverId!;
   const [server, setServer] = useState<Server>();
+  const [node, setNode] = useState<ServerNode>();
   const authentication = useContext(AuthenticationContext)
     ?.authentication!;
   const navigate = useNavigate();
@@ -34,56 +38,71 @@ const DashboardPage = () => {
     initialize();
   }, []);
 
+  useEffect(() => {
+    const run = async () => {
+      if (!server) return;
+      const nodeReturned = await getNode({
+        nodeId: server.nodeId,
+      });
+      setNode(nodeReturned);
+    };
+    run();
+  }, [server]);
+
   if (!server) return null;
 
   return (
     <ServerContext.Provider value={{ server, setServer }}>
-      <div className="container header-offset">
-        <div className="row mb-4">
-          <div className="col-md-2"></div>
-          <div className="col-md-10">
-            <nav aria-label="breadcrumb">
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">
-                  <Link to="/dashboard">Your Servers</Link>
-                </li>
-                <li
-                  className="breadcrumb-item active"
-                  aria-current="page"
-                >
-                  funserver.firestonehosting.com
-                </li>
-              </ol>
-            </nav>
-            <h1>
-              Fun Server
-              {!!server.restart ? (
-                <span className="ms-4 badge bg-warning">
-                  Restarting
-                </span>
-              ) : server.running ? (
-                <span className="ms-4 badge bg-success">
-                  Online
-                </span>
-              ) : (
-                <span className="ms-4 badge bg-secondary">
-                  Offline
-                </span>
-              )}
-            </h1>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="col-md-2">
-            <SideNavigation serverId={serverId} />
+      <NodeContext.Provider value={{ node, setNode }}>
+        <div className="container header-offset">
+          <div className="row mb-4">
+            <div className="col-md-2"></div>
+            <div className="col-md-10">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/dashboard">
+                      Your Servers
+                    </Link>
+                  </li>
+                  <li
+                    className="breadcrumb-item active"
+                    aria-current="page"
+                  >
+                    funserver.firestonehosting.com
+                  </li>
+                </ol>
+              </nav>
+              <h1>
+                Fun Server
+                {!!server.restart ? (
+                  <span className="ms-4 badge bg-warning">
+                    Restarting
+                  </span>
+                ) : server.running ? (
+                  <span className="ms-4 badge bg-success">
+                    Online
+                  </span>
+                ) : (
+                  <span className="ms-4 badge bg-secondary">
+                    Offline
+                  </span>
+                )}
+              </h1>
+            </div>
           </div>
 
-          <div className="col-md-10">
-            <Outlet />
+          <div className="row">
+            <div className="col-md-2">
+              <SideNavigation serverId={serverId} />
+            </div>
+
+            <div className="col-md-10">
+              <Outlet />
+            </div>
           </div>
         </div>
-      </div>
+      </NodeContext.Provider>
     </ServerContext.Provider>
   );
 };

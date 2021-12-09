@@ -4,6 +4,7 @@ import { Server as SocketServer, Socket } from 'socket.io';
 
 import util from 'util';
 import { Tail } from 'tail';
+import path from 'path';
 
 import cp from 'child_process';
 import fs from 'fs';
@@ -20,7 +21,7 @@ import { getServerHealth } from './getServerHealth';
 import dotenv from 'dotenv';
 import { Server } from '../../api/src/models/Server';
 import { restartServer } from './restartServer';
-// import cors from 'cors';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -28,8 +29,23 @@ const serverMap: {
   [key: string]: any
 } = {};
 
-// const app = express();
-// app.use(cors());
+const app = express();
+app.use(cors());
+app.get('/servers/:serverId/configuration', (req, res) => {
+  const serverId = req.params.serverId;
+  const filePath = path.join(process.env.SERVERS_DIR, `${serverId}/server.properties`);
+  res.sendFile(filePath)
+})
+app.post('/servers/:serverId/configuration', express.text({type: 'text/*'}), (req, res) => {
+  const serverId = req.params.serverId;
+  const filePath = path.join(process.env.SERVERS_DIR, `${serverId}/server.properties`);
+  console.log(req.body);
+  fs.writeFile(filePath, req.body, (err) => {
+    res.send('success');
+  });
+})
+app.listen(4444);
+console.log('http server started on port 4444');
 
 // const http = httpFn.createServer(app);
 const io = new SocketServer(5000, {
@@ -125,7 +141,6 @@ const sendContainerHealth = async () => {
           serverId: server.id,
         }));
       } catch (e) {
-        delete serverMap[server.id]
         console.error(
           'expected container to be running, but it was not (maybe it is about to start?)',
         );

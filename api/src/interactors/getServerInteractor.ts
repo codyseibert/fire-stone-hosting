@@ -1,4 +1,5 @@
 import { ApplicationContext } from "../createApplicationContext";
+import { getServerPersistence } from '../persistence/sqlite/getServerPersistence';
 
 type getServerInteractorOptions = {
   serverId: String;
@@ -6,7 +7,7 @@ type getServerInteractorOptions = {
 };
 
 export const getServerInteractor = async ({ serverId, applicationContext }: getServerInteractorOptions) =>
-  applicationContext.persistence.getServer({
+  getServerPersistence({
     serverId,
     applicationContext,
   });

@@ -1,24 +1,55 @@
-import React, { useEffect, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import getServer from '../../http/getServer.http';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Server } from '../../../../api/src/models/Server';
+import { NodeContext } from './context/NodeContext';
+import getServerConfiguration from '../../http/getServerConfiguration.http';
+import { ServerContext } from './context/ServerContext';
+import saveServerConfiguration from '../../http/saveServerConfiguration.http';
 
 const ConfigureServer = () => {
-  const params = useParams();
   const navigate = useNavigate();
-  const serverId = params.serverId!;
-  const [server, setServer] = useState<Server>();
+  const { node } = useContext(NodeContext)!;
+  const { server } = useContext(ServerContext)!;
+  const [values, setValues] = useState<{
+    [key: string]: string;
+  }>({});
 
   useEffect(() => {
-    const initialize = async () => {
-      const serverFromApi = await getServer({
-        serverId,
-      });
-      setServer(serverFromApi);
-    };
+    if (!server || !node) return;
+    getServerConfiguration({
+      nodeIp: node.ip,
+      serverId: server.id,
+    }).then((configuration) => {
+      configuration = configuration.replace(/\#.*\n/g, '');
+      const values: {
+        [key: string]: string;
+      } = {};
+      configuration
+        .split('\n')
+        .map((entry: any) => entry.split('='))
+        .forEach(([key, val]: string[]) => {
+          if (!key || val === undefined) return;
+          values[key] = val;
+        });
+      setValues(values);
+    });
+  }, [server, node]);
 
-    initialize();
-  }, []);
+  const saveConfiguration = async () => {
+    const configuration = Object.entries(values)
+      .map(([key, value]) => `${key}=${value}`)
+      .join('\n');
+    await saveServerConfiguration({
+      nodeIp: node!.ip,
+      serverId: server!.id,
+      configuration,
+    });
+  };
 
   if (!server) return null;
 
@@ -30,7 +61,7 @@ const ConfigureServer = () => {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row mb-4">
         <div className="col-md-6">
           <div className="form-group">
             <label>Hostname</label>
@@ -54,25 +85,24 @@ const ConfigureServer = () => {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row mb-4">
         <div className="col-md-12">
           <form>
             <div className="form-group">
               <label>Max players</label>
               <input
                 className="form-control"
+                value={values['max-players'] || ''}
+                onChange={(e) =>
+                  setValues({
+                    ...values,
+                    'max-players': e.target.value,
+                  })
+                }
                 // defaultValue={configuration.maxPlayers}
               />
             </div>
-
-            <div className="form-group">
-              <label>Message of the day</label>
-              <input
-                className="form-control"
-                // defaultValue={configuration.motd}
-              />
-            </div>
-
+            {/* 
             <div className="form-group">
               <label>Difficulty</label>
               <select className="form-control">
@@ -80,17 +110,20 @@ const ConfigureServer = () => {
                 <option>Hard</option>
                 <option>Brutual</option>
               </select>
-            </div>
-            <button
-              onClick={() => {
-                navigate('/purchase/payment-details');
-              }}
-              type="submit"
-              className="btn btn-primary"
-            >
-              Save
-            </button>
+            </div> */}
           </form>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col">
+          <button
+            onClick={saveConfiguration}
+            type="submit"
+            className="btn btn-primary"
+          >
+            Save
+          </button>
         </div>
       </div>
     </>

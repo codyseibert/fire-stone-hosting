@@ -1,12 +1,7 @@
-- deleting server doesn't remove server from servers directory
+- restarting alert doesn't update when the server is actually running again
+  - (maybe start an interval to fetch server info every 5 seconds, clear interval when done restarting?)
 - update all packages
 - remove all this CA crap
-- use context instead of redux
-- ability to create an account without buying
 - mock stripe when running locally
-- force new account before purchase a server
 - stop using sqlite and just use postgres
-- rename node to agent
-- rename server to MinecraftContainer
 - prevent server entry from re-creating if the server is deleted from sql
-- fix web sockets

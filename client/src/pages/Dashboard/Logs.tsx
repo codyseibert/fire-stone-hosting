@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { ServerContext } from './context/ServerContext';
 import getNode from '../../http/getNode.http';
 import { ServerNode } from '../../../../api/src/persistence/sqlite/getNodesPersistence';
+import { NodeContext } from './context/NodeContext';
 
 let socket: Socket;
 
@@ -21,18 +22,7 @@ const Logs = () => {
   const [logs, setLogs] = useState('');
   const [socket, setSocket] = useState<Socket | null>(null);
   const { server } = useContext(ServerContext)!;
-  const [node, setNode] = useState<ServerNode | null>(null);
-
-  useEffect(() => {
-    const run = async () => {
-      if (!server) return;
-      const nodeReturned = await getNode({
-        nodeId: server.nodeId,
-      });
-      setNode(nodeReturned);
-    };
-    run();
-  }, [server]);
+  const { node } = useContext(NodeContext)!;
 
   useEffect(() => {
     if (!node || !server || socket) return;
