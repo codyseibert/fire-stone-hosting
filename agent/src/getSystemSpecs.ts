@@ -19,8 +19,6 @@ for (const name of Object.keys(nets)) {
     }
 }
 
-console.log(results);
-
 export type Specs = {
   nodeId: string;
   ip: string;

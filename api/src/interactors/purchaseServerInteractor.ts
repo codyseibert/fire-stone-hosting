@@ -37,7 +37,7 @@ export const purchaseServerInteractor = async ({
     applicationContext,
   });
 
-  const memory = plans.find(p => p.plan === plan.plan).memory;
+  const memory = plans.find(p => p.plan === plan.plan)!.memory;
   const desiredNode = nodes.find(node => true || node.freeMemory > memory); // TODO: remove true
 
   if (!desiredNode) {

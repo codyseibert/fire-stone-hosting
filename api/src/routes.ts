@@ -17,10 +17,12 @@ import { deleteServerRoute } from './routes/deleteServerRoute';
 import { getPlansRoute } from './routes/getPlansRoute';
 import { restartServerRoute } from './routes/restartServerRoute';
 import { restartServerDoneRoute } from './routes/restartServerRouteDone';
+import { getNodeRoute } from './routes/getNodeRoute';
 
 export const setupRoutes = (app: any) => {
   app.get('/nodes', getNodesRoute);
   app.get('/plans', getPlansRoute);
+  app.get('/nodes/:nodeId', getNodeRoute);
   app.get('/nodes/:nodeId/servers', getServersOnNodeRoute);
   app.get('/users/:userId/servers', getServersForUserRoute);
   app.post('/register', registerRoute);

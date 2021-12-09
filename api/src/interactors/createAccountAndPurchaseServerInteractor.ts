@@ -53,7 +53,7 @@ export const createAccountAndPurchaseServerInteractor = async ({ applicationCont
   //   source,
   // });
 
-  const plan = plans.find(p => p.plan === planId)
+  const plan = plans.find(p => p.plan === planId)!
 
   // await stripe.subscriptions.create({
   //   customer: customer.id,

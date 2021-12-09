@@ -180,7 +180,7 @@ const runAgentLogic = async () => {
           `starting server ${server.id}, ${server.memory}M, P ${server.port}`,
         );
       });
-    } else if (!server.running && stdout.indexOf(server.id) !== -1 && !serverMap[serverId]) {
+    } else if (!server.running && stdout.indexOf(server.id) !== -1) {
       delete serverMap[serverId];
       console.time(`stopping server ${server.id}`);
       await stopServer({
