@@ -44,30 +44,6 @@ export const startServer: startServerInterface = async ({
     );
   }
 
-  console.log(
-  [
-    'screen',
-    `-S ${serverId}`,
-    '-d',
-    '-m',
-    'docker',
-    'run',
-    '--cpus="1"',
-    '--rm',
-    '-t',
-    '-i',
-    `--name ${serverId}`,
-    `-m ${memory}m`,
-    `-e JAVA_OPTS="-Xmn${Math.ceil(
-      memory / 4,
-    )}M -Xms${memory}M -Xmx${memory}M -XX:SoftMaxHeapSize=${Math.ceil(
-      memory / 2,
-    )}M"`,
-    `-p ${port}:25565`,
-    `-v $(pwd)/../servers/${serverId}:/minecraft`,
-    'minecraft',
-  ].join(' '));
-
   const subprocess = spawn(
     'screen',
     [
@@ -89,7 +65,7 @@ export const startServer: startServerInterface = async ({
       )}M"`,
       `-p ${port}:25565`,
       `-v $(pwd)/../servers/${serverId}:/minecraft`,
-      'minecraft',
+      serverId
     ],
     {
       detached: true,
