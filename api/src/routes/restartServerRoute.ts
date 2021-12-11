@@ -1,13 +1,13 @@
 import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { restartServerInteractor } from '../interactors/restartServerInteractor';
 
 export const restartServerRoute = async (req: Request, res: Response) => {
+  const { serverId } = req.params;
   const applicationContext = createApplicationContext();
-  const statement = await (await applicationContext.db).prepare(
-    'UPDATE `servers` SET `restart` = ? WHERE `id` = ?',
-  );
-  await statement.run(true, req.params.serverId);
-  await statement.finalize();
+  await restartServerInteractor({
+    applicationContext,
+    serverId,
+  });
   return res.send('server restarting');
 };
-

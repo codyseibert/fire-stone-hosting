@@ -1,0 +1,5 @@
+the input device is not a TTY
+docker: Error response from daemon: Conflict. The container name "/d0b98813-d763-4baa-a015-05ce3eebc6c5" is already in use by container "933689d4cba4f2e3edf3f6b948d59678a098849d88a4f99238d7935723b0ac5b". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+docker: Error response from daemon: Conflict. The container name "/d0b98813-d763-4baa-a015-05ce3eebc6c5" is already in use by container "933689d4cba4f2e3edf3f6b948d59678a098849d88a4f99238d7935723b0ac5b". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.

@@ -2,6 +2,7 @@ import fs from 'fs';
 import util from 'util';
 import cp from 'child_process';
 import { spawn } from 'child_process';
+import { getServerProxy } from './proxies/getServerProxy';
 const exec = util.promisify(cp.exec);
 
 const out = fs.openSync('./out.log', 'a');
@@ -9,24 +10,16 @@ const err = fs.openSync('./out.log', 'a');
 
 type startServerOptions = {
   serverId: string;
-  port: number;
-  memory: number;
 };
 
 interface startServerInterface {
   (opts: startServerOptions): Promise<any>;
 }
 
-export const startServer: startServerInterface = async ({
-  serverId,
-  memory,
-  port,
-}) => {
-  // TODO: make a user for FTP
-  // await exec('useradd bob');
-  // await exec('echo bob:123 | chpasswd');
+export const startServer: startServerInterface = async ({ serverId }) => {
+  const server = await getServerProxy({ serverId });
+  const { memory, port } = server;
 
-  // TODO: we should actually be using the user's FTP folder for all of this
   try {
     await new Promise<void>((resolve, reject) => {
       fs.access(`../servers/${serverId}`, fs.constants.F_OK, (error: Error) => {
@@ -34,28 +27,23 @@ export const startServer: startServerInterface = async ({
       });
     });
   } catch (error) {
-    console.log(`${serverId} - making directory`)
+    console.log(`${serverId} - making directory`);
     await exec(`mkdir -p ../servers/${serverId}`);
-    console.log(`${serverId} - copying server.properties`)
+    console.log(`${serverId} - copying server.properties`);
     await exec(`cp ../server.properties ../servers/${serverId}`);
-    console.log(`${serverId} - building container`)
+    console.log(`${serverId} - building container`);
     await exec(
       `docker build -t ${serverId} -f ../minecraft.Dockerfile ../servers/${serverId}`,
     );
   }
 
-  const subprocess = spawn(
-    'screen',
-    [
-      `-S ${serverId}`,
-      '-d',
-      '-m',
+  try {
+    const command = [
       'docker',
       'run',
+      '--restart unless-stopped',
       '--cpus="1"',
-      '--rm',
-      '-t',
-      '-i',
+      '-itd',
       `--name ${serverId}`,
       `-m ${memory}m`,
       `-e JAVA_OPTS="-Xmn${Math.ceil(
@@ -65,13 +53,11 @@ export const startServer: startServerInterface = async ({
       )}M"`,
       `-p ${port}:25565`,
       `-v $(pwd)/../servers/${serverId}:/minecraft`,
-      serverId
-    ],
-    {
-      detached: true,
-      stdio: ['ignore', out, err],
-      shell: true,
-    },
-  );
-  subprocess.unref();
+      serverId,
+    ].join(' ');
+    console.log('command', command);
+    await exec(command);
+  } catch (err) {
+    await exec(`docker start ${serverId}`);
+  }
 };

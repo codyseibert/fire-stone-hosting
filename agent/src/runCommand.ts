@@ -15,13 +15,5 @@ export const runCommand: runCommandInterface = async ({
   serverId,
   command,
 }) => {
-  const { stdout } = await exec(
-    `screen -ls | grep -oE "[0-9]+\.${serverId}" | sed -e "s/\\..*$//g"`,
-  );
-  const screenPid = stdout.replace('\n', '');
-
-  await exec(
-    `screen -S "${screenPid}.${serverId}" -p 0 -X stuff "${command}
-"`, // note, this extra line break is needed
-  );
+  await exec(`docker exec ${serverId} ${command}`);
 };

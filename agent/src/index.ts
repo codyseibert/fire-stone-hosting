@@ -25,25 +25,55 @@ import cors from 'cors';
 
 dotenv.config();
 
-const serverMap: {
-  [key: string]: any
-} = {};
-
 const app = express();
 app.use(cors());
+
 app.get('/servers/:serverId/configuration', (req, res) => {
   const serverId = req.params.serverId;
-  const filePath = path.join(process.env.SERVERS_DIR, `${serverId}/server.properties`);
-  res.sendFile(filePath)
-})
-app.post('/servers/:serverId/configuration', express.text({type: 'text/*'}), (req, res) => {
+  const filePath = path.join(
+    process.env.SERVERS_DIR,
+    `${serverId}/server.properties`,
+  );
+  res.sendFile(filePath);
+});
+
+app.post(
+  '/servers/:serverId/configuration',
+  express.text({ type: 'text/*' }),
+  (req, res) => {
+    const serverId = req.params.serverId;
+    const filePath = path.join(
+      process.env.SERVERS_DIR,
+      `${serverId}/server.properties`,
+    );
+    console.log(req.body);
+    fs.writeFile(filePath, req.body, err => {
+      res.send('success');
+    });
+  },
+);
+
+app.post('/servers/:serverId/restart', async (req, res) => {
   const serverId = req.params.serverId;
-  const filePath = path.join(process.env.SERVERS_DIR, `${serverId}/server.properties`);
-  console.log(req.body);
-  fs.writeFile(filePath, req.body, (err) => {
-    res.send('success');
-  });
-})
+  console.log('restarting', serverId);
+  await restartServer({ serverId });
+  res.send('server restarted');
+});
+
+app.post('/servers/:serverId/stop', async (req, res) => {
+  const serverId = req.params.serverId;
+  console.log('stopping', serverId);
+  await stopServer({ serverId });
+  res.send('server stopped');
+});
+
+app.post('/servers/:serverId/start', async (req, res) => {
+  const serverId = req.params.serverId;
+  console.log('starting', serverId);
+  await startServer({ serverId });
+  res.send('server started');
+});
+
 app.listen(4444);
 console.log('http server started on port 4444');
 
@@ -56,7 +86,7 @@ const io = new SocketServer(5000, {
 });
 const exec = util.promisify(cp.exec);
 
-const POLL_INTERVAL = 5000;
+const POLL_INTERVAL = 10000;
 
 io.on('connection', (socket: Socket) => {
   console.log('user connected');
@@ -76,6 +106,13 @@ io.on('connection', (socket: Socket) => {
         });
       },
     );
+
+    // socket.on('start', () => {
+    //   console.log('start', serverId);
+    //   startServer({
+    //     serverId,
+    //   });
+    // });
 
     socket.on('command', command => {
       console.log('command', command, serverId);
@@ -162,16 +199,8 @@ const sendContainerHealth = async () => {
   }
 };
 
-
-const runAgentLogic = async () => {
-  let servers: Server[] = [];
-  try {
-    servers = await getServersProxy({ nodeId });
-  } catch (err) {
-    console.error(
-      'unable to fetch the list of servers this agent should be running',
-    );
-  }
+const startRunningServers = async () => {
+  const servers = await getServersProxy({ nodeId });
 
   stopOrphanedServers({
     expectedServerIds: servers.map(({ id }) => id),
@@ -180,51 +209,25 @@ const runAgentLogic = async () => {
   const { stdout } = await exec('docker ps');
 
   for (const server of servers) {
-    const serverId: string = server.id;
-    if (server.running && stdout.indexOf(server.id) === -1 && !serverMap[serverId]) {
-      serverMap[serverId] = true;
+    const isServerRunningInDocker = stdout.indexOf(server.id) === -1;
+    if (server.running && isServerRunningInDocker) {
       console.time(
         `starting server ${server.id}, ${server.memory}M, P ${server.port}`,
       );
       startServer({
         serverId: server.id,
-        memory: server.memory,
-        port: server.port,
       }).then(() => {
         console.timeEnd(
           `starting server ${server.id}, ${server.memory}M, P ${server.port}`,
         );
       });
-    } else if (!server.running && stdout.indexOf(server.id) !== -1) {
-      delete serverMap[serverId];
-      console.time(`stopping server ${server.id}`);
-      await stopServer({
-        serverId: server.id,
-      });
-      console.timeEnd(`stopping server ${server.id}`);
-    } else if (server.restart && stdout.indexOf(server.id) !== -1) {
-      console.time(`restart server ${server.id}`);
-      await restartServer({
-        serverId: server.id,
-      });
-      console.timeEnd(`restart server ${server.id}`);
-    } else if (
-      server.running &&
-      server.runBackup &&
-      stdout.indexOf(server.id) !== -1
-    ) {
-      // if a sesrver is running an needs a backup
-      console.time(`backup for ${server.id}`);
-      await runBackup({
-        serverId: server.id,
-      });
-      console.timeEnd(`backup for ${server.id}`);
     }
   }
 };
 
 (async function main() {
   setIntervalAndRun(sendSystemSpecs, 5000);
-  setIntervalAndRun(sendContainerHealth, 5000);
-  setIntervalAndRun(runAgentLogic, POLL_INTERVAL);
+  // setIntervalAndRun(sendContainerHealth, 5000);
+  // setIntervalAndRun(runAgentLogic, POLL_INTERVAL);
+  startRunningServers();
 })();

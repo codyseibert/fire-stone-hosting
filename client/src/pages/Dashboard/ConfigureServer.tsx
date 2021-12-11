@@ -55,64 +55,30 @@ const ConfigureServer = () => {
 
   return (
     <>
-      <div className="row">
+      <div className="row mb-4">
         <div className="col">
-          <h4>Server Configuration</h4>
+          <h4>Server Properties</h4>
         </div>
       </div>
 
       <div className="row mb-4">
-        <div className="col-md-6">
-          <div className="form-group">
-            <label>Hostname</label>
-            <input
-              className="form-control"
-              value="funserver.firestonehosting.com"
-              readOnly={true}
-            />
-          </div>
-        </div>
-
-        <div className="col-md-6">
-          <div className="form-group">
-            <label>Address</label>
-            <input
-              className="form-control"
-              value={`:${server.port}`}
-              readOnly={true}
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="row mb-4">
-        <div className="col-md-12">
-          <form>
+        {Object.entries(values).map(([key, value]) => (
+          <div className="col-md-4 mb-4">
             <div className="form-group">
-              <label>Max players</label>
+              <label>{key.replace(/\-/g, ' ')}</label>
               <input
                 className="form-control"
-                value={values['max-players'] || ''}
+                value={value || ''}
                 onChange={(e) =>
                   setValues({
                     ...values,
-                    'max-players': e.target.value,
+                    [key]: e.target.value,
                   })
                 }
-                // defaultValue={configuration.maxPlayers}
               />
             </div>
-            {/* 
-            <div className="form-group">
-              <label>Difficulty</label>
-              <select className="form-control">
-                <option>Easy</option>
-                <option>Hard</option>
-                <option>Brutual</option>
-              </select>
-            </div> */}
-          </form>
-        </div>
+          </div>
+        ))}
       </div>
 
       <div className="row">

@@ -3,17 +3,13 @@ import cp from 'child_process';
 const exec = util.promisify(cp.exec);
 
 type stopServerOptions = {
-  serverId: string,
-}
+  serverId: string;
+};
 
 interface stopServerInterface {
-  (opts: stopServerOptions): Promise<any>
+  (opts: stopServerOptions): Promise<any>;
 }
 
 export const stopServer: stopServerInterface = async ({ serverId }) => {
-  try {
-    await exec(`screen -S "${serverId}" -p 0 -X stuff "stop\r"`);
-  } catch (err) {
-    console.log(err);
-  }
+  return exec(`docker exec ${serverId}`);
 };

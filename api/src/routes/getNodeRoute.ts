@@ -1,10 +1,10 @@
 import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
-import { ServerNode } from 'src/persistence/sqlite/getNodesPersistence';
+import { getNodePersistence } from '../persistence/sqlite/getNodePersistence';
 
 export const getNodeRoute = async (req: Request, res: Response) => {
   const { nodeId } = req.params;
   const applicationContext = createApplicationContext();
-  const serverNodes: ServerNode[] = await (await applicationContext.db).all('SELECT * from `nodes` where id = ?', [nodeId])
-  return res.send(serverNodes[0]);
+  const serverNode = await getNodePersistence({ applicationContext, nodeId });
+  return res.send(serverNode);
 };

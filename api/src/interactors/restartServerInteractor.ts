@@ -1,26 +1,23 @@
 import { ApplicationContext } from '../createApplicationContext';
-import { startServerPersistence } from '../persistence/sqlite/startServerPersistence';
 import { getServerPersistence } from '../persistence/sqlite/getServerPersistence';
 import { getNodePersistence } from '../persistence/sqlite/getNodePersistence';
-import { startServerCommand } from '../commands/startServerCommand';
+import { restartServerCommand } from '../commands/restartServerCommand';
+import { startServerPersistence } from '../persistence/sqlite/startServerPersistence';
 
-type startServerInteractorOptions = {
+type restartServerInteractorOptions = {
   serverId: String;
   applicationContext: ApplicationContext;
 };
 
-export const startServerInteractor = async ({
+export const restartServerInteractor = async ({
   applicationContext,
   serverId,
-}: startServerInteractorOptions) => {
+}: restartServerInteractorOptions) => {
   const server = await getServerPersistence({ applicationContext, serverId });
   const node = await getNodePersistence({
     applicationContext,
     nodeId: server.nodeId,
   });
-  startServerPersistence({
-    applicationContext,
-    serverId,
-  });
-  await startServerCommand({ server, node });
+  await startServerPersistence({ applicationContext, serverId: server.id });
+  await restartServerCommand({ server, node });
 };

@@ -1,5 +1,5 @@
 import request from 'request-promise-native';
-import { Specs } from 'src/getSystemSpecs';
+import { Specs } from '../getSystemSpecs';
 
 // type registerAgentOptions = {
 //   nodeId: string;

@@ -43,7 +43,6 @@ const ServersPage = () => {
           </span>
         )}
       </td>
-      <td>0 / 12</td>
       <td>
         <button
           onClick={() =>
@@ -75,7 +74,6 @@ const ServersPage = () => {
                 <th scope="col">Hostname</th>
                 <th scope="col">Server Address</th>
                 <th scope="col">Status</th>
-                <th scope="col">Players</th>
                 <th scope="col">Actions</th>
               </tr>
             </thead>
