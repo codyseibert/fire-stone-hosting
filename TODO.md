@@ -1,3 +1,4 @@
+- send websocket event to agent when user buys new server
 - change server status to "Stopping" when stopped
   - make stop button disabled or have a spinner when stopping
 - toast from top when saving server properties
