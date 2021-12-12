@@ -1,6 +1,6 @@
-import { ApplicationContext } from "../createApplicationContext";
-import { createNodePersistence } from "../persistence/sqlite/createNodePersistence";
-import { ServerNode } from "../persistence/sqlite/getNodesPersistence";
+import { ApplicationContext } from '../createApplicationContext';
+import { createNodePersistence } from '../persistence/sqlite/createNodePersistence';
+import { ServerNode } from '../models/ServerNode';
 
 type createNodeInteractorOptions = {
   node: ServerNode;
@@ -11,7 +11,10 @@ export interface createNodeInteractorInterface {
   (opts: createNodeInteractorOptions): Promise<void>;
 }
 
-export const createNodeInteractor: createNodeInteractorInterface = async ({ applicationContext, node }) =>
+export const createNodeInteractor: createNodeInteractorInterface = async ({
+  applicationContext,
+  node,
+}) =>
   createNodePersistence({
     applicationContext,
     node,

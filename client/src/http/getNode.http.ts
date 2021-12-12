@@ -1,6 +1,6 @@
-import axios from "axios";
-import { API_URL } from "./config";
-import { ServerNode } from '../../../api/src/persistence/sqlite/getNodesPersistence';
+import axios from 'axios';
+import { API_URL } from './config';
+import { ServerNode } from '../../../api/src/models/ServerNode';
 
 export type getNodeOptions = {
   nodeId: string;

@@ -1,6 +1,10 @@
-import * as sqlite from 'sqlite';
+import * as sqlite3 from 'sqlite3';
+import { open } from 'sqlite';
 
-export const db = sqlite.open('./database.sqlite').then(dbObj => {
+export const db = open({
+  filename: './database.sqlite',
+  driver: sqlite3.Database,
+}).then(dbObj => {
   const db = dbObj;
   // db.run('DROP TABLE IF EXISTS `users`');
   // db.run('DROP TABLE IF EXISTS `nodes`');

@@ -1,6 +1,6 @@
-import * as request from 'request-promise-native';
+import fetch from 'node-fetch';
 import { Server } from '../models/Server';
-import { ServerNode } from '../persistence/sqlite/getNodesPersistence';
+import { ServerNode } from '../models/ServerNode';
 import { getAgentUrl } from './commandUtilities';
 
 export const restartServerCommand = async ({
@@ -10,9 +10,10 @@ export const restartServerCommand = async ({
   node: ServerNode;
   server: Server;
 }) => {
-  await request({
-    method: 'post',
-    json: true,
-    url: `${getAgentUrl(node)}/servers/${server.id}/restart`,
-  });
+  await fetch(`${getAgentUrl(node)}/servers/${server.id}/restart`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  }).then(({ json }) => json());
 };

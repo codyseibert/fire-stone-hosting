@@ -1,5 +1,5 @@
 import React from 'react';
-import { ServerNode } from '../../../../../api/src/persistence/sqlite/getNodesPersistence';
+import { ServerNode } from '../../../../../api/src/models/ServerNode';
 
 export interface INodeContext {
   node: ServerNode | undefined;

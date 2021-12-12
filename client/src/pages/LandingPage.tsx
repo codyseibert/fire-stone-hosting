@@ -15,10 +15,6 @@ const Glass = styled.div`
   margin-top: 160px;
 `;
 
-const SpecialOffer = styled.h4`
-  color: red;
-`;
-
 const PrimaryButton = styled.div`
   background: rgba(171, 210, 255);
 `;
@@ -36,7 +32,7 @@ const List = styled.ul`
   font-size: 14px;
 `;
 
-const Landing = () => {
+export const LandingPage = () => {
   const navigate = useNavigate();
 
   return (
@@ -263,5 +259,3 @@ const Landing = () => {
     </>
   );
 };
-
-export default Landing;

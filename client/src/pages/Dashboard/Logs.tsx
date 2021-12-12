@@ -9,7 +9,7 @@ import React, {
 import { useParams } from 'react-router-dom';
 import { ServerContext } from './context/ServerContext';
 import getNode from '../../http/getNode.http';
-import { ServerNode } from '../../../../api/src/persistence/sqlite/getNodesPersistence';
+import { ServerNode } from '../../../../api/src/models/ServerNode';
 import { NodeContext } from './context/NodeContext';
 
 let socket: Socket;

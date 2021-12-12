@@ -11,7 +11,7 @@ import { Server } from '../../../../api/src/models/Server';
 import { AuthenticationContext } from '../../context/AuthenticationContext';
 import { Link } from 'react-router-dom';
 import { ServerContext } from './context/ServerContext';
-import { ServerNode } from '../../../../api/src/persistence/sqlite/getNodesPersistence';
+import { ServerNode } from '../../../../api/src/models/ServerNode';
 import getNode from '../../http/getNode.http';
 import { NodeContext } from './context/NodeContext';
 

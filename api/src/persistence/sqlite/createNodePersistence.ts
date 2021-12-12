@@ -1,5 +1,5 @@
-import { ApplicationContext } from "../../createApplicationContext";
-import { ServerNode } from "./getNodesPersistence";
+import { ApplicationContext } from '../../createApplicationContext';
+import { ServerNode } from '../../models/ServerNode';
 
 type createNodePersistenceOptions = {
   node: ServerNode;
@@ -10,7 +10,10 @@ export interface createNodePersistenceInterface {
   (opts: createNodePersistenceOptions): Promise<void>;
 }
 
-export const createNodePersistence: createNodePersistenceInterface = async ({ applicationContext, node }) => {
+export const createNodePersistence: createNodePersistenceInterface = async ({
+  applicationContext,
+  node,
+}) => {
   const { id, ip, totalMemory, freeMemory } = node;
   const statement = await (await applicationContext.db).prepare(
     'REPLACE INTO `nodes` (`id`, `ip`, `totalMemory`, `freeMemory`) VALUES (?, ?, ?, ?)',

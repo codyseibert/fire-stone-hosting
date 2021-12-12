@@ -1,10 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 import { plans } from '../data/plans';
-import { PlanContext } from '../context/PlanContext';
 
-const SelectAPlan = () => {
+export const SelectAPlanPage = () => {
   const error = null;
   const navigate = useNavigate();
 
@@ -111,5 +110,3 @@ const SelectAPlan = () => {
     </div>
   );
 };
-
-export default SelectAPlan;
