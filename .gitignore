@@ -1,3 +1,4 @@
+.vscode/
 servers/
 agent/node_modules/
 api/node_modules/

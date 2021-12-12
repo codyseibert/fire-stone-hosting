@@ -1,6 +1,0 @@
-- change server status to "Stopping" when stopped
-  - make stop button disabled or have a spinner when stopping
-- restarting alert doesn't update when the server is actually running again
-  - (maybe start an interval to fetch server info every 5 seconds, clear interval when done restarting?)
-- update all packages
-- mock stripe when running locally
