@@ -2,7 +2,7 @@ import React from 'react';
 import worldImg from '../images/world.jpg';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fontawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 
 const HeroBanner = styled.div`
