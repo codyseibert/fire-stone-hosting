@@ -1,8 +1,9 @@
 ---
 name: "\U0001F41B Bug report"
 about: Report a bug you found while using this Minecraft server software. The full template is required to be filled in.
-title: ''
-labels: ''
+description: File a bug report
+title: "[Bug]: (Enter short, one sentence summary of bug here)"
+labels: ["bug"]
 assignees:
 - codyseibert
 
