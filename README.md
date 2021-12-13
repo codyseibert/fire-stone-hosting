@@ -19,6 +19,11 @@ You will need the following installed in order for the agent to be able to run t
 - docker (used for wrapping and hosting the minecraft server)
 - socat (used for communicating via stdin to the running docker container)
 
+In order to start and configure the postgresql database, follow these steps
+
+- In the root folder run `docker-compose up -d`
+- Inside `api` run `npx prisma migrate dev` in order to apply pending migrations
+
 # Flows
 
 Below are the various high level architecture flows that occur in our system, such as when someone rents a server, or when someone sends a command to the MC Docker container.
