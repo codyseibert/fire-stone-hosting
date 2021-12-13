@@ -1,5 +1,9 @@
 # Related Issue/Addition to code
-- Issue/Addition to code, goes here.
+
+Please delete options that are not relevant.
+
+- Fixes #
+- Issue/Addition to code goes here
 
 ## Type of change
 
