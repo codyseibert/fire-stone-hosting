@@ -1,13 +1,13 @@
-import { createServerPersistence } from '../persistence/sqlite/createServerPersistence';
+import { createServerPersistence } from '../persistence/createServerPersistence';
 import { v4 as uuidv4 } from 'uuid';
 import { Server } from '../models/Server';
 
 // const stripe = require('stripe')(process.env.STRIPE_KEY);
 
 import { ApplicationContext } from '../createApplicationContext';
-import { User } from '../persistence/sqlite/createUserPersistence';
-import { getServersOnNodePersistence } from '../persistence/sqlite/getServersOnNodePersistence';
-import { getNodesPersistence } from '../persistence/sqlite/getNodesPersistence';
+import { User } from '../persistence/createUserPersistence';
+import { getServersOnNodePersistence } from '../persistence/getServersOnNodePersistence';
+import { getNodesPersistence } from '../persistence/getNodesPersistence';
 import { plans } from '../data/plans';
 
 type purchaseServerInteractorOptions = {
@@ -69,7 +69,7 @@ export const purchaseServerInteractor = async ({
     userId: user.id,
     running: true,
     runBackup: false,
-    restart: false
+    restart: false,
   };
 
   await createServerPersistence({

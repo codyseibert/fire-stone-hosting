@@ -1,11 +1,11 @@
-import { stopServerPersistence } from '../persistence/sqlite/stopServerPersistence';
+import { stopServerPersistence } from '../persistence/stopServerPersistence';
 import { ApplicationContext } from '../createApplicationContext';
-import { getNodePersistence } from '../persistence/sqlite/getNodePersistence';
-import { getServerPersistence } from '../persistence/sqlite/getServerPersistence';
+import { getNodePersistence } from '../persistence/getNodePersistence';
+import { getServerPersistence } from '../persistence/getServerPersistence';
 import { stopServerCommand } from '../commands/stopServerCommand';
 
 type stopServerInteractorOptions = {
-  serverId: String;
+  serverId: string;
   applicationContext: ApplicationContext;
 };
 
@@ -22,5 +22,5 @@ export const stopServerInteractor = async ({
     applicationContext,
     serverId,
   });
-  await stopServerCommand({ node, server });
+  await stopServerCommand({ node, serverId: server.id });
 };
