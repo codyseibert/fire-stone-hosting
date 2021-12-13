@@ -10,8 +10,8 @@ I'm trying to document this project via my youtube channel [https://www.youtube.
 
 This project is broken up into 3 main components: agent, api, and client. Each component has it's own package.json and will need to be setup and install individually. To get started, do the following:
 
-- client: `cd client && npm i && npm start`
-- server: `cd server && npm i && npm start`
+- client: `cd client && npm i && npm run dev`
+- server: `cd server && npm i && npm run dev`
 - agent: `cd agent && npm i && npm start`
 
 You will need the following installed in order for the agent to be able to run the minecraft servers and accept commands:
