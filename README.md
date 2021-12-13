@@ -4,7 +4,7 @@ The goal of this project is to create a minecraft server hosting system which co
 
 # Building in Public
 
-I'm trying to document this project via my youtube channel [https://www.youtube.com/c/webdevjunkie](https://www.youtube.com/c/webdevjunkie) on this specific youtube series found here: [https://www.youtube.com/watch?v=dBUHBrYB_bQ&list=PL6x5Q-Sj_BlYlBoxMa_jo7LO3OSUhhbru&index=1](https://bit.ly/minecraftvlogseries).
+I'm trying to document this project via my youtube channel [https://www.youtube.com/c/webdevjunkie](https://www.youtube.com/c/webdevjunkie) on this specific youtube series found here: [https://bit.ly/minecraftvlogseries](https://bit.ly/minecraftvlogseries).
 
 # Getting Started
 
