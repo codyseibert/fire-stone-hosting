@@ -30,10 +30,10 @@ export const startServer: startServerInterface = async ({ serverId }) => {
     console.log(`${serverId} - making directory`);
     await exec(`mkdir -p ../servers/${serverId}`);
     console.log(`${serverId} - copying server.properties`);
-    await exec(`cp ../server.properties ../servers/${serverId}`);
+    await exec(`cp ./server.properties ../servers/${serverId}`);
     console.log(`${serverId} - building container`);
     await exec(
-      `docker build -t ${serverId} -f ../minecraft.Dockerfile ../servers/${serverId}`,
+      `docker build -t ${serverId} -f ./minecraft.Dockerfile ../servers/${serverId}`,
     );
   }
 
