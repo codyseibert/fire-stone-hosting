@@ -1,6 +1,6 @@
 import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
-import { getNodePersistence } from '../persistence/sqlite/getNodePersistence';
+import { getNodePersistence } from '../persistence/getNodePersistence';
 
 export const getNodeRoute = async (req: Request, res: Response) => {
   const { nodeId } = req.params;

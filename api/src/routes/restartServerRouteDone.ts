@@ -3,11 +3,15 @@ import { Request, Response } from 'express';
 
 export const restartServerDoneRoute = async (req: Request, res: Response) => {
   const applicationContext = createApplicationContext();
-  const statement = await (await applicationContext.db).prepare(
-    'UPDATE `servers` SET `restart` = ? WHERE `id` = ?',
-  );
-  await statement.run(false, req.params.serverId);
-  await statement.finalize();
+
+  await applicationContext.db.servers.update({
+    where: {
+      id: req.params.serverId,
+    },
+    data: {
+      restart: false,
+    },
+  });
+
   return res.send('server done restarting');
 };
-

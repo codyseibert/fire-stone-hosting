@@ -1,5 +1,5 @@
 import { ApplicationContext } from '../createApplicationContext';
-import { createNodePersistence } from '../persistence/sqlite/createNodePersistence';
+import { createNodePersistence } from '../persistence/createNodePersistence';
 import { ServerNode } from '../models/ServerNode';
 
 type createNodeInteractorOptions = {

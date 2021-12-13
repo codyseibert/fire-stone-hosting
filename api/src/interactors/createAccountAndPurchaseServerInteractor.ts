@@ -5,10 +5,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 // const stripe = require('stripe')(process.env.STRIPE_KEY);
 
-import { ApplicationContext } from "../createApplicationContext";
-import { getServersOnNodePersistence } from '../persistence/sqlite/getServersOnNodePersistence';
-import { createUserPersistence } from '../persistence/sqlite/createUserPersistence';
-import { createServerPersistence } from '../persistence/sqlite/createServerPersistence';
+import { ApplicationContext } from '../createApplicationContext';
+import { getServersOnNodePersistence } from '../persistence/getServersOnNodePersistence';
+import { createUserPersistence } from '../persistence/createUserPersistence';
+import { createServerPersistence } from '../persistence/createServerPersistence';
 
 type createAccountAndPurchaseServerInteractorOptions = {
   email: string;
@@ -19,8 +19,14 @@ type createAccountAndPurchaseServerInteractorOptions = {
   applicationContext: ApplicationContext;
 };
 
-
-export const createAccountAndPurchaseServerInteractor = async ({ applicationContext, email, password, passwordConfirm, planId, source }: createAccountAndPurchaseServerInteractorOptions) => {
+export const createAccountAndPurchaseServerInteractor = async ({
+  applicationContext,
+  email,
+  password,
+  passwordConfirm,
+  planId,
+  source,
+}: createAccountAndPurchaseServerInteractorOptions) => {
   let customer;
 
   if (!email) {
@@ -39,7 +45,7 @@ export const createAccountAndPurchaseServerInteractor = async ({ applicationCont
     id: userId,
     email,
     password,
-  }
+  };
 
   await createUserPersistence({
     applicationContext,
@@ -53,7 +59,7 @@ export const createAccountAndPurchaseServerInteractor = async ({ applicationCont
   //   source,
   // });
 
-  const plan = plans.find(p => p.plan === planId)!
+  const plan = plans.find(p => p.plan === planId)!;
 
   // await stripe.subscriptions.create({
   //   customer: customer.id,

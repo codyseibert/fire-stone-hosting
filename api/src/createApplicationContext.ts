@@ -1,6 +1,6 @@
-import * as sqlite from 'sqlite';
+import { PrismaClient } from '@prisma/client';
 
-import { db } from './persistence/sqlite/db';
+import { db } from './persistence/db';
 
 import { getServersForUserInteractor } from './interactors/getServersForUserInteractor';
 import { getNodesInteractor } from './interactors/getNodesInteractor';
@@ -20,20 +20,20 @@ import { getServerInteractor } from './interactors/getServerInteractor';
 import {
   getNodesInterface,
   getNodesPersistence,
-} from './persistence/sqlite/getNodesPersistence';
-import { createNodePersistence } from './persistence/sqlite/createNodePersistence';
-import { getServersOnNodePersistence } from './persistence/sqlite/getServersOnNodePersistence';
-import { getServersForUserPersistence } from './persistence/sqlite/getServersForUserPersistence';
-import { setFreeMemoryOnNodePersistence } from './persistence/sqlite/setFreeMemoryOnNodePersistence';
-import { createServerPersistence } from './persistence/sqlite/createServerPersistence';
-import { stopServerPersistence } from './persistence/sqlite/stopServerPersistence';
-import { startServerPersistence } from './persistence/sqlite/startServerPersistence';
-import { createUserPersistence } from './persistence/sqlite/createUserPersistence';
-import { getUserPersistence } from './persistence/sqlite/getUserPersistence';
-import { runBackupPersistence } from './persistence/sqlite/runBackupPersistence';
-import { backupCompletePersistence } from './persistence/sqlite/backupCompletePersistence';
-import { setServerHealthPersistence } from './persistence/sqlite/setServerHealthPersistence';
-import { getServerPersistence } from './persistence/sqlite/getServerPersistence';
+} from './persistence/getNodesPersistence';
+import { createNodePersistence } from './persistence/createNodePersistence';
+import { getServersOnNodePersistence } from './persistence/getServersOnNodePersistence';
+import { getServersForUserPersistence } from './persistence/getServersForUserPersistence';
+import { setFreeMemoryOnNodePersistence } from './persistence/setFreeMemoryOnNodePersistence';
+import { createServerPersistence } from './persistence/createServerPersistence';
+import { stopServerPersistence } from './persistence/stopServerPersistence';
+import { startServerPersistence } from './persistence/startServerPersistence';
+import { createUserPersistence } from './persistence/createUserPersistence';
+import { getUserPersistence } from './persistence/getUserPersistence';
+import { runBackupPersistence } from './persistence/runBackupPersistence';
+import { backupCompletePersistence } from './persistence/backupCompletePersistence';
+import { setServerHealthPersistence } from './persistence/setServerHealthPersistence';
+import { getServerPersistence } from './persistence/getServerPersistence';
 
 export type ApplicationContext = {
   persistence: {
@@ -68,7 +68,7 @@ export type ApplicationContext = {
     createAccountAndPurchaseServerInteractor: Function;
     purchaseServerInteractor: Function;
   };
-  db: Promise<sqlite.Database>;
+  db: PrismaClient;
 };
 
 export const createApplicationContext = (): ApplicationContext => ({

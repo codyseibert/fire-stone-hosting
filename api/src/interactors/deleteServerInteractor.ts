@@ -1,5 +1,5 @@
 import { ApplicationContext } from '../createApplicationContext';
-import { deleteServerPersistence } from '../persistence/sqlite/deleteServerPersistence';
+import { deleteServerPersistence } from '../persistence/deleteServerPersistence';
 
 type deleteServerOptions = {
   serverId: string;
