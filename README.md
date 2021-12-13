@@ -1,6 +1,9 @@
 # What is this project?
 
-The goal of this project is to create a minecraft server hosting system which could potentially be used as a real product to rent out minecraft servers to other people.  Anyone is welcome to contribute to this project via github; just fork the project and submit a pull request, and I'll try to give it a timely review when I get a chance.  Try to keep pull requests small, and remember to tag any associated issue number if the pull request fixes or implements a specific issue.
+The goal of this project is to create a minecraft server hosting system which could potentially be used as a real product to rent out minecraft servers to other people.
+
+# Contributing
+Anyone is welcome to contribute to this project via github, just ensure you are following the guidelines for contributing to this project mentioned at CONTRIBUTING.md; just fork the project and submit a pull request, and I'll try to give it a timely review when I get a chance.
 
 # Building in Public
 
