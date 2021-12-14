@@ -32,7 +32,7 @@ export const SelectAPlanPage = () => {
             <button
               type="button"
               onClick={() => {
-                navigate(`/plans/${plan}/purchase`);
+                navigate(`/plans/${plan}/configure`);
               }}
               className="btn btn-outline-primary mt-2 w-100"
             >

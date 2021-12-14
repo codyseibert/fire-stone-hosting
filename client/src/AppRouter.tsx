@@ -11,6 +11,7 @@ import Logs from './pages/Dashboard/Logs';
 import { Overview } from './pages/Dashboard/Overview';
 import { AuthenticationContext } from './context/AuthenticationContext';
 import { RentAnotherDetailsPage } from './pages/RentAnotherDetailsPage';
+import { PickVersionPage } from './pages/PickVersionPage';
 
 export const AppRouter = () => {
   const { authentication } = useContext(
@@ -31,6 +32,10 @@ export const AppRouter = () => {
             <PaymentDetailsPage />
           )
         }
+      />
+      <Route
+        path="plans/:planId/configure"
+        element={<PickVersionPage />}
       />
       <Route path="dashboard" element={<ServersPage />} />
       <Route

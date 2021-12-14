@@ -16,7 +16,7 @@ export const db = open({
     'CREATE TABLE IF NOT EXISTS `nodes` (`id` VARCHAR(255) PRIMARY KEY, `ip` VARCHAR(255), `totalMemory` INT, `freeMemory` INT)',
   );
   db.run(
-    'CREATE TABLE IF NOT EXISTS `servers` (`id` VARCHAR(255) PRIMARY KEY, `nodeId` INT NOT NULL, `port` INIT, `memory` INT, `cpuPercent` VARCHAR(255), `memoryPercent` VARCHAR(255), `restart` BOOL, `running` BOOL, `runBackup` BOOL, `userId` INT)',
+    'CREATE TABLE IF NOT EXISTS `servers` (`id` VARCHAR(255) PRIMARY KEY, `nodeId` INT NOT NULL, `port` INIT, `memory` INT, `cpuPercent` VARCHAR(255), `memoryPercent` VARCHAR(255), `restart` BOOL, `running` BOOL, `runBackup` BOOL, `userId` INT, `version` VARCHAR(255))',
   );
   return db;
 });

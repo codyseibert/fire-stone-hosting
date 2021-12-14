@@ -8,12 +8,13 @@ export interface IAuthRequest extends Request {
 }
 
 export const purchaseServerRoute = async (req: IAuthRequest, res: Response) => {
-  const { planId } = req.body;
+  const { planId, version } = req.body;
   const plan = plans.find(p => p.plan === planId);
   const applicationContext = createApplicationContext();
   try {
     const ret = await purchaseServerInteractor({
       plan,
+      version,
       user: req.user,
       applicationContext,
     });

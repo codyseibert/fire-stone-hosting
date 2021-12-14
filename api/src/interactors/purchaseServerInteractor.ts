@@ -12,6 +12,7 @@ import { plans } from '../data/plans';
 
 type purchaseServerInteractorOptions = {
   user: User;
+  version: string;
   plan: {
     plan: string;
   };
@@ -21,6 +22,7 @@ type purchaseServerInteractorOptions = {
 export const purchaseServerInteractor = async ({
   user,
   plan,
+  version,
   applicationContext,
 }: purchaseServerInteractorOptions) => {
   // await stripe.subscriptions.create({
@@ -66,10 +68,11 @@ export const purchaseServerInteractor = async ({
     nodeId: desiredNode.id,
     port: freePort,
     memory,
+    version,
     userId: user.id,
     running: true,
     runBackup: false,
-    restart: false
+    restart: false,
   };
 
   await createServerPersistence({

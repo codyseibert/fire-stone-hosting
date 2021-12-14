@@ -4,13 +4,14 @@ import { Plan, plans } from '../data/plans';
 import { useNavigate, useParams } from 'react-router-dom';
 import purchaseServerHttp from '../http/purchaseServer.http';
 import { AuthenticationContext } from '../context/AuthenticationContext';
+import { ConfigurationContext } from './Dashboard/context/ConfigurationContext';
 
 let error = '';
 
 export const RentAnotherDetailsPage = () => {
   const params = useParams();
   const planId = params.planId!;
-  const [plan, setPlan] = useState<Plan>(() => {
+  const [plan] = useState<Plan>(() => {
     return plans.find((p) => p.plan === planId)!;
   });
   const navigate = useNavigate();
@@ -19,8 +20,16 @@ export const RentAnotherDetailsPage = () => {
     AuthenticationContext
   )!;
 
+  const { configuration } = useContext(
+    ConfigurationContext
+  )!;
+
   const handleSubmit = async () => {
-    await purchaseServerHttp(planId, authentication!.token);
+    await purchaseServerHttp(
+      planId,
+      configuration,
+      authentication!.token
+    );
     navigate('/dashboard');
   };
 
