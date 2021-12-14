@@ -1,11 +1,15 @@
-import axios from "axios";
-import { API_URL } from "./config";
+import axios from 'axios';
+import { API_URL } from './config';
 
-const purchaseServerHttp = (planId: string, token: string) =>
+const purchaseServerHttp = (
+  planId: string,
+  configuration: any,
+  token: string
+) =>
   axios
     .post(
       `${API_URL}/existing-user-purchase`,
-      { planId },
+      { planId, ...configuration },
       {
         headers: {
           Authorization: `Bearer ${token}`,

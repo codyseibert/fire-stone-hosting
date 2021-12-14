@@ -8,7 +8,7 @@ I'm trying to document this project via my youtube channel [https://www.youtube.
 
 # Getting Started
 
-This project is setup using a [npm workspace](https://docs.npmjs.com/cli/v8/using-npm/workspaces#running-commands-in-the-context-of-workspaces) monorepo in order to setup the multiple projects run the following commands in the root folder:
+This project is setup using a [npm workspace](https://docs.npmjs.com/cli/v8/using-npm/workspaces) monorepo in order to setup the multiple projects run the following commands in the root folder:
 
 1. `install-workspace`: Install all dependencies for the workspace
 2. For running each project use:

@@ -1,7 +1,6 @@
-import { ApplicationContext } from '../createApplicationContext';
+import { db } from './db';
 
 type deleteServerPersistenceOptions = {
-  applicationContext: ApplicationContext;
   serverId: string;
 };
 export interface deleteServerPersistenceInterface {
@@ -9,8 +8,8 @@ export interface deleteServerPersistenceInterface {
 }
 
 export const deleteServerPersistence: deleteServerPersistenceInterface =
-  async ({ applicationContext, serverId }) => {
-    await applicationContext.db.servers.delete({
+  async ({ serverId }) => {
+    await db.servers.delete({
       where: {
         id: serverId,
       },

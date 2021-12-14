@@ -1,15 +1,13 @@
-import { ApplicationContext } from '../createApplicationContext';
+import { db } from './db';
 
 type startServerPersistenceOptions = {
   serverId: string;
-  applicationContext: ApplicationContext;
 };
 
 export const startServerPersistence = async ({
-  applicationContext,
   serverId,
 }: startServerPersistenceOptions) => {
-  await applicationContext.db.servers.update({
+  await db.servers.update({
     where: {
       id: serverId,
     },

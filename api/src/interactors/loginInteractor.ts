@@ -1,15 +1,16 @@
 import * as jwt from 'jsonwebtoken';
-import { ApplicationContext } from "../createApplicationContext";
+import { getUserPersistence } from '../persistence/getUserPersistence';
 
 type loginInteractorOptions = {
-  email: String;
-  password: String;
-  applicationContext: ApplicationContext;
+  email: string;
+  password: string;
 };
 
-export const loginInteractor = async ({ applicationContext, email, password }: loginInteractorOptions) => {
-  const user = await applicationContext.persistence.getUser({
-    applicationContext,
+export const loginInteractor = async ({
+  email,
+  password,
+}: loginInteractorOptions) => {
+  const user = await getUserPersistence({
     email,
   });
   if (!user) {

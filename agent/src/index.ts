@@ -55,21 +55,21 @@ app.post('/servers/:serverId/restart', async (req, res) => {
   const serverId = req.params.serverId;
   console.log('restarting', serverId);
   await restartServer({ serverId });
-  res.send('server restarted');
+  res.json({ message: 'server restarting' });
 });
 
 app.post('/servers/:serverId/stop', async (req, res) => {
   const serverId = req.params.serverId;
   console.log('stopping', serverId);
   await stopServer({ serverId });
-  res.send('server stopped');
+  res.json({ message: 'server stopped' });
 });
 
 app.post('/servers/:serverId/start', async (req, res) => {
   const serverId = req.params.serverId;
   console.log('starting', serverId);
   await startServer({ serverId });
-  res.send('server started');
+  res.json({ message: 'server started' });
 });
 
 app.listen(4444, () => {
@@ -200,6 +200,7 @@ const sendContainerHealth = async () => {
 
 const startRunningServers = async () => {
   const servers = await getServersProxy({ nodeId });
+  console.log('servers', servers);
 
   stopOrphanedServers({
     expectedServerIds: servers.map(({ id }) => id),

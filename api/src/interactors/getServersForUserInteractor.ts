@@ -1,12 +1,12 @@
-import { ApplicationContext } from "../createApplicationContext";
+import { getServersForUserPersistence } from '../persistence/getServersForUserPersistence';
 
 type getServersForUserInteractorOptions = {
   userId: string;
-  applicationContext: ApplicationContext;
 };
 
-export const getServersForUserInteractor = async ({ userId, applicationContext }: getServersForUserInteractorOptions) =>
-  applicationContext.persistence.getServersForUser({
+export const getServersForUserInteractor = async ({
+  userId,
+}: getServersForUserInteractorOptions) =>
+  getServersForUserPersistence({
     userId,
-    applicationContext,
   });

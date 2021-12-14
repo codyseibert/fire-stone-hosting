@@ -10,6 +10,10 @@ import {
   PlanContext,
   PlanType,
 } from './context/PlanContext';
+import {
+  Configuration,
+  ConfigurationContext,
+} from './pages/Dashboard/context/ConfigurationContext';
 
 export const App = () => {
   const [authentication, setAuthentication] = useState<
@@ -20,6 +24,8 @@ export const App = () => {
     );
   });
   const [plan, setPlan] = useState<PlanType>();
+  const [configuration, setConfiguration] =
+    useState<Configuration>();
 
   useEffect(() => {
     localStorage.setItem(
@@ -41,10 +47,14 @@ export const App = () => {
           setPlan,
         }}
       >
-        <BrowserRouter>
-          <Navigation />
-          <AppRouter />
-        </BrowserRouter>
+        <ConfigurationContext.Provider
+          value={{ configuration, setConfiguration }}
+        >
+          <BrowserRouter>
+            <Navigation />
+            <AppRouter />
+          </BrowserRouter>
+        </ConfigurationContext.Provider>
       </PlanContext.Provider>
     </AuthenticationContext.Provider>
   );

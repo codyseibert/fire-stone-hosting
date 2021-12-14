@@ -1,9 +1,8 @@
-import { ApplicationContext } from '../createApplicationContext';
 import { Server } from '../models/Server';
+import { db } from './db';
 
 type getServersOnNodePersistenceOptions = {
   nodeId: string;
-  applicationContext: ApplicationContext;
 };
 
 interface getServersOnNodePersistenceInterface {
@@ -11,8 +10,8 @@ interface getServersOnNodePersistenceInterface {
 }
 
 export const getServersOnNodePersistence: getServersOnNodePersistenceInterface =
-  async ({ applicationContext, nodeId }) => {
-    return applicationContext.db.servers.findMany({
+  async ({ nodeId }) => {
+    return await db.servers.findMany({
       where: {
         nodeId,
       },

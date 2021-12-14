@@ -1,10 +1,7 @@
-import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { getNodesInteractor } from '../interactors/getNodesInteractor';
 
 export const getNodesRoute = async (req: Request, res: Response) => {
-  const applicationContext = createApplicationContext();
-  const nodes = await applicationContext.interactors.getNodesInteractor({
-    applicationContext,
-  });
+  const nodes = await getNodesInteractor();
   return res.send(nodes);
 };

@@ -1,11 +1,9 @@
-import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { setServerHealthInteractor } from '../interactors/setServerHealthInteractor';
 
 export const setServerHealthRoute = async (req: Request, res: Response) => {
-  const applicationContext = createApplicationContext();
   const { serverId } = req.params;
-  await applicationContext.interactors.setServerHealthInteractor({
-    applicationContext,
+  await setServerHealthInteractor({
     serverId,
     ...req.body,
   });

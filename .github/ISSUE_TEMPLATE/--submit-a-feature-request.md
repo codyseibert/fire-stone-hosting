@@ -4,7 +4,6 @@ about: 'Please drop in your feature request here, we will consider adding it to 
 title: ''
 labels: ''
 assignees:
-- codyseibert
 
 ---
 

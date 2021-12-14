@@ -12,10 +12,14 @@ export const restartServerCommand = async ({
   node,
   serverId,
 }: restartServerCommandOptions) => {
-  await fetch(`${getAgentUrl(node)}/servers/${serverId}/restart`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  const response = await fetch(
+    `${getAgentUrl(node)}/servers/${serverId}/restart`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  }).then(({ json }) => json());
+  );
+  return response.json();
 };

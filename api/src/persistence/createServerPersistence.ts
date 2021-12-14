@@ -1,23 +1,22 @@
 import { Server } from '../models/Server';
-import { ApplicationContext } from '../createApplicationContext';
+import { db } from './db';
 
 type createServerPersistenceOptions = {
   server: Server;
-  applicationContext: ApplicationContext;
 };
 
 export const createServerPersistence = async ({
-  applicationContext,
   server,
 }: createServerPersistenceOptions) => {
-  const { id, nodeId, port, memory, userId } = server;
+  const { id, nodeId, port, version, memory, userId } = server;
 
-  await applicationContext.db.servers.create({
+  await db.servers.create({
     data: {
       id,
       nodeId,
       port,
       memory,
+      version,
       running: true,
       userId,
     },

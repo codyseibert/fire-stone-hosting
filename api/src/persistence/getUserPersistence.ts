@@ -1,15 +1,13 @@
-import { ApplicationContext } from '../createApplicationContext';
+import { db } from './db';
 
 type getUserPersistenceOptions = {
   email: string;
-  applicationContext: ApplicationContext;
 };
 
 export const getUserPersistence = async ({
-  applicationContext,
   email,
 }: getUserPersistenceOptions) => {
-  return applicationContext.db.users.findUnique({
+  return db.users.findUnique({
     where: {
       email,
     },

@@ -1,13 +1,12 @@
-import { ApplicationContext } from "../createApplicationContext";
+import { getServersOnNodePersistence } from '../persistence/getServersOnNodePersistence';
 
 type getServersOnNodeInteractorOptions = {
-  nodeId: String;
-  applicationContext: ApplicationContext;
+  nodeId: string;
 };
 
-export const getServersOnNodeInteractor = async ({ nodeId, applicationContext }: getServersOnNodeInteractorOptions) =>
-  applicationContext.persistence.getServersOnNode({
+export const getServersOnNodeInteractor = async ({
+  nodeId,
+}: getServersOnNodeInteractorOptions) =>
+  getServersOnNodePersistence({
     nodeId,
-    applicationContext,
   });
-

@@ -1,9 +1,8 @@
-import { ApplicationContext } from '../createApplicationContext';
 import { ServerNode } from '../models/ServerNode';
+import { db } from './db';
 
 type createNodePersistenceOptions = {
   node: ServerNode;
-  applicationContext: ApplicationContext;
 };
 
 export interface createNodePersistenceInterface {
@@ -11,12 +10,11 @@ export interface createNodePersistenceInterface {
 }
 
 export const createNodePersistence: createNodePersistenceInterface = async ({
-  applicationContext,
   node,
 }) => {
   const { id, ip, totalMemory, freeMemory } = node;
 
-  await applicationContext.db.nodes.upsert({
+  await db.nodes.upsert({
     where: {
       id,
     },

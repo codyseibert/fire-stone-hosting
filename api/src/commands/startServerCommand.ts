@@ -12,10 +12,14 @@ export const startServerCommand = async ({
   node,
   serverId,
 }: startServerCommandOptions) => {
-  await fetch(`${getAgentUrl(node)}/servers/${serverId}/start`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  const response = await fetch(
+    `${getAgentUrl(node)}/servers/${serverId}/start`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  }).then(({ json }) => json());
+  );
+  return response.json();
 };

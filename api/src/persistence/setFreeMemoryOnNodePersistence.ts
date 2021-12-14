@@ -1,17 +1,15 @@
-import { ApplicationContext } from '../createApplicationContext';
+import { db } from './db';
 
 type setFreeMemoryOnNodePersistenceOptions = {
   nodeId: string;
   freeMemory: number;
-  applicationContext: ApplicationContext;
 };
 
 export const setFreeMemoryOnNodePersistence = async ({
-  applicationContext,
   freeMemory,
   nodeId,
 }: setFreeMemoryOnNodePersistenceOptions) => {
-  await applicationContext.db.nodes.update({
+  await db.nodes.update({
     where: {
       id: nodeId,
     },

@@ -1,9 +1,8 @@
 import { Nodes, Servers } from '@prisma/client';
-import { ApplicationContext } from '../createApplicationContext';
+import { db } from './db';
 
 type getServersForUserPersistenceOptions = {
   userId: String;
-  applicationContext: ApplicationContext;
 };
 
 type getServersForUserPersistenceResponse = Pick<
@@ -15,15 +14,26 @@ type getServersForUserPersistenceResponse = Pick<
 };
 
 export const getServersForUserPersistence = async ({
-  applicationContext,
   userId,
 }: getServersForUserPersistenceOptions): Promise<
   getServersForUserPersistenceResponse[]
 > => {
-  const servers: any[] = await applicationContext.db.$queryRaw`
-    SELECT s.id, n.id AS nodeId, s.memoryPercent, s.cpuPercent, s.memory, s.running, s.port, n.ip 
-    FROM "servers" AS s JOIN "nodes" AS n ON s.nodeId = n.id WHERE userId = ${userId} 
+  // TODO: refactor to use primsa models instead of queryRaw
+  const servers: any[] = await db.$queryRaw`
+    SELECT s.id, n.id AS nodeId, s.memory_percent as memoryPercent, s.cpu_percent as cpuPercent, s.memory, s.running, s.port, n.ip 
+    FROM "servers" AS s JOIN "nodes" AS n ON s.node_id = n.id WHERE user_id = ${userId} 
 `;
 
-  return servers;
+  // temp hack
+  return servers.map(server => {
+    server.cpuPercent = server.cpupercent;
+    server.nodeId = server.nodeid;
+    server.memoryPercent = server.memorypercent;
+    server.runBackup = server.runbackup;
+    delete server.cpupercent;
+    delete server.nodeid;
+    delete server.memorypercent;
+    delete server.runbackup;
+    return server;
+  });
 };

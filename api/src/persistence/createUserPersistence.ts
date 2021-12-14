@@ -1,5 +1,4 @@
-import { ApplicationContext } from '../createApplicationContext';
-
+import { db } from './db';
 export type User = {
   id: string;
   email: string;
@@ -8,16 +7,14 @@ export type User = {
 
 type createUserPersistenceOptions = {
   user: User;
-  applicationContext: ApplicationContext;
 };
 
 export const createUserPersistence = async ({
-  applicationContext,
   user,
 }: createUserPersistenceOptions) => {
   const { id, email, password } = user;
 
-  await applicationContext.db.users.create({
+  await db.users.create({
     data: {
       id,
       email,

@@ -1,11 +1,9 @@
-import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { stopServerInteractor } from '../interactors/stopServerInteractor';
 
 export const stopServerRoute = async (req: Request, res: Response) => {
-  const applicationContext = createApplicationContext();
   const { serverId } = req.params;
-  await applicationContext.interactors.stopServerInteractor({
-    applicationContext,
+  await stopServerInteractor({
     serverId,
   });
   return res.send('server stopped');

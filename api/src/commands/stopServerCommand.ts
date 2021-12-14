@@ -12,10 +12,14 @@ export const stopServerCommand = async ({
   node,
   serverId,
 }: stopServerCommandOptions) => {
-  await fetch(`${getAgentUrl(node)}/servers/${serverId}/stop`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
+  const response = await fetch(
+    `${getAgentUrl(node)}/servers/${serverId}/stop`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     },
-  }).then(({ json }) => json());
+  );
+  return response.json();
 };

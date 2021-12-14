@@ -1,15 +1,13 @@
-import { ApplicationContext } from '../createApplicationContext';
+import { db } from './db';
 
 type backupCompletePersistenceOptions = {
   serverId: string;
-  applicationContext: ApplicationContext;
 };
 
 export const backupCompletePersistence = async ({
-  applicationContext,
   serverId,
 }: backupCompletePersistenceOptions) => {
-  await applicationContext.db.servers.update({
+  await db.servers.update({
     where: {
       id: serverId,
     },

@@ -35,6 +35,7 @@ model Servers {
   id            String  @id @default(uuid()) @db.Uuid
   port          Int
   memory        Int
+  version       String  @db.VarChar(255)
   cpuPercent    String? @map("cpu_percent") @db.VarChar(255)
   memoryPercent String? @map("memory_percent") @db.VarChar(255)
   restart       Boolean @default(false)

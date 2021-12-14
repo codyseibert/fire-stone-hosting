@@ -4,24 +4,24 @@ import { Server } from '../models/Server';
 
 // const stripe = require('stripe')(process.env.STRIPE_KEY);
 
-import { ApplicationContext } from '../createApplicationContext';
 import { User } from '../persistence/createUserPersistence';
 import { getServersOnNodePersistence } from '../persistence/getServersOnNodePersistence';
 import { getNodesPersistence } from '../persistence/getNodesPersistence';
 import { plans } from '../data/plans';
+import { setFreeMemoryOnNodePersistence } from '../persistence/setFreeMemoryOnNodePersistence';
 
 type purchaseServerInteractorOptions = {
   user: User;
+  version: string;
   plan: {
     plan: string;
   };
-  applicationContext: ApplicationContext;
 };
 
 export const purchaseServerInteractor = async ({
   user,
   plan,
-  applicationContext,
+  version,
 }: purchaseServerInteractorOptions) => {
   // await stripe.subscriptions.create({
   //   customer: user.id,
@@ -33,9 +33,7 @@ export const purchaseServerInteractor = async ({
   //   ],
   // });
 
-  const nodes = await getNodesPersistence({
-    applicationContext,
-  });
+  const nodes = await getNodesPersistence();
 
   const memory = plans.find(p => p.plan === plan.plan)!.memory;
   const desiredNode = nodes.find(node => true || node.freeMemory > memory); // TODO: remove true
@@ -45,7 +43,6 @@ export const purchaseServerInteractor = async ({
   }
 
   const servers: Server[] = await getServersOnNodePersistence({
-    applicationContext,
     nodeId: desiredNode.id,
   });
 
@@ -55,8 +52,7 @@ export const purchaseServerInteractor = async ({
     freePort = ports[ports.length - 1] + 1;
   }
 
-  await applicationContext.persistence.setFreeMemoryOnNode({
-    applicationContext,
+  await setFreeMemoryOnNodePersistence({
     freeMemory: desiredNode.freeMemory - memory,
     nodeId: desiredNode.id,
   });
@@ -66,6 +62,7 @@ export const purchaseServerInteractor = async ({
     nodeId: desiredNode.id,
     port: freePort,
     memory,
+    version,
     userId: user.id,
     running: true,
     runBackup: false,
@@ -73,7 +70,6 @@ export const purchaseServerInteractor = async ({
   };
 
   await createServerPersistence({
-    applicationContext,
     server,
   });
 
