@@ -1,5 +1,5 @@
 ---
-name: "\U0001F41B Agent Feature request"
+name: "API Feature request"
 about: This urgently needs to be added to the api directory
 description: This urgently needs to be added to the api directory
 title: "[Feature Request]: (Enter short, one sentence summary of what needs to get added)"
