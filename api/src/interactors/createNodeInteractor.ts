@@ -1,10 +1,8 @@
-import { ApplicationContext } from '../createApplicationContext';
-import { createNodePersistence } from '../persistence/sqlite/createNodePersistence';
+import { createNodePersistence } from '../persistence/createNodePersistence';
 import { ServerNode } from '../models/ServerNode';
 
 type createNodeInteractorOptions = {
   node: ServerNode;
-  applicationContext: ApplicationContext;
 };
 
 export interface createNodeInteractorInterface {
@@ -12,10 +10,8 @@ export interface createNodeInteractorInterface {
 }
 
 export const createNodeInteractor: createNodeInteractorInterface = async ({
-  applicationContext,
   node,
 }) =>
   createNodePersistence({
-    applicationContext,
     node,
   });

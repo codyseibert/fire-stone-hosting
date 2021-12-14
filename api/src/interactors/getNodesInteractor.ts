@@ -1,10 +1,3 @@
-import { ApplicationContext } from "../createApplicationContext";
+import { getNodesPersistence } from '../persistence/getNodesPersistence';
 
-type getNodesInteractorOptions = {
-  applicationContext: ApplicationContext;
-};
-
-export const getNodesInteractor = async ({ applicationContext }: getNodesInteractorOptions) =>
-  applicationContext.persistence.getNodes({
-    applicationContext,
-  });
+export const getNodesInteractor = async () => getNodesPersistence();

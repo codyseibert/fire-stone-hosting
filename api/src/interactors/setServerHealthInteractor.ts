@@ -1,20 +1,17 @@
-import { ApplicationContext } from "../createApplicationContext";
+import { setServerHealthPersistence } from '../persistence/setServerHealthPersistence';
 
 type setServerHealthInteractorOptions = {
-  memoryPercent: String;
-  cpuPercent: String;
-  serverId: String;
-  applicationContext: ApplicationContext;
+  memoryPercent: string;
+  cpuPercent: string;
+  serverId: string;
 };
 
 export const setServerHealthInteractor = async ({
-  applicationContext,
   serverId,
   memoryPercent,
   cpuPercent,
 }: setServerHealthInteractorOptions) =>
-  applicationContext.persistence.setServerHealth({
-    applicationContext,
+  setServerHealthPersistence({
     serverId,
     memoryPercent,
     cpuPercent,

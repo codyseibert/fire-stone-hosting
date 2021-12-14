@@ -30,10 +30,10 @@ export const startServer: startServerInterface = async ({ serverId }) => {
     console.log(`${serverId} - making directory`);
     await exec(`mkdir -p ../servers/${serverId}`);
     console.log(`${serverId} - copying server.properties`);
-    await exec(`cp ../server.properties ../servers/${serverId}`);
+    await exec(`cp ./server.properties ../servers/${serverId}`);
     console.log(`${serverId} - building container`);
     await exec(
-      `docker build -t ${serverId} -f ../minecraft.Dockerfile ../servers/${serverId}`,
+      `docker build -t mc-${serverId} -f ./minecraft.Dockerfile ../servers/${serverId}`,
     );
   }
 
@@ -44,7 +44,7 @@ export const startServer: startServerInterface = async ({ serverId }) => {
       '--restart unless-stopped',
       '--cpus="1"',
       '-itd',
-      `--name ${serverId}`,
+      `--name mc-${serverId}`,
       `-m ${memory}m`,
       `-e JAVA_OPTS="-Xmn${Math.ceil(
         memory / 4,
@@ -53,11 +53,11 @@ export const startServer: startServerInterface = async ({ serverId }) => {
       )}M"`,
       `-p ${port}:25565`,
       `-v $(pwd)/../servers/${serverId}:/minecraft`,
-      serverId,
+      `mc-${serverId}`,
     ].join(' ');
     console.log('command', command);
     await exec(command);
   } catch (err) {
-    await exec(`docker start ${serverId}`);
+    await exec(`docker start mc-${serverId}`);
   }
 };

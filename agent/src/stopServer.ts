@@ -11,5 +11,5 @@ interface stopServerInterface {
 }
 
 export const stopServer: stopServerInterface = async ({ serverId }) => {
-  return exec(`docker exec ${serverId}`);
+  return exec(`docker stop mc-${serverId}`);
 };

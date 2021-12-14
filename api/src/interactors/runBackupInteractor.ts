@@ -1,12 +1,12 @@
-import { ApplicationContext } from "../createApplicationContext";
+import { runBackupPersistence } from '../persistence/runBackupPersistence';
 
 type runBackupInteractorOptions = {
-  serverId: String;
-  applicationContext: ApplicationContext;
+  serverId: string;
 };
 
-export const runBackupInteractor = async ({ applicationContext, serverId }: runBackupInteractorOptions) =>
-  applicationContext.persistence.runBackup({
-    applicationContext,
+export const runBackupInteractor = async ({
+  serverId,
+}: runBackupInteractorOptions) =>
+  runBackupPersistence({
     serverId,
   });

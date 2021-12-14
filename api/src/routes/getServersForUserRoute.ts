@@ -1,14 +1,10 @@
-import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { getServersForUserInteractor } from '../interactors/getServersForUserInteractor';
 
 export const getServersForUserRoute = async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const applicationContext = createApplicationContext();
-  const servers = await applicationContext.interactors.getServersForUserInteractor(
-    {
-      userId,
-      applicationContext,
-    },
-  );
+  const servers = await getServersForUserInteractor({
+    userId,
+  });
   return res.send(servers);
 };

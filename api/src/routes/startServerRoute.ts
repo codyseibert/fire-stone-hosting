@@ -1,11 +1,9 @@
-import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { startServerInteractor } from '../interactors/startServerInteractor';
 
 export const startServerRoute = async (req: Request, res: Response) => {
-  const applicationContext = createApplicationContext();
   const { serverId } = req.params;
-  await applicationContext.interactors.startServerInteractor({
-    applicationContext,
+  await startServerInteractor({
     serverId,
   });
   return res.send('server started');

@@ -1,12 +1,10 @@
-import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { registerInteractor } from '../interactors/registerInteractor';
 
 export const registerRoute = async (req: Request, res: Response) => {
-  const applicationContext = createApplicationContext();
   const account = req.body;
   try {
-    await applicationContext.interactors.registerInteractor({
-      applicationContext,
+    await registerInteractor({
       account,
     });
     return res.send('account registered');

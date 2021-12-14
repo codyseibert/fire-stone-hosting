@@ -1,11 +1,9 @@
-import { createApplicationContext } from '../createApplicationContext';
 import { Request, Response } from 'express';
+import { backupCompleteInteractor } from '../interactors/backupCompleteInteractor';
 
 export const backupCompleteRoute = async (req: Request, res: Response) => {
-  const applicationContext = createApplicationContext();
   const { serverId } = req.params;
-  await applicationContext.interactors.backupCompleteInteractor({
-    applicationContext,
+  await backupCompleteInteractor({
     serverId,
   });
   return res.send('server back up complete');

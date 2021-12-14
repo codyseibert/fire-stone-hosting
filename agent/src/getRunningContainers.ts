@@ -12,6 +12,7 @@ export const getRunningContainers: getRunningContainersInterface = async () => {
   const names = namesStdout
     .trim()
     .split('\n')
-    .filter(n => n.length);
+    .filter(n => n.length)
+    .filter(n => n.startsWith('mc-'));
   return names;
 };

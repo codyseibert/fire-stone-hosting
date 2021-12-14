@@ -8,3 +8,5 @@ ui/.cache/
 ui/dist/
 .vagrant/
 .DS_STORE
+.env
+dist

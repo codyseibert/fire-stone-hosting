@@ -1,12 +1,12 @@
-import { ApplicationContext } from "../createApplicationContext";
+import { backupCompletePersistence } from '../persistence/backupCompletePersistence';
 
 type backupCompleteInteractorOptions = {
   serverId: string;
-  applicationContext: ApplicationContext;
 };
 
-export const backupCompleteInteractor = async ({ applicationContext, serverId }: backupCompleteInteractorOptions) =>
-  applicationContext.persistence.backupComplete({
-    applicationContext,
+export const backupCompleteInteractor = async ({
+  serverId,
+}: backupCompleteInteractorOptions) =>
+  backupCompletePersistence({
     serverId,
   });
