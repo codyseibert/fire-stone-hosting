@@ -9,7 +9,7 @@ assignees:
 ---
 
 ### Describe what needs to be added
-Write a clear and concise description of what the bug is.
+Write a clear and concise description of why this needs to be added.
 
 ### Why do you think this needs to be added?
 
