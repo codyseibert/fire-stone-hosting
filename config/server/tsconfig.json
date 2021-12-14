@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    /* Visit https://aka.ms/tsconfig.json to read more about this file */
+
+    "target": "es2016",
+    "lib": ["ESNext"],
+
+    "module": "commonjs",
+    "moduleResolution": "node",
+
+    "allowJs": true,
+    "checkJs": true,
+
+    "noEmit": true,
+
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    // Type checking
+    "noImplicitAny": true,
+
+    //  Uncomment the following for more strict type checking
+    // "strict": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noImplicitReturns": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "allowUnreachableCode": false,
+
+    "skipLibCheck": true
+  }
+}

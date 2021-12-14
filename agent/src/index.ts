@@ -1,5 +1,4 @@
 import express from 'express';
-import httpFn from 'http';
 import { Server as SocketServer, Socket } from 'socket.io';
 
 import util from 'util';
@@ -11,7 +10,6 @@ import fs from 'fs';
 import { getSystemSpecs } from './getSystemSpecs';
 import { registerAgentProxy } from './proxies/registerAgentProxy';
 import { getServersProxy } from './proxies/getServersProxy';
-import { runBackup } from './runBackup';
 import { startServer } from './startServer';
 import { saveServerHealthProxy } from './proxies/saveServerHealthProxy';
 import { runCommand } from './runCommand';
@@ -19,7 +17,7 @@ import { stopServer } from './stopServer';
 import { stopOrphanedServers } from './stopOrphanedServers';
 import { getServerHealth } from './getServerHealth';
 import dotenv from 'dotenv';
-import { Server } from '../../api/src/models/Server';
+import { Server } from 'api/src/models/Server';
 import { restartServer } from './restartServer';
 import cors from 'cors';
 
