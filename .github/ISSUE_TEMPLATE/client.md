@@ -3,7 +3,7 @@ name: "Client Feature request"
 about: This urgently needs to be added to the client directory
 description: This urgently needs to be added to the client directory
 title: "[Feature Request]: (Enter short, one sentence summary of what needs to get added)"
-labels: ["client"]
+labels: ["client", "feature"]
 assignees:
 
 ---
