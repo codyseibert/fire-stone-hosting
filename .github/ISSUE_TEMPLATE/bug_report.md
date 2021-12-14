@@ -5,7 +5,7 @@ description: File a bug report
 title: "[Bug]: (Enter short, one sentence summary of bug here)"
 labels: ["bug"]
 assignees:
-- codyseibert
+- 
 
 
 ---
