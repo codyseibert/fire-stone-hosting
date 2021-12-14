@@ -1,0 +1,32 @@
+---
+name: "\U0001F41B Agent Feature request"
+about: This urgently needs to be added to the agent directory
+description: This urgently needs to be added to the agent directory
+title: "[Bug]: (Enter short, one sentence summary of what needs to get added)"
+labels: ["agent"]
+assignees:
+
+---
+
+### Describe what needs to be added
+Write a clear and concise description of what the bug is.
+
+### Why do you think this needs to be added?
+
+1. 
+2. 
+3. 
+4. 
+
+### Will you be able to work on adding this to the project?
+
+- [ ] Yes
+- [ ] No
+
+### Screenshots
+
+Add screenshots, if applicable.
+
+### Additional context/details
+
+Add any other context or details, you would like to mention.
