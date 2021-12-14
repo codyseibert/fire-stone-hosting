@@ -74,8 +74,9 @@ app.post('/servers/:serverId/start', async (req, res) => {
   res.send('server started');
 });
 
-app.listen(4444);
-console.log('http server started on port 4444');
+app.listen(4444, () => {
+  console.log('[AGENT] server listening on http://localhost:4444');
+});
 
 // const http = httpFn.createServer(app);
 const io = new SocketServer(5000, {

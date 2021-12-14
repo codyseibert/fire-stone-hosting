@@ -1,7 +1,7 @@
 import 'dotenv/config';
-import * as express from 'express';
-import * as cors from 'cors';
-import * as morgan from 'morgan';
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
 
 import { setupRoutes } from './routes';
 
@@ -12,4 +12,6 @@ app.use(express.json());
 
 setupRoutes(app);
 
-app.listen(3333);
+app.listen(3333, () => {
+  console.log('[API] server listening on http://localhost:3333');
+});
