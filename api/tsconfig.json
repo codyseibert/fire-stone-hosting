@@ -1,17 +1,8 @@
 {
+  "extends": "config/server/tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es6",
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
-    "baseUrl": ".",
-    "typeRoots": ["@types", "./node_modules/@types"],
-    "removeComments": true,
-    "skipLibCheck": true
+    "rootDir": "./src"
   },
-  "include": ["src/**/*", "@types/express/custom.d.ts"],
-  "exclude": ["node_modules"]
+  "include": ["./src", "./environment.d.ts"],
+  "exclude": ["dist", "node_modules", "setup.js"]
 }
