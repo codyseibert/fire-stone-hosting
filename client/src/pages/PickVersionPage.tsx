@@ -1,8 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Plan, plans } from '../data/plans';
-import { ConfigurationContext } from './Dashboard/context/ConfigurationContext';
-// import { useNavigate, useParams } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Plan, plans } from "../data/plans";
+import { ConfigurationContext } from "./Dashboard/context/ConfigurationContext";
 
 export const PickVersionPage: React.FC = () => {
   const params = useParams();
@@ -11,9 +10,7 @@ export const PickVersionPage: React.FC = () => {
   const [plan] = useState<Plan>(() => {
     return plans.find((p) => p.plan === planId)!;
   });
-  const { configuration, setConfiguration } = useContext(
-    ConfigurationContext
-  )!;
+  const { configuration, setConfiguration } = useContext(ConfigurationContext)!;
 
   const confirmConfiguration = () => {
     navigate(`/plans/${planId}/purchase`);
@@ -55,13 +52,14 @@ export const PickVersionPage: React.FC = () => {
         <div className="col-md-6">
           <div className="shadow-sm p-3 pt-4 bg-info text-white rounded">
             <h6>
-              Selected Plan:{' '}
+              Selected Plan:{" "}
               <img
                 src={plan.imageSrc}
-                style={{ width: '30px' }}
-              />{' '}
-              {plan.name}, {plan.memory} GB, ${' '}
-              {(plan.memory * 3).toFixed(2)} / month
+                style={{ width: "30px" }}
+                alt="plan-cover"
+              />{" "}
+              {plan.name}, {plan.memory} GB, $ {(plan.memory * 3).toFixed(2)} /
+              month
             </h6>
           </div>
         </div>
