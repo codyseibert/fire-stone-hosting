@@ -1,7 +1,6 @@
 import { NextFunction, Response } from 'express';
+import { getTokenFromHeader, getTokenPayload } from '../lib/jwt';
 import { IAuthRequest } from '../routes/purchaseServerRoute';
-
-const jwt = require('jsonwebtoken');
 
 export const isAuthenticated = (
   req: IAuthRequest,
@@ -9,11 +8,11 @@ export const isAuthenticated = (
   next: NextFunction,
 ) => {
   try {
-    const user = jwt.verify(
-      req.headers.authorization.split(' ')[1],
-      process.env.JWT_SECRET || 'testing',
-    );
+    const token = getTokenFromHeader(req);
+    const user = getTokenPayload(token);
+
     req.user = user;
+
     next();
   } catch (err) {
     res.status(401).send('Unauthenticated');

@@ -1,15 +1,14 @@
-import * as jwt from 'jsonwebtoken';
-import { plans } from '../data/plans';
-
 import { v4 as uuidv4 } from 'uuid';
 
 // const stripe = require('stripe')(process.env.STRIPE_KEY);
 
+import { plans } from '../data/plans';
 import { getServersOnNodePersistence } from '../persistence/getServersOnNodePersistence';
 import { createUserPersistence } from '../persistence/createUserPersistence';
 import { createServerPersistence } from '../persistence/createServerPersistence';
 import { getNodesPersistence } from '../persistence/getNodesPersistence';
 import { setFreeMemoryOnNodePersistence } from '../persistence/setFreeMemoryOnNodePersistence';
+import { getSignedToken } from '../lib/jwt';
 
 type createAccountAndPurchaseServerInteractorOptions = {
   email: string;
@@ -49,7 +48,8 @@ export const createAccountAndPurchaseServerInteractor = async ({
   await createUserPersistence({
     user,
   });
-  const token = jwt.sign(user, process.env.JWT_SECRET || 'testing');
+
+  const token = getSignedToken(user);
 
   // customer = await stripe.customers.create({
   //   email: user.email,
