@@ -1,5 +1,6 @@
-import * as jwt from 'jsonwebtoken';
 import { getUserPersistence } from '../persistence/getUserPersistence';
+import { isValidPassword } from '../lib/passwordEncryption';
+import { getSignedToken } from '../lib/jwt';
 
 type loginInteractorOptions = {
   email: string;
@@ -13,14 +14,18 @@ export const loginInteractor = async ({
   const user = await getUserPersistence({
     email,
   });
+
   if (!user) {
-    throw new Error('invalid login');
+    throw new Error('user not found');
   }
 
-  if (user.password !== password) {
-    throw new Error('invalid login');
+  const isValid = await isValidPassword(password, user.password);
+
+  if (!isValid) {
+    throw new Error('invalid password');
   }
 
-  const token = jwt.sign(user, process.env.JWT_SECRET || 'testing');
+  const token = getSignedToken(user);
+
   return { token, user };
 };
