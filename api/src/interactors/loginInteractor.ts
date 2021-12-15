@@ -19,7 +19,7 @@ export const loginInteractor = async ({
     throw new Error('user not found');
   }
 
-  const isValid = await isValidPassword(user.password, password);
+  const isValid = await isValidPassword(password, user.password);
 
   if (!isValid) {
     throw new Error('invalid password');
