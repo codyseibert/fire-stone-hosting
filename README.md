@@ -6,7 +6,7 @@
 
 # Building in Public
 
-I'm trying to document this project via my [Youtube channel](https://www.youtube.com/c/webdevjunkie) on this specific youtube series found [here](https://bit.ly/minecraftvlogseries).
+I'm trying to document this project via my [Youtube Channel](https://www.youtube.com/c/webdevjunkie) on this specific youtube series found [here](https://bit.ly/minecraftvlogseries).
 
 # Getting Started
 
