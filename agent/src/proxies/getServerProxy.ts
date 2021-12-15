@@ -1,5 +1,5 @@
 import request from 'request-promise-native';
-import { Server } from '../../../api/src/models/Server';
+import { Server } from 'api/src/models/Server';
 
 type getServerProxyOptions = {
   serverId: string;

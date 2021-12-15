@@ -10,11 +10,13 @@ I'm trying to document this project via my youtube channel [https://www.youtube.
 
 # Getting Started
 
-This project is broken up into 3 main components: agent, api, and client. Each component has it's own package.json and will need to be setup and install individually. To get started, do the following:
+This project is setup using a [npm workspace](https://docs.npmjs.com/cli/v8/using-npm/workspaces) monorepo in order to setup the multiple projects run the following commands in the root folder:
 
-- client: `cd client && npm i && npm run dev`
-- server: `cd server && npm i && npm run dev`
-- agent: `cd agent && npm i && npm dev`
+1. `install-workspace`: Install all dependencies for the workspace
+2. For running each project use:
+   - `dev:agent`: Runs agent project
+   - `dev:api`: Runs api project
+   - `dev:client`: Runs client project
 
 You will need the following installed in order for the agent to be able to run the minecraft servers and accept commands:
 

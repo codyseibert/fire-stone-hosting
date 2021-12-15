@@ -1,23 +1,21 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "license": "MIT",
+  "private": true,
   "scripts": {
     "build": "esbuild src/index.ts --bundle --minify --outdir=dist --platform=node --target=node16",
     "dev": "nodemon src/index.ts",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "check:type": "tsc --project ./tsconfig.json",
+    "postinstall": "prisma generate"
   },
-  "keywords": [],
-  "author": "",
-  "license": "MIT",
   "dependencies": {
+    "config": "*",
     "@prisma/client": "^3.6.0",
-    "body-parser": "^1.19.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "ip": "^1.1.5",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.6",
@@ -32,8 +30,6 @@
     "@types/morgan": "^1.9.3",
     "@types/node": "^16.11.12",
     "@types/node-fetch": "^2.5.12",
-    "@types/request-promise-native": "^1.0.18",
-    "@types/stripe": "^8.0.417",
     "@types/uuid": "^8.3.3",
     "esbuild": "^0.14.3",
     "eslint": "^8.4.1",
@@ -45,6 +41,6 @@
     "prettier": "^2.5.1",
     "prisma": "^3.6.0",
     "ts-node": "^10.4.0",
-    "typescript": "^4.5.3"
+    "typescript": "^4.5.4"
   }
 }
