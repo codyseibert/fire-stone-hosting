@@ -18,7 +18,7 @@ interface startServerInterface {
 
 export const startServer: startServerInterface = async ({ serverId }) => {
   const server = await getServerProxy({ serverId });
-  const { memory, port } = server;
+  const { memory, port, version } = server;
 
   try {
     await new Promise<void>((resolve, reject) => {
@@ -29,12 +29,6 @@ export const startServer: startServerInterface = async ({ serverId }) => {
   } catch (error) {
     console.log(`${serverId} - making directory`);
     await exec(`mkdir -p ../servers/${serverId}`);
-    console.log(`${serverId} - copying server.properties`);
-    await exec(`cp ./server.properties ../servers/${serverId}`);
-    console.log(`${serverId} - building container`);
-    await exec(
-      `docker build -t mc-${serverId} -f ./minecraft.Dockerfile ../servers/${serverId}`,
-    );
   }
 
   try {
@@ -45,15 +39,13 @@ export const startServer: startServerInterface = async ({ serverId }) => {
       '--cpus="1"',
       '-itd',
       `--name mc-${serverId}`,
-      `-m ${memory}m`,
-      `-e JAVA_OPTS="-Xmn${Math.ceil(
-        memory / 4,
-      )}M -Xms${memory}M -Xmx${memory}M -XX:SoftMaxHeapSize=${Math.ceil(
-        memory / 2,
-      )}M"`,
       `-p ${port}:25565`,
-      `-v $(pwd)/../servers/${serverId}:/minecraft`,
-      `mc-${serverId}`,
+      `-m ${memory}m`,
+      `-v $(pwd)/../servers/${serverId}:/data`,
+      '-e EULA=TRUE',
+      `-e VERSION=${version}`,
+      `-e MEMORY=${memory}M`,
+      `itzg/minecraft-server`,
     ].join(' ');
     console.log('command', command);
     await exec(command);
