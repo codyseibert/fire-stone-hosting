@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "./config";
 
-export default ({ serverId }: { serverId: string }, token: string) =>
+const stopServer = ({ serverId }: { serverId: string }, token: string) =>
   axios
     .post(`${API_URL}/servers/${serverId}/stop`, null, {
       headers: {
@@ -9,3 +9,5 @@ export default ({ serverId }: { serverId: string }, token: string) =>
       },
     })
     .then((response) => response.data);
+
+export default stopServer;

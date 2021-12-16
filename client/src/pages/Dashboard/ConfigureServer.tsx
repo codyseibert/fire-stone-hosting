@@ -1,18 +1,11 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
-import getServer from '../../http/getServer.http';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Server } from '../../../../api/src/models/Server';
-import { NodeContext } from './context/NodeContext';
-import getServerConfiguration from '../../http/getServerConfiguration.http';
-import { ServerContext } from './context/ServerContext';
-import saveServerConfiguration from '../../http/saveServerConfiguration.http';
+import React, { useContext, useEffect, useState } from "react";
+
+import { NodeContext } from "./context/NodeContext";
+import getServerConfiguration from "../../http/getServerConfiguration.http";
+import { ServerContext } from "./context/ServerContext";
+import saveServerConfiguration from "../../http/saveServerConfiguration.http";
 
 const ConfigureServer = () => {
-  const navigate = useNavigate();
   const { node } = useContext(NodeContext)!;
   const { server } = useContext(ServerContext)!;
   const [values, setValues] = useState<{
@@ -25,13 +18,14 @@ const ConfigureServer = () => {
       nodeIp: node.ip,
       serverId: server.id,
     }).then((configuration) => {
-      configuration = configuration.replace(/\#.*\n/g, '');
+      // eslint-disable-next-line no-useless-escape
+      configuration = configuration.replace(/\#.*\n/g, "");
       const values: {
         [key: string]: string;
       } = {};
       configuration
-        .split('\n')
-        .map((entry: any) => entry.split('='))
+        .split("\n")
+        .map((entry: any) => entry.split("="))
         .forEach(([key, val]: string[]) => {
           if (!key || val === undefined) return;
           values[key] = val;
@@ -43,7 +37,7 @@ const ConfigureServer = () => {
   const saveConfiguration = async () => {
     const configuration = Object.entries(values)
       .map(([key, value]) => `${key}=${value}`)
-      .join('\n');
+      .join("\n");
     await saveServerConfiguration({
       nodeIp: node!.ip,
       serverId: server!.id,
@@ -65,10 +59,11 @@ const ConfigureServer = () => {
         {Object.entries(values).map(([key, value]) => (
           <div className="col-md-4 mb-4">
             <div className="form-group">
-              <label>{key.replace(/\-/g, ' ')}</label>
+              {/* eslint-disable-next-line no-useless-escape */}
+              <label>{key.replace(/\-/g, " ")}</label>
               <input
                 className="form-control"
-                value={value || ''}
+                value={value || ""}
                 onChange={(e) =>
                   setValues({
                     ...values,
