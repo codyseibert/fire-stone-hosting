@@ -4,6 +4,9 @@
 # Contributing
 - Anyone is welcome to contribute to this project via github, just ensure you are following the guidelines for contributing to this project mentioned at CONTRIBUTING.md; just fork the project and submit a pull request, and I'll try to give it a timely review when I get a chance.
 
+# Creating Issues
+- If you find a bug with the code, or you would like to request for a feature, you can go to the issues section and create a thread. If you want to request a feature in a specific directory, we require you to tap on the directory name and create the feature request thread from there. If you want all 3 diretories, we request you to add the feature to the feature request section and we will add all the directories as labels.
+
 # Building in Public
 
 I'm trying to document this project via my [Youtube Channel](https://www.youtube.com/c/webdevjunkie) on this specific youtube series found [here](https://bit.ly/minecraftvlogseries).
