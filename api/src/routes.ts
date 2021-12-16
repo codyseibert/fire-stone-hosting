@@ -1,3 +1,5 @@
+import { Express } from 'express';
+
 import { getServersForUserRoute } from './routes/getServersForUserRoute';
 import { getServerRoute } from './routes/getServerRoute';
 import { getNodesRoute } from './routes/getNodesRoute';
@@ -19,7 +21,7 @@ import { restartServerRoute } from './routes/restartServerRoute';
 import { getNodeRoute } from './routes/getNodeRoute';
 import { getMCVersionsRoute } from './routes/getMCVersionsRoute';
 
-export const setupRoutes = (app: any) => {
+export const setupRoutes = (app: Express) => {
   app.get('/plans', getPlansRoute);
 
   app.get('/nodes', getNodesRoute);
