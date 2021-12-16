@@ -1,9 +1,10 @@
 /* eslint-disable no-restricted-syntax */
-import * as util from 'util';
-import * as cp from 'child_process';
-const exec = util.promisify(cp.exec);
+import util from 'util';
+import cp from 'child_process';
 
-const { getRunningContainers } = require('./getRunningContainers');
+import { getRunningContainers } from './getRunningContainers';
+
+const exec = util.promisify(cp.exec);
 
 type stopOrphanedServersOptions = {
   expectedServerIds: string[];
@@ -18,15 +19,17 @@ export const stopOrphanedServers: stopOrphanedServersInterface = async ({
 }) => {
   const runningServerIds = await getRunningContainers();
   const promises = [];
+
   for (const runningId of runningServerIds) {
     if (!expectedServerIds.find(expectedId => expectedId === runningId)) {
       // eslint-disable-next-line no-await-in-loop
       promises.push(
         exec(`docker stop --time=30 ${runningId}`).then(() =>
-          exec(`rm -rf ../servers/${runningId}`),
+          exec(`rm -rf ../../servers/${runningId}`),
         ),
       );
     }
   }
+
   await Promise.all(promises);
 };

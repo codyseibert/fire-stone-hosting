@@ -17,7 +17,9 @@ export const getServerHealth: getServerHealthInterface = async ({
   const { stdout } = await exec(
     `docker stats --no-stream --format "{{.CPUPerc}}|{{.MemPerc}}" mc-${serverId}`,
   );
+
   const [cpuPercent, memoryPercent] = stdout.replace('\n', '').split('|');
+
   return {
     cpuPercent,
     memoryPercent,

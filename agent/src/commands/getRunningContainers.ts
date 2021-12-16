@@ -4,7 +4,7 @@ import cp from 'child_process';
 const exec = util.promisify(cp.exec);
 
 interface getRunningContainersInterface {
-  (): Promise<any>;
+  (): Promise<string[]>;
 }
 
 export const getRunningContainers: getRunningContainersInterface = async () => {
@@ -14,5 +14,6 @@ export const getRunningContainers: getRunningContainersInterface = async () => {
     .split('\n')
     .filter(n => n.length)
     .filter(n => n.startsWith('mc-'));
+
   return names;
 };

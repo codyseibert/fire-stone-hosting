@@ -1,22 +1,27 @@
-
-import request from 'request-promise-native';
+import fetch from 'node-fetch';
+import request from 'node-fetch';
 
 type saveServerHealthProxyOptions = {
-    serverId: String,
-    cpuPercent: String,
-    memoryPercent: String,
-}
+  serverId: String;
+  cpuPercent: String;
+  memoryPercent: String;
+};
 
 interface saveServerHealthProxyInterface {
-  (opts: saveServerHealthProxyOptions): Promise<any>
+  (opts: saveServerHealthProxyOptions): Promise<any>;
 }
 
-export const saveServerHealthProxy: saveServerHealthProxyInterface = async ({ serverId, cpuPercent, memoryPercent }) => request({
-  method: 'post',
-  json: true,
-  url: `${process.env.MASTER_NODE_BASE_URL}/servers/${serverId}/health`,
-  body: {
-    cpuPercent,
-    memoryPercent,
-  },
-});
+export const saveServerHealthProxy: saveServerHealthProxyInterface = async ({
+  serverId,
+  cpuPercent,
+  memoryPercent,
+}) => {
+  fetch(`${process.env.MASTER_NODE_BASE_URL}/servers/${serverId}/health`, {
+    method: 'POST',
+    body: JSON.stringify({
+      cpuPercent,
+      memoryPercent,
+    }),
+    headers: { 'Content-Type': 'application/json' },
+  });
+};

@@ -1,15 +1,19 @@
-import request from 'request-promise-native';
+import fetch from 'node-fetch';
 
 type backupCompleteProxyOptions = {
-  serverId: string,
-}
+  serverId: string;
+};
 
 interface backupCompleteProxyInterface {
-  (opts: backupCompleteProxyOptions): Promise<any>
+  (opts: backupCompleteProxyOptions): Promise<any>;
 }
 
-export const backupCompleteProxy: backupCompleteProxyInterface = async ({ serverId }) => request({
-  method: 'post',
-  json: true,
-  url: `${process.env.MASTER_NODE_BASE_URL}/servers/${serverId}/backup-complete`,
-});
+export const backupCompleteProxy: backupCompleteProxyInterface = async ({
+  serverId,
+}) =>
+  fetch(
+    `${process.env.MASTER_NODE_BASE_URL}/servers/${serverId}/backup-complete`,
+    {
+      method: 'POST',
+    },
+  );
