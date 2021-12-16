@@ -1,0 +1,513 @@
+[
+  {
+    "id": "1.18.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/b0bdc637e4c4cbf0501500cbaad5a757b04848ed/1.18.1.json",
+    "time": "2021-12-10T08:26:34+00:00",
+    "releaseTime": "2021-12-10T08:23:00+00:00"
+  },
+  {
+    "id": "1.18",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/4220b6c4c91d80e17d441bcc166e5ca3f9a77304/1.18.json",
+    "time": "2021-12-10T08:14:51+00:00",
+    "releaseTime": "2021-11-30T09:16:29+00:00"
+  },
+  {
+    "id": "1.17.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/0b1d2828e58cf8eb1aac14ee588f5160bd06e77f/1.17.1.json",
+    "time": "2021-12-10T02:52:28+00:00",
+    "releaseTime": "2021-07-06T12:01:34+00:00"
+  },
+  {
+    "id": "1.17",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/bb6684a5a4f4ecfa8540a4c3aec0d1eab8c574c1/1.17.json",
+    "time": "2021-12-10T02:52:28+00:00",
+    "releaseTime": "2021-06-08T11:00:40+00:00"
+  },
+  {
+    "id": "1.16.5",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/53d73bd5ad8ce02c6b3ec809d4720fd6fff03456/1.16.5.json",
+    "time": "2021-12-15T15:44:04+00:00",
+    "releaseTime": "2021-01-14T16:05:32+00:00"
+  },
+  {
+    "id": "1.16.4",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/3015de9d239dcfe37688dae27d718eacfe03c3ef/1.16.4.json",
+    "time": "2021-12-15T15:44:03+00:00",
+    "releaseTime": "2020-10-29T15:49:37+00:00"
+  },
+  {
+    "id": "1.16.3",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/e9702439d7e1dfbc0499f7b66f45398acafa0f2b/1.16.3.json",
+    "time": "2021-12-15T15:44:02+00:00",
+    "releaseTime": "2020-09-10T13:42:37+00:00"
+  },
+  {
+    "id": "1.16.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/1b7955bc3a4508288c0b71df4934fb9f9ee69ab2/1.16.2.json",
+    "time": "2021-12-15T15:44:02+00:00",
+    "releaseTime": "2020-08-11T10:13:46+00:00"
+  },
+  {
+    "id": "1.16.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/ddd245eae029e77e6fa8f65383129f79c1ed6684/1.16.1.json",
+    "time": "2021-12-15T15:44:01+00:00",
+    "releaseTime": "2020-06-24T10:31:40+00:00"
+  },
+  {
+    "id": "1.16",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/51b50a20fb1129dabf3c323787c71ebf8492277a/1.16.json",
+    "time": "2021-12-15T15:44:04+00:00",
+    "releaseTime": "2020-06-23T16:20:52+00:00"
+  },
+  {
+    "id": "1.15.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/a134a40902959810875d4642a4ac9c69c37e39a0/1.15.2.json",
+    "time": "2021-12-15T15:43:59+00:00",
+    "releaseTime": "2020-01-17T10:03:52+00:00"
+  },
+  {
+    "id": "1.15.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/3526ede769b1a1d30aca5b7b98a81607c60305f7/1.15.1.json",
+    "time": "2021-12-15T15:43:59+00:00",
+    "releaseTime": "2019-12-16T10:29:47+00:00"
+  },
+  {
+    "id": "1.15",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/75d15976c2d82a0afd796802bac73c934ea59df7/1.15.json",
+    "time": "2021-12-15T15:44:00+00:00",
+    "releaseTime": "2019-12-09T13:13:38+00:00"
+  },
+  {
+    "id": "1.14.4",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/8f81523cd2c2fdaf9c37431fceb0a446dbe71ed5/1.14.4.json",
+    "time": "2021-12-15T15:43:57+00:00",
+    "releaseTime": "2019-07-19T09:25:47+00:00"
+  },
+  {
+    "id": "1.14.3",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/970fb095132b5fa3edf829bbc487d415f3267d7f/1.14.3.json",
+    "time": "2021-12-15T15:43:57+00:00",
+    "releaseTime": "2019-06-24T12:52:52+00:00"
+  },
+  {
+    "id": "1.14.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/13a7b4ed55faa6a88f7729c0923bbe12a03f63e8/1.14.2.json",
+    "time": "2021-12-15T15:43:56+00:00",
+    "releaseTime": "2019-05-27T11:48:25+00:00"
+  },
+  {
+    "id": "1.14.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/770df8fddfd27061560507267eccb650345b61e2/1.14.1.json",
+    "time": "2021-12-15T15:43:56+00:00",
+    "releaseTime": "2019-05-13T11:10:12+00:00"
+  },
+  {
+    "id": "1.14",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/44552c5e051cff06483616adb1f6fd2d94ee3447/1.14.json",
+    "time": "2021-12-15T15:43:58+00:00",
+    "releaseTime": "2019-04-23T14:52:44+00:00"
+  },
+  {
+    "id": "1.13.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/1f439c21fee6a7816356c40a6194d064d1f44baa/1.13.2.json",
+    "time": "2021-12-15T15:43:55+00:00",
+    "releaseTime": "2018-10-22T11:41:07+00:00"
+  },
+  {
+    "id": "1.13.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/85c39d0f9d94a4777a9b401deb08cf07f55dfe39/1.13.1.json",
+    "time": "2021-12-15T15:43:54+00:00",
+    "releaseTime": "2018-08-22T14:03:42+00:00"
+  },
+  {
+    "id": "1.13",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/54e62e6c77c38f0094357d7d85a3c63a2b2f3dce/1.13.json",
+    "time": "2021-12-15T15:43:55+00:00",
+    "releaseTime": "2018-07-18T15:11:46+00:00"
+  },
+  {
+    "id": "1.12.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/cfd75871c03119093d7c96a6a99f21137d00c855/1.12.2.json",
+    "time": "2021-12-15T15:43:53+00:00",
+    "releaseTime": "2017-09-18T08:39:46+00:00"
+  },
+  {
+    "id": "1.12.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/ece2a75ac1eb6cabef04106a15f340a4cb87d86b/1.12.1.json",
+    "time": "2021-12-15T15:43:52+00:00",
+    "releaseTime": "2017-08-03T12:40:39+00:00"
+  },
+  {
+    "id": "1.12",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/fa3085f26ec90ef361352c3076e98aba6781b4b5/1.12.json",
+    "time": "2021-12-15T15:43:53+00:00",
+    "releaseTime": "2017-06-02T13:50:27+00:00"
+  },
+  {
+    "id": "1.11.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/4a7b205586fa9f827085c389ec8ce46a6df5fd94/1.11.2.json",
+    "time": "2021-12-15T15:43:51+00:00",
+    "releaseTime": "2016-12-21T09:29:12+00:00"
+  },
+  {
+    "id": "1.11.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/b4280e36205db0d7040c2fb1ecc8609dba675720/1.11.1.json",
+    "time": "2021-12-15T15:43:51+00:00",
+    "releaseTime": "2016-12-20T14:05:34+00:00"
+  },
+  {
+    "id": "1.11",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/ec94669865c0b0f6e9acfdb172985861790c8538/1.11.json",
+    "time": "2021-12-15T15:43:52+00:00",
+    "releaseTime": "2016-11-14T14:34:40+00:00"
+  },
+  {
+    "id": "1.10.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/453f5b2785876c07c4723c5811d101132f2f6b74/1.10.2.json",
+    "time": "2021-12-15T15:43:50+00:00",
+    "releaseTime": "2016-06-23T09:17:32+00:00"
+  },
+  {
+    "id": "1.10.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/6c26e69ed37120c0f6c93c3f69e7dc7b8e697ab8/1.10.1.json",
+    "time": "2021-12-15T15:43:50+00:00",
+    "releaseTime": "2016-06-22T10:13:22+00:00"
+  },
+  {
+    "id": "1.10",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/ed24421f4d1c6eae738a614ff1d9a60a05a700f2/1.10.json",
+    "time": "2021-12-15T15:43:51+00:00",
+    "releaseTime": "2016-06-08T13:06:18+00:00"
+  },
+  {
+    "id": "1.9.4",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/47a4367ff27db76067065807a97416711b7c7d09/1.9.4.json",
+    "time": "2021-12-15T15:44:15+00:00",
+    "releaseTime": "2016-05-10T10:17:16+00:00"
+  },
+  {
+    "id": "1.9.3",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/6107cb3185da153f79be05b3f424804c130b2c88/1.9.3.json",
+    "time": "2021-12-15T15:44:14+00:00",
+    "releaseTime": "2016-05-10T08:33:35+00:00"
+  },
+  {
+    "id": "1.9.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/b0be54cf45695e324b9926f990434f9a0235bd9b/1.9.2.json",
+    "time": "2021-12-15T15:44:14+00:00",
+    "releaseTime": "2016-03-30T15:23:55+00:00"
+  },
+  {
+    "id": "1.9.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/cb32af124abf1bc87c38b788926b3e592126a77c/1.9.1.json",
+    "time": "2021-12-15T15:44:13+00:00",
+    "releaseTime": "2016-03-30T13:43:07+00:00"
+  },
+  {
+    "id": "1.9",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/7bb4eab858d50c58d2855228110dfe1a4c2fa293/1.9.json",
+    "time": "2021-12-15T15:44:15+00:00",
+    "releaseTime": "2016-02-29T13:49:54+00:00"
+  },
+  {
+    "id": "1.8.9",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/d546f1707a3f2b7d034eece5ea2e311eda875787/1.8.9.json",
+    "time": "2021-12-15T15:44:12+00:00",
+    "releaseTime": "2015-12-03T09:24:39+00:00"
+  },
+  {
+    "id": "1.8.8",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/690172f1227e1c1d2fa8fceadd0f578f7851a69e/1.8.8.json",
+    "time": "2021-12-15T15:44:12+00:00",
+    "releaseTime": "2015-07-27T10:31:28+00:00"
+  },
+  {
+    "id": "1.8.7",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/7152f102903cd3ce7514d84c8ac98efecac30839/1.8.7.json",
+    "time": "2021-12-15T15:44:11+00:00",
+    "releaseTime": "2015-06-05T10:10:44+00:00"
+  },
+  {
+    "id": "1.8.6",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/acccbb056a3e8f3086c4614974fb3a894317853a/1.8.6.json",
+    "time": "2021-12-15T15:44:11+00:00",
+    "releaseTime": "2015-05-25T10:31:19+00:00"
+  },
+  {
+    "id": "1.8.5",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/16da5f5be7478f3602c25182a90f2057ba2f60d8/1.8.5.json",
+    "time": "2021-12-15T15:44:11+00:00",
+    "releaseTime": "2015-05-22T11:15:28+00:00"
+  },
+  {
+    "id": "1.8.4",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/043b84efde9fc25d849e979329c03101ac9b7795/1.8.4.json",
+    "time": "2021-12-15T15:44:10+00:00",
+    "releaseTime": "2015-04-17T11:37:50+00:00"
+  },
+  {
+    "id": "1.8.3",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/413ad8fdcf8f29f4f1c2b4425aa0dade00f75dd4/1.8.3.json",
+    "time": "2021-12-15T15:44:10+00:00",
+    "releaseTime": "2015-02-20T14:00:09+00:00"
+  },
+  {
+    "id": "1.8.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/1e35829856a71261f5a7b2b3a83012c7434b2203/1.8.2.json",
+    "time": "2021-12-15T15:44:09+00:00",
+    "releaseTime": "2015-02-19T15:47:29+00:00"
+  },
+  {
+    "id": "1.8.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/62f9f77f67fd7d6c92cfae57cecd445be14ccd4e/1.8.1.json",
+    "time": "2021-12-15T15:44:09+00:00",
+    "releaseTime": "2014-11-24T14:13:31+00:00"
+  },
+  {
+    "id": "1.8",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/9eb165eef46294062d8698c8a78e8ac914949e7a/1.8.json",
+    "time": "2021-12-15T15:44:13+00:00",
+    "releaseTime": "2014-09-02T08:24:35+00:00"
+  },
+  {
+    "id": "1.7.10",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/ed5d8789ed29872ea2ef1c348302b0c55e3f3468/1.7.10.json",
+    "time": "2021-12-15T15:44:05+00:00",
+    "releaseTime": "2014-05-14T17:29:23+00:00"
+  },
+  {
+    "id": "1.7.9",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/5579bc9e25a9bb5e3187a2570693a0c6658edce4/1.7.9.json",
+    "time": "2021-12-15T15:44:08+00:00",
+    "releaseTime": "2014-04-14T13:29:23+00:00"
+  },
+  {
+    "id": "1.7.8",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/03d8e2e1c192d48ffc406cb7a483861cf26dfe25/1.7.8.json",
+    "time": "2021-12-15T15:44:08+00:00",
+    "releaseTime": "2014-04-09T07:58:16+00:00"
+  },
+  {
+    "id": "1.7.7",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/47e228263557da73d0e2be803e5d83e5b246ae75/1.7.7.json",
+    "time": "2021-12-15T15:44:07+00:00",
+    "releaseTime": "2014-04-09T07:52:16+00:00"
+  },
+  {
+    "id": "1.7.6",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/b6dd3e6496ad415f0c57867dea1f97710d5f184c/1.7.6.json",
+    "time": "2021-12-15T15:44:07+00:00",
+    "releaseTime": "2014-04-09T07:52:06+00:00"
+  },
+  {
+    "id": "1.7.5",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/4afb628501a6a206b80a47ab4f29ea6b98caac90/1.7.5.json",
+    "time": "2021-12-15T15:44:06+00:00",
+    "releaseTime": "2014-02-26T09:22:17+00:00"
+  },
+  {
+    "id": "1.7.4",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/5db9d89cb6b89573384f324aa585b4c99525b37a/1.7.4.json",
+    "time": "2021-12-15T15:44:06+00:00",
+    "releaseTime": "2013-12-09T12:28:10+00:00"
+  },
+  {
+    "id": "1.7.3",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/cd133f90b7e339c50b3cdce64188a51469c6a128/1.7.3.json",
+    "time": "2021-12-15T15:44:06+00:00",
+    "releaseTime": "2013-12-06T13:55:34+00:00"
+  },
+  {
+    "id": "1.7.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/c2e8ecbf355760a74c93d7210767fa043d53f27c/1.7.2.json",
+    "time": "2021-12-15T15:44:05+00:00",
+    "releaseTime": "2013-10-25T13:00:00+00:00"
+  },
+  {
+    "id": "1.6.4",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/b71bae449192fbbe1582ff32fb3765edf0b9b0a8/1.6.4.json",
+    "time": "2019-06-28T07:06:16+00:00",
+    "releaseTime": "2013-09-19T15:52:37+00:00"
+  },
+  {
+    "id": "1.6.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/c0729761bf65dc58138ce508645dba1442fa78b8/1.6.2.json",
+    "time": "2019-06-28T07:06:16+00:00",
+    "releaseTime": "2013-07-05T13:09:02+00:00"
+  },
+  {
+    "id": "1.6.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/7fd8e0c76f62813eb0465e31bb74b160c01472d6/1.6.1.json",
+    "time": "2019-06-28T07:06:16+00:00",
+    "releaseTime": "2013-06-28T14:48:41+00:00"
+  },
+  {
+    "id": "1.5.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/a611948faa091ef3a0af43d39f77589c5e402170/1.5.2.json",
+    "time": "2019-06-28T07:06:16+00:00",
+    "releaseTime": "2013-04-25T15:45:00+00:00"
+  },
+  {
+    "id": "1.5.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/46b50f586db97821f22d2c94914c3a31f733a264/1.5.1.json",
+    "time": "2019-06-28T07:06:16+00:00",
+    "releaseTime": "2013-03-20T10:00:00+00:00"
+  },
+  {
+    "id": "1.4.7",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/89802d57ccee3d03ec59d2ab1f44386234adb399/1.4.7.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-12-27T22:00:00+00:00"
+  },
+  {
+    "id": "1.4.5",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/19555cce1f6d04e2b417ac2e9e06b6b752d5a2de/1.4.5.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-12-19T22:00:00+00:00"
+  },
+  {
+    "id": "1.4.6",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/a7d02971582fcdf14ea275cc549cb57604a37079/1.4.6.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-12-19T22:00:00+00:00"
+  },
+  {
+    "id": "1.4.4",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/578d09d5753e590ea043a68bdaaea45a5b9711ab/1.4.4.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-12-13T22:00:00+00:00"
+  },
+  {
+    "id": "1.4.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/aec7405cf74ae5f79b13f6e8c88f66920eac0e1b/1.4.2.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-11-24T22:00:00+00:00"
+  },
+  {
+    "id": "1.3.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/2bd0ca9b77465a29df4b9449772d008f8724dd19/1.3.2.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-08-15T22:00:00+00:00"
+  },
+  {
+    "id": "1.3.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/be773d2fff5c6e4db9929ae4ea780f8837323b6b/1.3.1.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-07-31T22:00:00+00:00"
+  },
+  {
+    "id": "1.2.5",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/886723c6385e62bb8dbe8026abf685140602404b/1.2.5.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-03-29T22:00:00+00:00"
+  },
+  {
+    "id": "1.2.4",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/3cc81a28957e8c7d94bdd4f6b2c51ef8cae54f9b/1.2.4.json",
+    "time": "2019-06-28T07:06:15+00:00",
+    "releaseTime": "2012-03-21T22:00:00+00:00"
+  },
+  {
+    "id": "1.2.3",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/4100a29330f76c93ef3bdc47d11fa016fd73de99/1.2.3.json",
+    "time": "2019-06-28T07:06:14+00:00",
+    "releaseTime": "2012-03-01T22:00:00+00:00"
+  },
+  {
+    "id": "1.2.2",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/897ce0e56d1cecc9e720f1934c09ea395008aa9e/1.2.2.json",
+    "time": "2019-06-28T07:06:14+00:00",
+    "releaseTime": "2012-02-29T22:00:01+00:00"
+  },
+  {
+    "id": "1.2.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/dc5f9e134da9e18a2db42ddc246aba5cdfe28d3c/1.2.1.json",
+    "time": "2019-06-28T07:06:14+00:00",
+    "releaseTime": "2012-02-29T22:00:00+00:00"
+  },
+  {
+    "id": "1.1",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/1c1aaa3dea5155b549d4baf3491e3f5f564c3b8b/1.1.json",
+    "time": "2019-06-28T07:05:45+00:00",
+    "releaseTime": "2012-01-11T22:00:00+00:00"
+  },
+  {
+    "id": "1.0",
+    "type": "release",
+    "url": "https://launchermeta.mojang.com/v1/packages/edfc56a64dfc6430665d745264732db53b0d1b41/1.0.json",
+    "time": "2019-06-28T07:05:45+00:00",
+    "releaseTime": "2011-11-17T22:00:00+00:00"
+  }
+]

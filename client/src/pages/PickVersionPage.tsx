@@ -1,16 +1,31 @@
-import React, { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Plan, plans } from "../data/plans";
-import { ConfigurationContext } from "./Dashboard/context/ConfigurationContext";
+import React, { useContext, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Plan, plans } from '../data/plans';
+import { ConfigurationContext } from './Dashboard/context/ConfigurationContext';
+import { MCVersion } from 'api/src/models/MCVersion';
+import { useEffect } from 'react';
+import { getVersions } from '../http/getVersions.http';
 
 export const PickVersionPage: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const [versions, setVersions] = useState<MCVersion[]>([]);
   const planId = params.planId;
   const [plan] = useState<Plan>(() => {
     return plans.find((p) => p.plan === planId)!;
   });
-  const { configuration, setConfiguration } = useContext(ConfigurationContext)!;
+  const { configuration, setConfiguration } = useContext(
+    ConfigurationContext
+  )!;
+
+  useEffect(() => {
+    getVersions().then((versions) => {
+      setVersions(versions);
+      setConfiguration({
+        version: versions[0].id,
+      });
+    });
+  }, []);
 
   const confirmConfiguration = () => {
     navigate(`/plans/${planId}/purchase`);
@@ -33,9 +48,11 @@ export const PickVersionPage: React.FC = () => {
                 });
               }}
             >
-              <option value="">- Select -</option>
-              <option value="1.18.1">1.18.1</option>
-              <option value="1.17.1">1.17.1</option>
+              {versions.map((version) => (
+                <option key={version.id} value={version.id}>
+                  {version.id}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -52,14 +69,14 @@ export const PickVersionPage: React.FC = () => {
         <div className="col-md-6">
           <div className="shadow-sm p-3 pt-4 bg-info text-white rounded">
             <h6>
-              Selected Plan:{" "}
+              Selected Plan:{' '}
               <img
                 src={plan.imageSrc}
-                style={{ width: "30px" }}
+                style={{ width: '30px' }}
                 alt="plan-cover"
-              />{" "}
-              {plan.name}, {plan.memory} GB, $ {(plan.memory * 3).toFixed(2)} /
-              month
+              />{' '}
+              {plan.name}, {plan.memory} GB, ${' '}
+              {(plan.memory * 3).toFixed(2)} / month
             </h6>
           </div>
         </div>
