@@ -25,14 +25,9 @@ This project is setup using a [npm workspace](https://docs.npmjs.com/cli/v8/usin
    - `npm run dev:api`: Runs api project
    - `npm run dev:client`: Runs client project
    - `npm run db`: Starts postgres db in Docker locally
-   - `npm run migrate`: Runs all migrations for the project
+   - `npm run migrate -- dev`: Runs all migrations for the project
 
 You will need the following installed in order for the agent to be able to run the minecraft servers and accept commands:
 
 - docker (used for wrapping and hosting the minecraft server)
 - socat (used for communicating via stdin to the running docker container)
-
-In order to start and configure the postgresql database, follow these steps
-
-- In the root folder run `docker-compose up -d`
-- Inside `api` run `npx prisma migrate dev` in order to apply pending migrations
