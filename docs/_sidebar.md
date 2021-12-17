@@ -2,3 +2,4 @@
 
 * [Home](/)
 * [Architecture](/architecture)
+* [DevLog Videos](/videos)
