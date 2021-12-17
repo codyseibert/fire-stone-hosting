@@ -5,8 +5,8 @@ import {
   injectStripe,
 } from 'react-stripe-elements';
 import { AuthenticationContext } from '../context/AuthenticationContext';
-import createAccountAndPurchaseServerHttp from '../http/createAccountAndPurchaseServer.http';
-import loginProxy from '../http/login.http';
+import { createAccountAndPurchaseServerApi } from '../api/createAccountAndPurchaseServerApi';
+import { loginApi } from '../api/loginApi';
 
 type CheckoutFormState = {
   email: string;
@@ -68,14 +68,14 @@ const CheckoutForm = ({
         name: 'Bob Sagot',
       },
     });
-    await createAccountAndPurchaseServerHttp({
+    await createAccountAndPurchaseServerApi({
       source: source.id,
       email: form.email,
       password: form.password,
       passwordConfirm: form.passwordConfirm,
       planId,
     });
-    const { token, user } = await loginProxy({
+    const { token, user } = await loginApi({
       ...form,
     });
     setAuthentication({

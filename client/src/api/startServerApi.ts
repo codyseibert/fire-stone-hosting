@@ -1,7 +1,10 @@
-import axios from "axios";
-import { API_URL } from "./config";
+import axios from 'axios';
+import { API_URL } from './config';
 
-const startServer = ({ serverId }: { serverId: string }, token: string) =>
+export const startServerApi = (
+  { serverId }: { serverId: string },
+  token: string
+) =>
   axios
     .post(`${API_URL}/servers/${serverId}/start`, null, {
       headers: {
@@ -9,5 +12,3 @@ const startServer = ({ serverId }: { serverId: string }, token: string) =>
       },
     })
     .then((response) => response.data);
-
-export default startServer;

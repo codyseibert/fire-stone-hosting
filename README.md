@@ -20,6 +20,8 @@ This project is setup using a [npm workspace](https://docs.npmjs.com/cli/v8/usin
    - `npm run dev:agent`: Runs agent project
    - `npm run dev:api`: Runs api project
    - `npm run dev:client`: Runs client project
+   - `npm run db`: Starts postgres db in Docker locally
+   - `npm run migrate`: Runs all migrations for the project
 
 You will need the following installed in order for the agent to be able to run the minecraft servers and accept commands:
 

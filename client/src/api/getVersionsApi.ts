@@ -6,7 +6,7 @@ export interface IGetVersions {
   (): Promise<MCVersion[]>;
 }
 
-export const getVersions: IGetVersions = () =>
+export const getVersionsApi: IGetVersions = () =>
   axios
     .get(`${API_URL}/versions`)
     .then((response) => response.data);

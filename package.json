@@ -9,7 +9,8 @@
     "check:type": "npm run check:type --workspace=agent --workspace=api",
     "dev:agent": "npm run dev --workspace=agent",
     "dev:api": "npm run dev --workspace=api",
-    "dev:client": "npm run start --workspace=client"
+    "dev:client": "npm run start --workspace=client",
+    "db": "docker-compose up"
   },
   "workspaces": [
     "agent",

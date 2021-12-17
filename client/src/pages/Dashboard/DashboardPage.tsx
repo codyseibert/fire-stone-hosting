@@ -1,29 +1,34 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { SideNavigation } from "./SideNavigation";
-import getServer from "../../http/getServer.http";
-import { useParams } from "react-router-dom";
-import { Server } from "../../../../api/src/models/Server";
-import { AuthenticationContext } from "../../context/AuthenticationContext";
-import { Link } from "react-router-dom";
-import { ServerContext } from "./context/ServerContext";
-import { ServerNode } from "../../../../api/src/models/ServerNode";
-import getNode from "../../http/getNode.http";
-import { NodeContext } from "./context/NodeContext";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { SideNavigation } from './SideNavigation';
+import { getServerApi } from '../../api/getServerApi';
+import { useParams } from 'react-router-dom';
+import { Server } from '../../../../api/src/models/Server';
+import { AuthenticationContext } from '../../context/AuthenticationContext';
+import { Link } from 'react-router-dom';
+import { ServerContext } from './context/ServerContext';
+import { ServerNode } from '../../../../api/src/models/ServerNode';
+import { getNodeApi } from '../../api/getNodeApi';
+import { NodeContext } from './context/NodeContext';
 
 const DashboardPage = () => {
   const params = useParams();
   const serverId = params.serverId!;
   const [server, setServer] = useState<Server>();
   const [node, setNode] = useState<ServerNode>();
-  const authentication = useContext(AuthenticationContext)?.authentication!;
+  const authentication = useContext(AuthenticationContext)
+    ?.authentication!;
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!authentication.token) {
-      navigate("/");
+      navigate('/');
     }
-    getServer({
+    getServerApi({
       serverId,
     }).then((serverFromApi) => setServer(serverFromApi));
   }, [authentication.token, navigate, setServer, serverId]);
@@ -31,7 +36,7 @@ const DashboardPage = () => {
   useEffect(() => {
     const run = async () => {
       if (!server) return;
-      const nodeReturned = await getNode({
+      const nodeReturned = await getNodeApi({
         nodeId: server.nodeId,
       });
       setNode(nodeReturned);
@@ -51,9 +56,14 @@ const DashboardPage = () => {
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">
                   <li className="breadcrumb-item">
-                    <Link to="/dashboard">Your Servers</Link>
+                    <Link to="/dashboard">
+                      Your Servers
+                    </Link>
                   </li>
-                  <li className="breadcrumb-item active" aria-current="page">
+                  <li
+                    className="breadcrumb-item active"
+                    aria-current="page"
+                  >
                     funserver.firestonehosting.com
                   </li>
                 </ol>
@@ -61,11 +71,17 @@ const DashboardPage = () => {
               <h1>
                 Fun Server
                 {!!server.restart ? (
-                  <span className="ms-4 badge bg-warning">Restarting</span>
+                  <span className="ms-4 badge bg-warning">
+                    Restarting
+                  </span>
                 ) : server.running ? (
-                  <span className="ms-4 badge bg-success">Online</span>
+                  <span className="ms-4 badge bg-success">
+                    Online
+                  </span>
                 ) : (
-                  <span className="ms-4 badge bg-secondary">Offline</span>
+                  <span className="ms-4 badge bg-secondary">
+                    Offline
+                  </span>
                 )}
               </h1>
             </div>

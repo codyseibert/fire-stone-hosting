@@ -1,7 +1,7 @@
-import axios from "axios";
-import { API_URL } from "./config";
+import axios from 'axios';
+import { API_URL } from './config';
 
-const createAccountAndPurchaseServerHttp = (payload: {
+export const createAccountAndPurchaseServerApi = (payload: {
   email: string;
   password: string;
   passwordConfirm: string;
@@ -11,6 +11,3 @@ const createAccountAndPurchaseServerHttp = (payload: {
   axios
     .post(`${API_URL}/new-user-purchase`, payload)
     .then((response) => response.data);
-
-
-export default createAccountAndPurchaseServerHttp

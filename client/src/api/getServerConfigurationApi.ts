@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getServerConfiguration = ({
+export const getServerConfigurationApi = ({
   nodeIp,
   serverId,
 }: {
@@ -12,5 +12,3 @@ const getServerConfiguration = ({
       `http://${nodeIp}:4444/servers/${serverId}/configuration`
     )
     .then((response) => response.data);
-
-export default getServerConfiguration;

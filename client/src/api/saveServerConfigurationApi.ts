@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const saveServerConfiguration = ({
+export const saveServerConfigurationApi = ({
   nodeIp,
   serverId,
   configuration,
@@ -15,10 +15,8 @@ const saveServerConfiguration = ({
       configuration,
       {
         headers: {
-          'Content-Type': "text/plain"
-        }
+          'Content-Type': 'text/plain',
+        },
       }
     )
     .then((response) => response.data);
-
-export default saveServerConfiguration;

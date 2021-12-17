@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
-import loginProxy from "../http/login.http";
-import { AuthenticationContext } from "../context/AuthenticationContext";
+import React, { useContext, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
+import { loginApi } from '../api/loginApi';
+import { AuthenticationContext } from '../context/AuthenticationContext';
 
 const LoginPage = () => {
   // const error = useAppSelector(
@@ -11,13 +11,21 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
-  const { setAuthentication } = useContext(AuthenticationContext)!;
+  const { setAuthentication } = useContext(
+    AuthenticationContext
+  )!;
 
-  const setFormKey = ({ key, value }: { key: string; value: string }) => {
+  const setFormKey = ({
+    key,
+    value,
+  }: {
+    key: string;
+    value: string;
+  }) => {
     setForm({
       ...form,
       [key]: value,
@@ -25,17 +33,17 @@ const LoginPage = () => {
   };
 
   const login = async () => {
-    const { token, user } = await loginProxy({
+    const { token, user } = await loginApi({
       ...form,
     });
     setAuthentication({
       user,
       token,
     });
-    navigate("/dashboard");
+    navigate('/dashboard');
   };
 
-  const error = "";
+  const error = '';
 
   return (
     <div className="container mt-4">
@@ -50,10 +58,16 @@ const LoginPage = () => {
           {error && (
             <div className="row">
               <div className="col-md-12">
-                <div className="alert alert-danger" role="alert">
+                <div
+                  className="alert alert-danger"
+                  role="alert"
+                >
                   <div className="row">
                     <div className="col-md-1 text-center">
-                      <FontAwesomeIcon size="lg" icon="exclamation-circle" />
+                      <FontAwesomeIcon
+                        size="lg"
+                        icon="exclamation-circle"
+                      />
                     </div>
                     <div className="col-md-11">{}</div>
                   </div>
@@ -70,7 +84,7 @@ const LoginPage = () => {
               defaultValue={form.email}
               onChange={(e) => {
                 setFormKey({
-                  key: "email",
+                  key: 'email',
                   value: e.currentTarget.value,
                 });
               }}
@@ -85,7 +99,7 @@ const LoginPage = () => {
               defaultValue={form.password}
               onChange={(e) => {
                 setFormKey({
-                  key: "password",
+                  key: 'password',
                   value: e.currentTarget.value,
                 });
               }}

@@ -1,11 +1,17 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Server } from "../../../api/src/models/Server";
-import getServersForUserHttp from "../http/getServersForUser.http";
-import { useNavigate } from "react-router-dom";
-import { AuthenticationContext } from "../context/AuthenticationContext";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
+import { Server } from '../../../api/src/models/Server';
+import { getServersForUserApi } from '../api/getServersForUserApi';
+import { useNavigate } from 'react-router-dom';
+import { AuthenticationContext } from '../context/AuthenticationContext';
 
 const ServersPage = () => {
-  const authentication = useContext(AuthenticationContext)?.authentication;
+  const authentication = useContext(
+    AuthenticationContext
+  )?.authentication;
 
   const userId = authentication?.user.id;
   const [servers, setServers] = useState([]);
@@ -13,13 +19,14 @@ const ServersPage = () => {
 
   useEffect(() => {
     if (!authentication?.token) {
-      navigate("/");
+      navigate('/');
     }
 
     const getServers = async () => {
-      const serversForCurrentUser = await getServersForUserHttp({
-        userId: userId!,
-      });
+      const serversForCurrentUser =
+        await getServersForUserApi({
+          userId: userId!,
+        });
 
       setServers(serversForCurrentUser);
     };
@@ -36,12 +43,16 @@ const ServersPage = () => {
         {server.running ? (
           <span className="badge bg-success">Online</span>
         ) : (
-          <span className="badge bg-secondary">Offline</span>
+          <span className="badge bg-secondary">
+            Offline
+          </span>
         )}
       </td>
       <td>
         <button
-          onClick={() => navigate(`/dashboard/${server.id}/overview`)}
+          onClick={() =>
+            navigate(`/dashboard/${server.id}/overview`)
+          }
           type="button"
           className="btn btn-outline-primary mr-2"
         >

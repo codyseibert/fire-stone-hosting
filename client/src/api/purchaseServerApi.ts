@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { API_URL } from './config';
 
-const purchaseServerHttp = (
+export const purchaseServerApi = (
   planId: string,
   configuration: any,
   token: string
@@ -17,5 +17,3 @@ const purchaseServerHttp = (
       }
     )
     .then((response) => response.data);
-
-export default purchaseServerHttp;

@@ -1,38 +1,39 @@
-import React, { useContext, useEffect } from "react";
-import getServer from "../../http/getServer.http";
-import deleteServerHttp from "../../http/deleteServer.http";
-import { useNavigate } from "react-router-dom";
-import { AuthenticationContext } from "../../context/AuthenticationContext";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect } from 'react';
+import { getServerApi } from '../../api/getServerApi';
+import { deleteServerApi } from '../../api/deleteServerApi';
+import { useNavigate } from 'react-router-dom';
+import { AuthenticationContext } from '../../context/AuthenticationContext';
+import { useParams } from 'react-router-dom';
 
-import stopServerHttp from "../../http/stopServer.http";
-import startServerHttp from "../../http/startServer.http";
-import { ServerContext } from "./context/ServerContext";
-import restartServerHttp from "../../http/restartServer.http";
+import { stopServerApi } from '../../api/stopServerApi';
+import { startServerApi } from '../../api/startServerApi';
+import { ServerContext } from './context/ServerContext';
+import { restartServerApi } from '../../api/restartServerApi';
 
 export const Overview = () => {
   const params = useParams();
   const serverId = params.serverId!;
   const { server, setServer } = useContext(ServerContext)!;
-  const authentication = useContext(AuthenticationContext)?.authentication!;
+  const authentication = useContext(AuthenticationContext)
+    ?.authentication!;
   const navigate = useNavigate();
 
   const deleteServer = async () => {
     const yes = window.confirm(
-      "are you sure you want to delete this server?  all data will be lost"
+      'are you sure you want to delete this server?  all data will be lost'
     );
     if (yes) {
-      await deleteServerHttp(serverId, authentication.token);
-      navigate("/dashboard");
+      await deleteServerApi(serverId, authentication.token);
+      navigate('/dashboard');
     }
   };
 
   useEffect(() => {
     if (!authentication.token) {
-      navigate("/");
+      navigate('/');
     }
 
-    getServer({
+    getServerApi({
       serverId,
     }).then((serverFromApi) => setServer(serverFromApi));
   }, [authentication.token, navigate, setServer, serverId]);
@@ -40,7 +41,7 @@ export const Overview = () => {
   if (!server) return null;
 
   const stopServer = async () => {
-    await stopServerHttp({ serverId }, authentication.token);
+    await stopServerApi({ serverId }, authentication.token);
     setServer({
       ...server,
       running: false,
@@ -48,7 +49,10 @@ export const Overview = () => {
   };
 
   const restartServer = async () => {
-    await restartServerHttp({ serverId }, authentication.token);
+    await restartServerApi(
+      { serverId },
+      authentication.token
+    );
     setServer({
       ...server,
       restart: true,
@@ -56,7 +60,10 @@ export const Overview = () => {
   };
 
   const startServer = async () => {
-    await startServerHttp({ serverId }, authentication.token);
+    await startServerApi(
+      { serverId },
+      authentication.token
+    );
     setServer({
       ...server,
       running: true,
@@ -75,8 +82,9 @@ export const Overview = () => {
         <div className="col-md-8">
           <h5>Restart</h5>
           <p>
-            Did you manually update server files? You may need to manually
-            restart it for your changes to take effect.
+            Did you manually update server files? You may
+            need to manually restart it for your changes to
+            take effect.
           </p>
         </div>
         <div className="col-md-4">
@@ -95,8 +103,8 @@ export const Overview = () => {
         <div className="col-md-8">
           <h5>Power</h5>
           <p>
-            You'll may want to stop your server if you don't want people to
-            connect to it.
+            You'll may want to stop your server if you don't
+            want people to connect to it.
           </p>
         </div>
         <div className="col-md-4">
@@ -125,12 +133,15 @@ export const Overview = () => {
         <div className="col-md-8">
           <h5>Subscription</h5>
           <p>
-            If you no longer want to pay to rent your server, you can continue
-            by clicking the end subscription button. Don't worry, you'll still
-            be able to use your server until the end of your subscription
-            period. All your server data will be removed at the end of your
-            subsription period, so be sure to download your server files from
-            our service if you plan to use the world at a later point.
+            If you no longer want to pay to rent your
+            server, you can continue by clicking the end
+            subscription button. Don't worry, you'll still
+            be able to use your server until the end of your
+            subscription period. All your server data will
+            be removed at the end of your subsription
+            period, so be sure to download your server files
+            from our service if you plan to use the world at
+            a later point.
           </p>
         </div>
         <div className="col-md-4">

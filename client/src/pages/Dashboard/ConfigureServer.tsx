@@ -1,9 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
-import { NodeContext } from "./context/NodeContext";
-import getServerConfiguration from "../../http/getServerConfiguration.http";
-import { ServerContext } from "./context/ServerContext";
-import saveServerConfiguration from "../../http/saveServerConfiguration.http";
+import { NodeContext } from './context/NodeContext';
+import { getServerConfigurationApi } from '../../api/getServerConfigurationApi';
+import { ServerContext } from './context/ServerContext';
+import { saveServerConfigurationApi } from '../../api/saveServerConfigurationApi';
 
 const ConfigureServer = () => {
   const { node } = useContext(NodeContext)!;
@@ -14,18 +18,18 @@ const ConfigureServer = () => {
 
   useEffect(() => {
     if (!server || !node) return;
-    getServerConfiguration({
+    getServerConfigurationApi({
       nodeIp: node.ip,
       serverId: server.id,
     }).then((configuration) => {
       // eslint-disable-next-line no-useless-escape
-      configuration = configuration.replace(/\#.*\n/g, "");
+      configuration = configuration.replace(/\#.*\n/g, '');
       const values: {
         [key: string]: string;
       } = {};
       configuration
-        .split("\n")
-        .map((entry: any) => entry.split("="))
+        .split('\n')
+        .map((entry: any) => entry.split('='))
         .forEach(([key, val]: string[]) => {
           if (!key || val === undefined) return;
           values[key] = val;
@@ -37,8 +41,8 @@ const ConfigureServer = () => {
   const saveConfiguration = async () => {
     const configuration = Object.entries(values)
       .map(([key, value]) => `${key}=${value}`)
-      .join("\n");
-    await saveServerConfiguration({
+      .join('\n');
+    await saveServerConfigurationApi({
       nodeIp: node!.ip,
       serverId: server!.id,
       configuration,
@@ -60,10 +64,10 @@ const ConfigureServer = () => {
           <div className="col-md-4 mb-4">
             <div className="form-group">
               {/* eslint-disable-next-line no-useless-escape */}
-              <label>{key.replace(/\-/g, " ")}</label>
+              <label>{key.replace(/\-/g, ' ')}</label>
               <input
                 className="form-control"
-                value={value || ""}
+                value={value || ''}
                 onChange={(e) =>
                   setValues({
                     ...values,

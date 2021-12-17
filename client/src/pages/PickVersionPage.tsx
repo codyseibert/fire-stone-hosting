@@ -4,7 +4,7 @@ import { Plan, plans } from '../data/plans';
 import { ConfigurationContext } from './Dashboard/context/ConfigurationContext';
 import { MCVersion } from 'api/src/models/MCVersion';
 import { useEffect } from 'react';
-import { getVersions } from '../http/getVersions.http';
+import { getVersionsApi } from '../api/getVersionsApi';
 
 export const PickVersionPage: React.FC = () => {
   const params = useParams();
@@ -19,7 +19,7 @@ export const PickVersionPage: React.FC = () => {
   )!;
 
   useEffect(() => {
-    getVersions().then((versions) => {
+    getVersionsApi().then((versions) => {
       setVersions(versions);
       setConfiguration({
         version: versions[0].id,
