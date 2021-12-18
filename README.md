@@ -1,6 +1,6 @@
 # Documentation
 
-Read a more in detailed documentation on our docsify page (here)[https://codyseibert.github.io/fire-stone-hosting]
+Read a more in detailed documentation on our docsify page [here](https://codyseibert.github.io/fire-stone-hosting)
 
 # What is this project?
 - The goal of this project is to create a minecraft server hosting system which could potentially be used as a real product to rent out minecraft servers to other people.
