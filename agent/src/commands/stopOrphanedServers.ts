@@ -25,7 +25,7 @@ export const stopOrphanedServers: stopOrphanedServersInterface = async ({
       // eslint-disable-next-line no-await-in-loop
       promises.push(
         exec(`docker stop --time=30 ${runningId}`).then(() =>
-          exec(`rm -rf ../../servers/${runningId}`),
+          exec(`rm -rf $SERVERS_DIR/${runningId}`),
         ),
       );
     }

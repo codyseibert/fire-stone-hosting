@@ -20,13 +20,13 @@ export const runBackup: runBackupInterface = async ({ serverId }) => {
   await exec(`screen -S "${serverId}" -p 0 -X stuff "/save-all\r"`);
 
   // create the tar
-  await exec(`cd ../../servers/${serverId} && tar -zcvf ${serverId}.tar.gz .`);
+  await exec(`cd $SERVERS_DIR/${serverId} && tar -zcvf ${serverId}.tar.gz .`);
 
   // TODO: upload  to s3 instead of copying to tmp
-  await exec(`cp ../../servers/${serverId}/${serverId}.tar.gz ..`);
+  await exec(`cp $SERVERS_DIR/${serverId}/${serverId}.tar.gz ..`);
 
   // delete the tar
-  await exec(`rm ../../servers/${serverId}/${serverId}.tar.gz`);
+  await exec(`rm $SERVERS_DIR/${serverId}/${serverId}.tar.gz`);
 
   // enable minecraft auto save
   await exec(`screen -S "${serverId}" -p 0 -X stuff "/save-on\r"`);

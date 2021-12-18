@@ -6,16 +6,16 @@ import fs from 'fs';
 import { onCommand } from './ws/onCommand';
 import { onDisconnect } from './ws/onDisconnect';
 
-export const getServerLastestLog = (serverId: string) =>
-  path.resolve(__dirname, `../servers/${serverId}/logs/latest.log`);
-
 export const onConnection = (socket: Socket) => {
   try {
     console.log('user connected');
 
     const serverId: string = socket.handshake.query.serverId as string;
 
-    const logsPath = getServerLastestLog(serverId);
+    const logsPath = path.join(
+      process.env.SERVERS_DIR,
+      `/${serverId}/logs/latest.log`,
+    );
 
     const tail = new Tail(logsPath);
 

@@ -1,13 +1,10 @@
 import { Request, Response } from 'express';
-import path from 'path';
+import { getServerConfig } from '../interactors/getServerConfig';
 
-export const getServerConfiguration = (req: Request, res: Response) => {
+export const getServerConfiguration = async (req: Request, res: Response) => {
   const { serverId } = req.params;
 
-  const filePath = path.join(
-    process.env.SERVERS_DIR,
-    `${serverId}/server.properties`,
-  );
+  const configuration = await getServerConfig(serverId);
 
-  res.sendFile(filePath);
+  res.send(configuration);
 };
