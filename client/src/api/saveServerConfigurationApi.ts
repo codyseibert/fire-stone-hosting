@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const saveServerConfigurationApi = ({
   nodeIp,
@@ -7,16 +7,11 @@ export const saveServerConfigurationApi = ({
 }: {
   serverId: string;
   nodeIp: string;
-  configuration: string;
+  configuration: Record<string, string | number | boolean>;
 }) =>
   axios
     .post(
       `http://${nodeIp}:4444/servers/${serverId}/configuration`,
-      configuration,
-      {
-        headers: {
-          'Content-Type': 'text/plain',
-        },
-      }
+      configuration
     )
     .then((response) => response.data);

@@ -1,4 +1,6 @@
 import { db } from './db';
+import { getPasswordHash } from '../lib/passwordEncryption';
+
 export type User = {
   id: string;
   email: string;
@@ -14,11 +16,13 @@ export const createUserPersistence = async ({
 }: createUserPersistenceOptions) => {
   const { id, email, password } = user;
 
+  const passwordHash = await getPasswordHash(password);
+
   await db.users.create({
     data: {
       id,
       email,
-      password,
+      password: passwordHash,
     },
   });
 };

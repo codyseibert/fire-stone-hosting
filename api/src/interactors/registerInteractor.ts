@@ -1,6 +1,5 @@
 import { createUserPersistence } from '../persistence/createUserPersistence';
 import { v4 as uuidv4 } from 'uuid';
-import { getPasswordHash } from '../lib/passwordEncryption';
 
 // const stripe = require('stripe')(process.env.STRIPE_KEY);
 
@@ -31,14 +30,11 @@ export const registerInteractor = async ({
 
   const userId = uuidv4();
 
-  const passwordHash = await getPasswordHash(account.password);
-
   await createUserPersistence({
     user: {
       ...account,
       // stripeCustomerId: customer.id,
       id: userId,
-      password: passwordHash,
     },
   });
 };

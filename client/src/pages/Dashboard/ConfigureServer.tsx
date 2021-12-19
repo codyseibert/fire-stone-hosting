@@ -1,52 +1,89 @@
-import React, {
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useContext, useEffect, useState } from "react";
+import { ValidationError } from "yup";
 
-import { NodeContext } from './context/NodeContext';
-import { getServerConfigurationApi } from '../../api/getServerConfigurationApi';
-import { ServerContext } from './context/ServerContext';
-import { saveServerConfigurationApi } from '../../api/saveServerConfigurationApi';
+import { NodeContext } from "./context/NodeContext";
+import { ServerContext } from "./context/ServerContext";
+import { getServerConfigurationApi } from "../../api/getServerConfigurationApi";
+import { saveServerConfigurationApi } from "../../api/saveServerConfigurationApi";
+import { severConfigObject } from "config/validation/serverConfig";
+
+type KeyValueType = string | number | boolean;
+
+type InputFieldProps = {
+  value: KeyValueType;
+  label: string;
+  onChange: (inputValue: KeyValueType) => void;
+};
+
+const InputField: React.FC<InputFieldProps> = ({ value, label, onChange }) => {
+  if (typeof value === "boolean") {
+    return (
+      <div className="h-100 d-flex align-items-center">
+        <div className="form-check">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            checked={value}
+            id={`check-${label}`}
+            onChange={(e) => onChange(e.target.checked)}
+          />
+          <label className="form-check-label" htmlFor={`check-${label}`}>
+            {label}
+          </label>
+        </div>
+      </div>
+    );
+  }
+
+  const inputType = typeof value === "number" ? "number" : "text";
+
+  return (
+    <div className="form-group">
+      <label>{label}</label>
+      <input
+        className="form-control"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        type={inputType}
+      />
+    </div>
+  );
+};
 
 const ConfigureServer = () => {
   const { node } = useContext(NodeContext)!;
   const { server } = useContext(ServerContext)!;
-  const [values, setValues] = useState<{
-    [key: string]: string;
-  }>({});
+  const [values, setValues] = useState<Record<string, KeyValueType>>({});
 
   useEffect(() => {
     if (!server || !node) return;
+
     getServerConfigurationApi({
       nodeIp: node.ip,
       serverId: server.id,
     }).then((configuration) => {
-      // eslint-disable-next-line no-useless-escape
-      configuration = configuration.replace(/\#.*\n/g, '');
-      const values: {
-        [key: string]: string;
-      } = {};
-      configuration
-        .split('\n')
-        .map((entry: any) => entry.split('='))
-        .forEach(([key, val]: string[]) => {
-          if (!key || val === undefined) return;
-          values[key] = val;
-        });
-      setValues(values);
+      setValues(configuration);
     });
   }, [server, node]);
 
   const saveConfiguration = async () => {
-    const configuration = Object.entries(values)
-      .map(([key, value]) => `${key}=${value}`)
-      .join('\n');
-    await saveServerConfigurationApi({
-      nodeIp: node!.ip,
-      serverId: server!.id,
-      configuration,
-    });
+    let isValid = false;
+
+    try {
+      await severConfigObject.validate(values);
+
+      isValid = true;
+    } catch (err) {
+      alert((err as ValidationError).message);
+    }
+
+    if (isValid) {
+      await saveServerConfigurationApi({
+        nodeIp: node!.ip,
+        serverId: server!.id,
+        configuration: values,
+      });
+    }
   };
 
   if (!server) return null;
@@ -61,21 +98,17 @@ const ConfigureServer = () => {
 
       <div className="row mb-4">
         {Object.entries(values).map(([key, value]) => (
-          <div className="col-md-4 mb-4">
-            <div className="form-group">
-              {/* eslint-disable-next-line no-useless-escape */}
-              <label>{key.replace(/\-/g, ' ')}</label>
-              <input
-                className="form-control"
-                value={value || ''}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    [key]: e.target.value,
-                  })
-                }
-              />
-            </div>
+          <div key={`input-${key}`} className="col-md-4 mb-4">
+            <InputField
+              label={key}
+              value={value}
+              onChange={(inputValue: KeyValueType) => {
+                setValues({
+                  ...values,
+                  [key]: inputValue,
+                });
+              }}
+            />
           </div>
         ))}
       </div>

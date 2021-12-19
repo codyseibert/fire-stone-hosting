@@ -1,17 +1,21 @@
 import { Request, Response } from 'express';
-import path from 'path';
-import fs from 'fs';
+import { updateServerConfig } from '../interactors/updateServerConfig';
 
-export const updateServerConfiguration = (req: Request, res: Response) => {
+export const updateServerConfiguration = async (
+  req: Request,
+  res: Response,
+) => {
   const { serverId } = req.params;
-  const filePath = path.join(
-    process.env.SERVERS_DIR,
-    `${serverId}/server.properties`,
-  );
 
-  console.log(req.body);
+  try {
+    const updateStatus = await updateServerConfig(req.body, serverId);
 
-  fs.writeFile(filePath, req.body, err => {
-    res.send('success');
-  });
+    if (updateStatus) {
+      res.send('success');
+    } else {
+      res.status(400).send('failure');
+    }
+  } catch (err) {
+    res.status(500).send('server error');
+  }
 };

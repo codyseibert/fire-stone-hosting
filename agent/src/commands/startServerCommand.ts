@@ -1,6 +1,7 @@
 import fs from 'fs';
 import util from 'util';
 import cp from 'child_process';
+import path from 'path';
 
 import { getServerProxy } from '../proxies/getServerProxy';
 
@@ -19,16 +20,19 @@ export const startServerCommand: startServerInterface = async ({
 }) => {
   const { memory, port, version } = await getServerProxy({ serverId });
 
+  const serverVolumePath = path.join(process.env.SERVERS_DIR, `/${serverId}`);
+
   try {
     await new Promise<void>((resolve, reject) => {
-      fs.access(`../../servers/${serverId}`, fs.constants.F_OK, error => {
+      fs.access(serverVolumePath, fs.constants.F_OK, error => {
         if (error) reject(error);
         resolve();
       });
     });
   } catch (error) {
     console.log(`${serverId} - making directory`);
-    await exec(`mkdir -p ../../servers/${serverId}`);
+
+    await exec(`mkdir -p ${serverVolumePath}`);
   }
 
   try {
@@ -41,7 +45,7 @@ export const startServerCommand: startServerInterface = async ({
       `--name mc-${serverId}`,
       `-p ${port}:25565`,
       `-m ${memory}m`,
-      `-v $(pwd)/../../servers/${serverId}:/data`,
+      `-v ${serverVolumePath}:/data`,
       '-e EULA=TRUE',
       `-e VERSION=${version}`,
       `-e MEMORY=${memory}M`,

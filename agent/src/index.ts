@@ -22,6 +22,7 @@ import { onConnection } from './onConnection';
 const app = express();
 
 app.use(cors());
+app.use(express.json());
 
 setupRoutes(app);
 
@@ -107,7 +108,8 @@ const sendContainerHealth = async () => {
 
 const startRunningServers = async () => {
   const servers = await getServersProxy({ nodeId });
-  console.log('servers', servers);
+
+  if (!servers || servers.length === 0) return;
 
   stopOrphanedServers({
     expectedServerIds: servers.map(({ id }) => id),
@@ -117,6 +119,7 @@ const startRunningServers = async () => {
 
   for (const server of servers) {
     const isServerRunningInDocker = stdout.indexOf(server.id) === -1;
+
     if (server.running && isServerRunningInDocker) {
       console.time(
         `starting server ${server.id}, ${server.memory}M, P ${server.port}`,
