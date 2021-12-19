@@ -1,5 +1,6 @@
 import util from 'util';
 import cp from 'child_process';
+import path from 'path';
 import { backupCompleteProxy } from '../proxies/backupCompleteProxy';
 
 const exec = util.promisify(cp.exec);
@@ -13,6 +14,8 @@ interface runBackupInterface {
 }
 
 export const runBackup: runBackupInterface = async ({ serverId }) => {
+  const serverPath = path.join(process.env.SERVERS_DIR, `/${serverId}`);
+
   // disable minecraft auto save
   await exec(`screen -S "${serverId}" -p 0 -X stuff "/save-off\r"`);
 
@@ -20,13 +23,13 @@ export const runBackup: runBackupInterface = async ({ serverId }) => {
   await exec(`screen -S "${serverId}" -p 0 -X stuff "/save-all\r"`);
 
   // create the tar
-  await exec(`cd $SERVERS_DIR/${serverId} && tar -zcvf ${serverId}.tar.gz .`);
+  await exec(`cd ${serverPath} && tar -zcvf ${serverId}.tar.gz .`);
 
   // TODO: upload  to s3 instead of copying to tmp
-  await exec(`cp $SERVERS_DIR/${serverId}/${serverId}.tar.gz ..`);
+  await exec(`cp ${serverPath}/${serverId}.tar.gz ..`);
 
   // delete the tar
-  await exec(`rm $SERVERS_DIR/${serverId}/${serverId}.tar.gz`);
+  await exec(`rm ${serverPath}/${serverId}.tar.gz`);
 
   // enable minecraft auto save
   await exec(`screen -S "${serverId}" -p 0 -X stuff "/save-on\r"`);
