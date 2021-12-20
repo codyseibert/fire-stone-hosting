@@ -8,19 +8,6 @@ import loginApi from '../api/loginApi';
 import * as yup from 'yup';
 import classNames from 'classnames';
 
-const formSchema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
-  passwordConfirm: yup.string().required(),
-  name: yup.string().required(),
-  phone: yup.string().required(),
-  address: yup.string().required(),
-  city: yup.string().required(),
-  state: yup.string().required(),
-});
-
-let error = '';
-
 type PaymentForm = {
   email: string;
   password: string;
@@ -41,6 +28,57 @@ const initialFormState: PaymentForm = {
   address: '',
   state: '',
   city: '',
+};
+
+const formSchema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+  passwordConfirm: yup.string().required(),
+  name: yup.string().required(),
+  phone: yup.string().required(),
+  address: yup.string().required(),
+  city: yup.string().required(),
+  state: yup.string().required(),
+});
+
+let error = '';
+
+const PaymentInput = ({
+  form,
+  setFormKey,
+  errors,
+  formKey,
+  title,
+  type = 'text',
+}: {
+  form: any;
+  setFormKey: (obj: any) => void;
+  errors: any;
+  formKey: string;
+  title: string;
+  type?: string;
+}) => {
+  return (
+    <div className="form-group">
+      <label>{title}</label>
+      <input
+        type={type}
+        className={classNames('form-control', {
+          'is-invalid': errors[formKey],
+        })}
+        defaultValue={form[formKey]}
+        onChange={(e) => {
+          setFormKey({
+            key: formKey,
+            value: e.currentTarget.value,
+          });
+        }}
+      />
+      {errors.email && (
+        <span className="text-danger">{errors.email}</span>
+      )}
+    </div>
+  );
 };
 
 export const PaymentDetailsPage = () => {
@@ -111,6 +149,27 @@ export const PaymentDetailsPage = () => {
     navigate('/dashboard');
   };
 
+  const InputForm = ({
+    formKey,
+    title,
+    type,
+  }: {
+    formKey: string;
+    title: string;
+    type?: string;
+  }) => {
+    return (
+      <PaymentInput
+        form={form}
+        setFormKey={setFormKey}
+        errors={errors}
+        formKey={formKey}
+        title={title}
+        type={type}
+      />
+    );
+  };
+
   return (
     <div className="container header-offset">
       <div className="row">
@@ -157,73 +216,27 @@ export const PaymentDetailsPage = () => {
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-md-12">
-            <div className="form-group">
-              <label>Email</label>
-              <input
-                type="email"
-                className={classNames('form-control', {
-                  'is-invalid': errors.email,
-                })}
-                defaultValue={form.email}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'email',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.email && (
-                <span className="text-danger">
-                  {errors.email}
-                </span>
-              )}
-            </div>
+            <InputForm
+              formKey="email"
+              type="email"
+              title="Email"
+            />
           </div>
 
           <div className="col-md-12 mt-4">
-            <div className="form-group">
-              <label>Password</label>
-              <input
-                type="password"
-                className={classNames('form-control', {
-                  'is-invalid': errors.password,
-                })}
-                defaultValue={form.password}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'password',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.password && (
-                <span className="text-danger">
-                  {errors.password}
-                </span>
-              )}
-            </div>
+            <InputForm
+              formKey="password"
+              type="password"
+              title="Password"
+            />
+          </div>
 
-            <div className="form-group mt-4">
-              <label>Confirm Password</label>
-              <input
-                type="password"
-                className={classNames('form-control', {
-                  'is-invalid': errors.passwordConfirm,
-                })}
-                defaultValue={form.passwordConfirm}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'passwordConfirm',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.passwordConfirm && (
-                <span className="text-danger">
-                  {errors.passwordConfirm}
-                </span>
-              )}
-            </div>
+          <div className="col-md-12 mt-4">
+            <InputForm
+              formKey="passwordConfirm"
+              type="password"
+              title="Confirm Password"
+            />
           </div>
         </div>
 
@@ -231,148 +244,35 @@ export const PaymentDetailsPage = () => {
 
         <div className="row mt-4">
           <div className="col-md-6">
-            <div className="form-group">
-              <label>Name</label>
-              <input
-                type="name"
-                className={classNames('form-control', {
-                  'is-invalid': errors.name,
-                })}
-                defaultValue={form.name}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'name',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.name && (
-                <span className="text-danger">
-                  {errors.name}
-                </span>
-              )}
-            </div>
+            <InputForm formKey="name" title="Name" />
           </div>
 
           <div className="col-md-6">
-            <div className="form-group">
-              <label>Phone</label>
-              <input
-                type="phone"
-                className={classNames('form-control', {
-                  'is-invalid': errors.phone,
-                })}
-                defaultValue={form.phone}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'phone',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.phone && (
-                <span className="text-danger">
-                  {errors.phone}
-                </span>
-              )}
-            </div>
+            <InputForm
+              formKey="phone"
+              title="Phone"
+              type="phone"
+            />
           </div>
         </div>
 
         <div className="row mt-4">
           <div className="col-md-12">
-            <div className="form-group">
-              <label>Address</label>
-              <input
-                type="address"
-                className={classNames('form-control', {
-                  'is-invalid': errors.address,
-                })}
-                defaultValue={form.address}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'address',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.address && (
-                <span className="text-danger">
-                  {errors.address}
-                </span>
-              )}
-            </div>
+            <InputForm formKey="address" title="Address" />
           </div>
         </div>
 
         <div className="row mt-4">
           <div className="col-md-4">
-            <div className="form-group">
-              <label>City</label>
-              <input
-                className={classNames('form-control', {
-                  'is-invalid': errors.city,
-                })}
-                defaultValue={form.city}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'city',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.city && (
-                <span className="text-danger">
-                  {errors.city}
-                </span>
-              )}
-            </div>
+            <InputForm formKey="city" title="City" />
           </div>
 
           <div className="col-md-4">
-            <div className="form-group">
-              <label>State</label>
-              <input
-                className={classNames('form-control', {
-                  'is-invalid': errors.state,
-                })}
-                defaultValue={form.state}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'state',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.state && (
-                <span className="text-danger">
-                  {errors.state}
-                </span>
-              )}
-            </div>
+            <InputForm formKey="state" title="State" />
           </div>
 
           <div className="col-md-4">
-            <div className="form-group">
-              <label>City</label>
-              <input
-                className={classNames('form-control', {
-                  'is-invalid': errors.state,
-                })}
-                defaultValue={form.city}
-                onChange={(e) => {
-                  setFormKey({
-                    key: 'city',
-                    value: e.currentTarget.value,
-                  });
-                }}
-              />
-              {errors.state && (
-                <span className="text-danger">
-                  {errors.state}
-                </span>
-              )}
-            </div>
+            <InputForm formKey="city" title="City" />
           </div>
         </div>
 
@@ -380,22 +280,19 @@ export const PaymentDetailsPage = () => {
 
         <div className="row mt-4">
           <div className="col-md-6">
-            <div className="form-group">
-              <label>Card Number</label>
-              <input type="text" className="form-control" />
-            </div>
+            <InputForm formKey="card" title="Card Number" />
           </div>
           <div className="col-md-3">
-            <div className="form-group">
-              <label>Expiration Date</label>
-              <input type="text" className="form-control" />
-            </div>
+            <InputForm
+              formKey="expirationDate"
+              title="Expiration Date"
+            />
           </div>
           <div className="col-md-3">
-            <div className="form-group">
-              <label>3 Digit Number</label>
-              <input type="text" className="form-control" />
-            </div>
+            <InputForm
+              formKey="securityCode"
+              title="Security Code"
+            />
           </div>
         </div>
 
