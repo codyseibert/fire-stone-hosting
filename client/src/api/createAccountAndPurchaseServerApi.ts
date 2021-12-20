@@ -6,6 +6,7 @@ export const createAccountAndPurchaseServerApi = (payload: {
   password: string;
   passwordConfirm: string;
   planId: string;
+  version: string;
 }) =>
   axios
     .post(`${API_URL}/new-user-purchase`, payload)

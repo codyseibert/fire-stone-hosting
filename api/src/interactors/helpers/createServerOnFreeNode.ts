@@ -7,9 +7,11 @@ import { Plan } from '../../data/plans';
 
 export const createServerOnFreeNode = async ({
   userId,
+  version,
   plan,
 }: {
   userId: string;
+  version: string;
   plan: Plan;
 }) => {
   const nodes = await getNodesPersistence();
@@ -39,7 +41,7 @@ export const createServerOnFreeNode = async ({
     id: uuidv4(),
     nodeId: desiredNode.id,
     port: freePort,
-    version: '1.18.1',
+    version,
     running: true,
     runBackup: false,
     restart: false,

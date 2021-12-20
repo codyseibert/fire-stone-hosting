@@ -7,7 +7,7 @@ import { AuthenticationContext } from '../context/AuthenticationContext';
 import loginApi from '../api/loginApi';
 import * as yup from 'yup';
 import classNames from 'classnames';
-import { registerApi } from '../api/registerApi';
+import { ConfigurationContext } from './Dashboard/context/ConfigurationContext';
 
 type PaymentForm = {
   email: string;
@@ -136,6 +136,10 @@ export const PaymentDetailsPage = () => {
     AuthenticationContext
   )!;
 
+  const { configuration } = useContext(
+    ConfigurationContext
+  )!;
+
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     setHasSubmitted(true);
@@ -160,6 +164,7 @@ export const PaymentDetailsPage = () => {
       password: form.password,
       passwordConfirm: form.passwordConfirm,
       planId,
+      version: configuration!.version,
     });
     const { token, user } = await loginApi({
       ...form,

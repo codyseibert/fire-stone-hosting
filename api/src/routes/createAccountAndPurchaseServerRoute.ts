@@ -5,7 +5,7 @@ export const createAccountAndPurchaseServerRoute = async (
   req: Request,
   res: Response,
 ) => {
-  const { email, password, passwordConfirm, planId } = req.body;
+  const { version, email, password, passwordConfirm, planId } = req.body;
 
   // TODO: create source with stripe using provided card info
   const source = 'abc';
@@ -16,6 +16,7 @@ export const createAccountAndPurchaseServerRoute = async (
       password,
       passwordConfirm,
       email,
+      version,
       source,
     });
     return res.send(ret);

@@ -11,6 +11,7 @@ type createAccountAndPurchaseServerInteractorOptions = {
   password: string;
   passwordConfirm: string;
   planId: string;
+  version: string;
   source: string;
 };
 
@@ -19,6 +20,7 @@ export const createAccountAndPurchaseServerInteractor = async ({
   password,
   passwordConfirm,
   planId,
+  version,
   source,
 }: createAccountAndPurchaseServerInteractorOptions) => {
   let customer;
@@ -67,6 +69,7 @@ export const createAccountAndPurchaseServerInteractor = async ({
   await createServerOnFreeNode({
     userId,
     plan,
+    version,
   });
 
   return { token, user };

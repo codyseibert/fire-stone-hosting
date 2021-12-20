@@ -35,6 +35,7 @@ export const purchaseServerInteractor = async ({
   const server = await createServerOnFreeNode({
     userId: user.id,
     plan,
+    version,
   });
 
   return server;
