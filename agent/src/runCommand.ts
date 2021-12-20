@@ -15,7 +15,5 @@ export const runCommand: runCommandInterface = async ({
   serverId,
   command,
 }) => {
-  await exec(
-    `echo '${command}' | socat EXEC:"docker attach ${serverId}",pty STDIN`,
-  );
+  await exec(`docker exec mc-${serverId} mc-send-to-console ${command}`);
 };

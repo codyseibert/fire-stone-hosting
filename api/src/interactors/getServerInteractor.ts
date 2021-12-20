@@ -1,7 +1,7 @@
 import { getServerPersistence } from '../persistence/getServerPersistence';
 
 type getServerInteractorOptions = {
-  serverId: String;
+  serverId: string;
 };
 
 export const getServerInteractor = async ({

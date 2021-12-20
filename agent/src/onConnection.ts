@@ -17,18 +17,26 @@ export const onConnection = (socket: Socket) => {
       `/${serverId}/logs/latest.log`,
     );
 
-    const tail = new Tail(logsPath);
+    try {
+      // TODO: sometimes this crashes if the user
+      // tries to access the server logs before the server is started
+      // which means the user will never get the logs in their UI
+      const tail = new Tail(logsPath);
 
-    fs.readFile(logsPath, 'utf-8', (_, logs) => {
-      socket.emit('logs', logs);
+      fs.readFile(logsPath, 'utf-8', (_, logs) => {
+        socket.emit('logs', logs);
 
-      tail.on('line', line => {
-        socket.emit('line', `${line}\n`);
+        tail.on('line', line => {
+          socket.emit('line', `${line}\n`);
+        });
       });
-    });
 
-    onCommand(socket);
-    onDisconnect(socket, tail);
+      onCommand(socket);
+      onDisconnect(socket, tail);
+    } catch (err) {
+      console.error(err);
+      // we should probably do some type of retry
+    }
   } catch (err) {
     socket.disconnect();
   }
