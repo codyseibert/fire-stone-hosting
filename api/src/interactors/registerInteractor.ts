@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const costPerGB = 3;
 
-type Account = {
+export type Account = {
   email: string;
   password: string;
   passwordConfirm: String;

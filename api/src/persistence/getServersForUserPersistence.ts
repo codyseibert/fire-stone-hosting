@@ -20,7 +20,7 @@ export const getServersForUserPersistence = async ({
 > => {
   // TODO: refactor to use primsa models instead of queryRaw
   const servers: any[] = await db.$queryRaw`
-    SELECT s.id, n.id AS nodeId, s.memory_percent as memoryPercent, s.cpu_percent as cpuPercent, s.memory, s.running, s.port, n.ip 
+    SELECT s.id, n.id AS nodeId, s.version, s.memory_percent as memoryPercent, s.cpu_percent as cpuPercent, s.memory, s.running, s.port, n.ip 
     FROM "servers" AS s JOIN "nodes" AS n ON s.node_id = n.id WHERE user_id = ${userId} 
 `;
 
