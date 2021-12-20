@@ -7,15 +7,14 @@ import { Server } from '../models/Server';
 import { User } from '../persistence/createUserPersistence';
 import { getServersOnNodePersistence } from '../persistence/getServersOnNodePersistence';
 import { getNodesPersistence } from '../persistence/getNodesPersistence';
-import { plans } from '../data/plans';
+import { Plan, plans } from '../data/plans';
 import { setFreeMemoryOnNodePersistence } from '../persistence/setFreeMemoryOnNodePersistence';
+import { createServerOnFreeNode } from './helpers/createServerOnFreeNode';
 
 type purchaseServerInteractorOptions = {
   user: User;
   version: string;
-  plan: {
-    plan: string;
-  };
+  plan: Plan;
 };
 
 export const purchaseServerInteractor = async ({
@@ -33,44 +32,9 @@ export const purchaseServerInteractor = async ({
   //   ],
   // });
 
-  const nodes = await getNodesPersistence();
-
-  const memory = plans.find(p => p.plan === plan.plan)!.memory;
-  const desiredNode = nodes.find(node => true || node.freeMemory > memory); // TODO: remove true
-
-  if (!desiredNode) {
-    throw new Error('no available nodes');
-  }
-
-  const servers: Server[] = await getServersOnNodePersistence({
-    nodeId: desiredNode.id,
-  });
-
-  let freePort = 25565;
-  if (servers.length) {
-    const ports = servers.map(s => s.port).sort();
-    freePort = ports[ports.length - 1] + 1;
-  }
-
-  await setFreeMemoryOnNodePersistence({
-    freeMemory: desiredNode.freeMemory - memory,
-    nodeId: desiredNode.id,
-  });
-
-  const server: Server = {
-    id: uuidv4(),
-    nodeId: desiredNode.id,
-    port: freePort,
-    memory,
-    version,
+  const server = await createServerOnFreeNode({
     userId: user.id,
-    running: true,
-    runBackup: false,
-    restart: false,
-  };
-
-  await createServerPersistence({
-    server,
+    plan,
   });
 
   return server;

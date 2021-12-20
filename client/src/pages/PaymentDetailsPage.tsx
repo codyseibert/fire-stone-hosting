@@ -7,6 +7,7 @@ import { AuthenticationContext } from '../context/AuthenticationContext';
 import loginApi from '../api/loginApi';
 import * as yup from 'yup';
 import classNames from 'classnames';
+import { registerApi } from '../api/registerApi';
 
 type PaymentForm = {
   email: string;
@@ -17,6 +18,10 @@ type PaymentForm = {
   address: string;
   city: string;
   state: string;
+  zip: string;
+  card: string;
+  securityCode: string;
+  expirationDate: string;
 };
 
 const initialFormState: PaymentForm = {
@@ -28,6 +33,10 @@ const initialFormState: PaymentForm = {
   address: '',
   state: '',
   city: '',
+  zip: '',
+  card: '',
+  securityCode: '',
+  expirationDate: '',
 };
 
 const formSchema = yup.object().shape({
@@ -39,6 +48,10 @@ const formSchema = yup.object().shape({
   address: yup.string().required(),
   city: yup.string().required(),
   state: yup.string().required(),
+  zip: yup.string().required(),
+  card: yup.string().required(),
+  securityCode: yup.string().required(),
+  expirationDate: yup.string().required(),
 });
 
 let error = '';
@@ -49,6 +62,7 @@ const PaymentInput = ({
   errors,
   formKey,
   title,
+  validate,
   type = 'text',
 }: {
   form: any;
@@ -56,12 +70,14 @@ const PaymentInput = ({
   errors: any;
   formKey: string;
   title: string;
+  validate: Function;
   type?: string;
 }) => {
   return (
     <div className="form-group">
       <label>{title}</label>
       <input
+        key={`input.${formKey}`}
         type={type}
         className={classNames('form-control', {
           'is-invalid': errors[formKey],
@@ -72,10 +88,13 @@ const PaymentInput = ({
             key: formKey,
             value: e.currentTarget.value,
           });
+          validate();
         }}
       />
-      {errors.email && (
-        <span className="text-danger">{errors.email}</span>
+      {errors[formKey] && (
+        <span className="text-danger">
+          {errors[formKey]}
+        </span>
       )}
     </div>
   );
@@ -87,6 +106,9 @@ export const PaymentDetailsPage = () => {
   const [plan] = useState<Plan>(() => {
     return plans.find((p) => p.plan === planId)!;
   });
+
+  const [hasSubmitted, setHasSubmitted] =
+    useState<boolean>();
 
   const [errors, setErrors] = useState<PaymentForm>(
     initialFormState
@@ -116,6 +138,7 @@ export const PaymentDetailsPage = () => {
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
+    setHasSubmitted(true);
 
     try {
       await formSchema.validate(form, {
@@ -133,7 +156,6 @@ export const PaymentDetailsPage = () => {
     }
 
     await createAccountAndPurchaseServerApi({
-      source: 'abc', // todo: fix this
       email: form.email,
       password: form.password,
       passwordConfirm: form.passwordConfirm,
@@ -149,25 +171,27 @@ export const PaymentDetailsPage = () => {
     navigate('/dashboard');
   };
 
-  const InputForm = ({
-    formKey,
-    title,
-    type,
-  }: {
-    formKey: string;
-    title: string;
-    type?: string;
-  }) => {
-    return (
-      <PaymentInput
-        form={form}
-        setFormKey={setFormKey}
-        errors={errors}
-        formKey={formKey}
-        title={title}
-        type={type}
-      />
-    );
+  const validate = async () => {
+    if (!hasSubmitted) return;
+    try {
+      await formSchema.validate(form, {
+        abortEarly: false,
+      });
+    } catch (err: any) {
+      setErrors(
+        err.errors.reduce((acc: any, curr: any) => {
+          acc[curr.split(' ')[0]] = curr;
+          return acc;
+        }, {})
+      );
+    }
+  };
+
+  const formHelpers = {
+    setFormKey,
+    validate,
+    form,
+    errors,
   };
 
   return (
@@ -216,7 +240,8 @@ export const PaymentDetailsPage = () => {
       <form onSubmit={handleSubmit}>
         <div className="row">
           <div className="col-md-12">
-            <InputForm
+            <PaymentInput
+              {...formHelpers}
               formKey="email"
               type="email"
               title="Email"
@@ -224,7 +249,9 @@ export const PaymentDetailsPage = () => {
           </div>
 
           <div className="col-md-12 mt-4">
-            <InputForm
+            <PaymentInput
+              {...formHelpers}
+              key="password"
               formKey="password"
               type="password"
               title="Password"
@@ -232,7 +259,9 @@ export const PaymentDetailsPage = () => {
           </div>
 
           <div className="col-md-12 mt-4">
-            <InputForm
+            <PaymentInput
+              {...formHelpers}
+              key="passwordConfirm"
               formKey="passwordConfirm"
               type="password"
               title="Confirm Password"
@@ -244,11 +273,18 @@ export const PaymentDetailsPage = () => {
 
         <div className="row mt-4">
           <div className="col-md-6">
-            <InputForm formKey="name" title="Name" />
+            <PaymentInput
+              {...formHelpers}
+              key="name"
+              formKey="name"
+              title="Name"
+            />
           </div>
 
           <div className="col-md-6">
-            <InputForm
+            <PaymentInput
+              {...formHelpers}
+              key="phone"
               formKey="phone"
               title="Phone"
               type="phone"
@@ -258,21 +294,41 @@ export const PaymentDetailsPage = () => {
 
         <div className="row mt-4">
           <div className="col-md-12">
-            <InputForm formKey="address" title="Address" />
+            <PaymentInput
+              {...formHelpers}
+              key="address"
+              formKey="address"
+              title="Address"
+            />
           </div>
         </div>
 
         <div className="row mt-4">
           <div className="col-md-4">
-            <InputForm formKey="city" title="City" />
+            <PaymentInput
+              {...formHelpers}
+              key="city"
+              formKey="city"
+              title="City"
+            />
           </div>
 
           <div className="col-md-4">
-            <InputForm formKey="state" title="State" />
+            <PaymentInput
+              {...formHelpers}
+              key="state"
+              formKey="state"
+              title="State"
+            />
           </div>
 
           <div className="col-md-4">
-            <InputForm formKey="city" title="City" />
+            <PaymentInput
+              {...formHelpers}
+              key="zip"
+              formKey="zip"
+              title="Zip Code"
+            />
           </div>
         </div>
 
@@ -280,16 +336,25 @@ export const PaymentDetailsPage = () => {
 
         <div className="row mt-4">
           <div className="col-md-6">
-            <InputForm formKey="card" title="Card Number" />
+            <PaymentInput
+              {...formHelpers}
+              key="card"
+              formKey="card"
+              title="Card Number"
+            />
           </div>
           <div className="col-md-3">
-            <InputForm
+            <PaymentInput
+              {...formHelpers}
+              key="expirationDate"
               formKey="expirationDate"
               title="Expiration Date"
             />
           </div>
           <div className="col-md-3">
-            <InputForm
+            <PaymentInput
+              {...formHelpers}
+              key="securityCode"
               formKey="securityCode"
               title="Security Code"
             />
