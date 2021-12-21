@@ -134,7 +134,7 @@ export const PaymentDetailsPage = () => {
     return plans.find((p) => p.plan === planId)!;
   });
 
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string>('');
 
   const [hasSubmitted, setHasSubmitted] =
     useState<boolean>(false);
