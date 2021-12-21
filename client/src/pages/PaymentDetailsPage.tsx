@@ -1,4 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Plan, plans } from '../data/plans';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -54,7 +58,31 @@ const formSchema = yup.object().shape({
   expirationDate: yup.string().required(),
 });
 
-let error = '';
+const validate = async ({
+  form,
+  setErrors,
+  hasSubmitted,
+}: {
+  form: any;
+  setErrors: Function;
+  hasSubmitted: boolean;
+}) => {
+  if (!hasSubmitted) return;
+  try {
+    await formSchema.validate(form, {
+      abortEarly: false,
+    });
+    setErrors(initialFormState);
+  } catch (err: any) {
+    console.log('err', err);
+    setErrors(
+      err.errors.reduce((acc: any, curr: any) => {
+        acc[curr.split(' ')[0]] = curr;
+        return acc;
+      }, {})
+    );
+  }
+};
 
 const PaymentInput = ({
   form,
@@ -88,7 +116,6 @@ const PaymentInput = ({
             key: formKey,
             value: e.currentTarget.value,
           });
-          validate();
         }}
       />
       {errors[formKey] && (
@@ -107,8 +134,10 @@ export const PaymentDetailsPage = () => {
     return plans.find((p) => p.plan === planId)!;
   });
 
+  const [error, setError] = useState(null);
+
   const [hasSubmitted, setHasSubmitted] =
-    useState<boolean>();
+    useState<boolean>(false);
 
   const [errors, setErrors] = useState<PaymentForm>(
     initialFormState
@@ -159,38 +188,30 @@ export const PaymentDetailsPage = () => {
       return;
     }
 
-    await createAccountAndPurchaseServerApi({
-      email: form.email,
-      password: form.password,
-      passwordConfirm: form.passwordConfirm,
-      planId,
-      version: configuration!.version,
-    });
-    const { token, user } = await loginApi({
-      ...form,
-    });
-    setAuthentication({
-      user,
-      token,
-    });
-    navigate('/dashboard');
-  };
-
-  const validate = async () => {
-    if (!hasSubmitted) return;
     try {
-      await formSchema.validate(form, {
-        abortEarly: false,
+      await createAccountAndPurchaseServerApi({
+        email: form.email,
+        password: form.password,
+        passwordConfirm: form.passwordConfirm,
+        planId,
+        version: configuration!.version,
       });
+      const { token, user } = await loginApi({
+        ...form,
+      });
+      setAuthentication({
+        user,
+        token,
+      });
+      navigate('/dashboard');
     } catch (err: any) {
-      setErrors(
-        err.errors.reduce((acc: any, curr: any) => {
-          acc[curr.split(' ')[0]] = curr;
-          return acc;
-        }, {})
-      );
+      setError(err.message);
     }
   };
+
+  useEffect(() => {
+    validate({ form, setErrors, hasSubmitted });
+  }, [form, hasSubmitted]);
 
   const formHelpers = {
     setFormKey,
@@ -201,7 +222,7 @@ export const PaymentDetailsPage = () => {
 
   return (
     <div className="container header-offset">
-      <div className="row">
+      <div className="row mb-4">
         <div className="col-md-6 mt-2">
           <h1>Payment Details</h1>
         </div>
