@@ -7,8 +7,8 @@ assignees:
 
 ---
 
-### Describe the feature or problem you’d like to solve
-Write a clear and concise description of what the feature or problem is. If this is a bug report, please use the bug report template instead.
+### Describe the feature you'd like to be added to this program.
+Write a clear and concise description of what the feature you would like to add. If this is a bug report, please use the bug report template instead.
 
 ### Proposed solution
 Please share how this will help benifit the Minecraft Server Software.
