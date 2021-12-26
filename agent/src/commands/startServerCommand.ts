@@ -31,7 +31,6 @@ export const startServerCommand: startServerInterface = async ({
     });
   } catch (error) {
     console.log(`${serverId} - making directory`);
-
     await exec(`mkdir -p ${serverVolumePath}`);
   }
 
@@ -57,5 +56,32 @@ export const startServerCommand: startServerInterface = async ({
     await exec(command);
   } catch (err) {
     await exec(`docker start mc-${serverId}`);
+  }
+
+  const ftpPortMin = (port - 25565) * 10 + 21100 + 1;
+  const ftpPortMax = ftpPortMin + 8;
+
+  try {
+    const command = [
+      'docker',
+      'run',
+      '-d',
+      `-v ${serverVolumePath}:/home/vsftpd/admin`,
+      `-p ${ftpPortMin - 1}:21`,
+      `-p ${ftpPortMin}-${ftpPortMax}:${ftpPortMin}-${ftpPortMax}`,
+      '-e PASV_ADDR_RESOLVE=YES',
+      '-e LOG_STDOUT=YES',
+      '-e FTP_USER=admin',
+      '-e FTP_PASS=admin',
+      '-e PASV_ADDRESS=127.0.0.1',
+      `-e PASV_MIN_PORT=${ftpPortMin}`,
+      `-e PASV_MAX_PORT=${ftpPortMax}`,
+      `--name ftp-${serverId}`,
+      '--restart unless-stopped',
+      'fauria/vsftpd',
+    ].join(' ');
+    await exec(command);
+  } catch (err) {
+    console.log(err);
   }
 };
