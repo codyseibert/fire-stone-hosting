@@ -6,12 +6,14 @@ labels: 'feature'
 assignees:
 
 ---
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-### Describe the feature or problem you’d like to solve
-Write a clear and concise description of what the feature or problem is. If this is a bug report, please use the bug report template instead.
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
 
-### Proposed solution
-Please share how this will help benifit the Minecraft Server Software.
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
 
-### Additional context
-Please include any other context, like screenshots or mockups, if applicable.
+**Additional context**
+Add any other context or screenshots about the feature request here.
