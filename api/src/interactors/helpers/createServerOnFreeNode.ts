@@ -4,6 +4,7 @@ import { setFreeMemoryOnNodePersistence } from '../../persistence/setFreeMemoryO
 import { createServerPersistence } from '../../persistence/createServerPersistence';
 import { v4 as uuidv4 } from 'uuid';
 import { Plan } from '../../data/plans';
+import { startServerCommand } from '../../commands/startServerCommand';
 
 export const createServerOnFreeNode = async ({
   userId,
@@ -52,6 +53,11 @@ export const createServerOnFreeNode = async ({
   await createServerPersistence({
     server,
   });
+
+  await startServerCommand({
+    serverId: server.id,
+    node: desiredNode 
+  })
 
   return server;
 };

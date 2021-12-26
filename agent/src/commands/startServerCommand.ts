@@ -73,7 +73,7 @@ export const startServerCommand: startServerInterface = async ({
       '-e LOG_STDOUT=YES',
       '-e FTP_USER=admin',
       '-e FTP_PASS=admin',
-      '-e PASV_ADDRESS=127.0.0.1',
+      '-e PASV_ADDRESS=10.0.0.166',
       `-e PASV_MIN_PORT=${ftpPortMin}`,
       `-e PASV_MAX_PORT=${ftpPortMax}`,
       `--name ftp-${serverId}`,
