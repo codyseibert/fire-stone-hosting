@@ -65,6 +65,17 @@ export const SideNavigation = ({
         <FontAwesomeIcon icon="terminal" />
         <span className="ps-2">Terminal</span>
       </NavigationLink>
+
+      <NavigationLink
+        onClick={(e) => {
+          e.preventDefault();
+          navigate(`/dashboard/${serverId}/ftp`);
+        }}
+        href=""
+      >
+        <FontAwesomeIcon icon="folder-open" />
+        <span className="ps-2">ftp</span>
+      </NavigationLink>
       {/* <a
         onClick={e => {
           e.preventDefault();

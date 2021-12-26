@@ -47,10 +47,10 @@ export const LandingPage = () => {
                   SPECIAL OFFER! 50% off the first month!
                 </SpecialOffer> */}
                 <p>
-                  Our servers start at $3.00 / GB, They're fully
-                  customizable, able to run automated backups and
-                  easily scale up and down. We also include your own
-                  subdomain, and more...
+                  Servers start at $3.00 / GB. They are fully
+                  customizable, run automated backups,
+                  easily scale up and down and include a
+                  custom subdomain.
                 </p>
                 <PrimaryButton
                   className="btn"
@@ -89,9 +89,8 @@ export const LandingPage = () => {
             />
             <h2>Automated Backups</h2>
             <p>
-              We automatically backup your server's
-              configurations and installed modifications to
-              allow easy restoration in the future.
+              Server configuration and installed modifications
+              are automatically backed up for easy restoration.
             </p>
           </div>
 
@@ -132,7 +131,7 @@ export const LandingPage = () => {
             <p>
               We provide support for almost all mod systems
               including Paper, Sponge, Spigot and Bukkit.
-              Upload any custom modpacks, or use our web
+              Upload any custom modpacks via FTP, or use our web
               interface to easily install modpacks on the
               fly.
             </p>
@@ -148,7 +147,7 @@ export const LandingPage = () => {
             <p>
               Low ping means fun times. We provide locations
               around the globe to provide your players with
-              the lowest ping possible.
+              the lowest possible ping.
             </p>
           </div>
         </div>
@@ -163,7 +162,7 @@ export const LandingPage = () => {
             <h2>Free Subdomain</h2>
             <p>
               We provide a free subdomain that points to
-              your server, which means easy access.
+              your server, meaning easy and fast access.
             </p>
           </div>
           <div className="col text-center">
@@ -174,8 +173,9 @@ export const LandingPage = () => {
             />
             <h2>Monitoring</h2>
             <p>
-              We have monitoring setup so you can tell when
-              you server is about to reach it's limits.
+              We have monitor setup, which makes it easier
+              for you to tell when your server is about to
+              reach it's limits.
             </p>
           </div>
 

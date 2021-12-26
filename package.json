@@ -10,7 +10,7 @@
     "dev:agent": "npm run dev --workspace=agent",
     "dev:api": "npm run dev --workspace=api",
     "dev:client": "npm run start --workspace=client",
-    "db": "docker-compose up",
+    "db": "docker-compose up -d",
     "docs": "npx docsify-cli serve docs"
   },
   "workspaces": [
