@@ -47,10 +47,10 @@ export const LandingPage = () => {
                   SPECIAL OFFER! 50% off the first month!
                 </SpecialOffer> */}
                 <p>
-                  Our servers start at $3.00 / GB, are fully
+                  Servers start at $3.00 / GB. They are fully
                   customizable, run automated backups,
-                  easily scale up and down, your own
-                  subdomain is included, and more...
+                  easily scale up and down and include a
+                  custom subdomain.
                 </p>
                 <PrimaryButton
                   className="btn"
@@ -78,7 +78,7 @@ export const LandingPage = () => {
             <h2>Speedy Setup</h2>
             <p>
               Your server will be fully operational within
-              minutes after your initial purchase.
+              a few minutes of the initial payment.
             </p>
           </div>
           <div className="col text-center">
@@ -89,10 +89,8 @@ export const LandingPage = () => {
             />
             <h2>Automated Backups</h2>
             <p>
-              We automatically backup your server
-              configuration and installed modifications to
-              allow easy restoration in the future if
-              needed.
+              Server configuration and installed modifications
+              are automatically backed up for easy restoration.
             </p>
           </div>
 
@@ -105,8 +103,7 @@ export const LandingPage = () => {
             <h2>DDoS protection</h2>
             <p>
               Our services will mitigate DDoS attacks to
-              help your server stay operational if someone
-              wants to try taking down your server.
+              help your server stay operational.
             </p>
           </div>
         </div>
@@ -121,9 +118,7 @@ export const LandingPage = () => {
             <h2>Full Access to Files</h2>
             <p>
               Easily upload, download, and modify your
-              server files via FTP. You can also do it from
-              our website if installing a FTP client is not
-              your cup of tea.
+              server files via FTP, or our web panel.
             </p>
           </div>
           <div className="col text-center">
@@ -134,9 +129,9 @@ export const LandingPage = () => {
             />
             <h2>Mod & Plugin support</h2>
             <p>
-              We provide support for most major mod systems
+              We provide support for almost all major mod systems
               including Paper, Sponge, Spigot and Bukkit.
-              Upload any custom modpacks, or use our web
+              Upload any custom modpacks via FTP, or use our web
               interface to easily install modpacks on the
               fly.
             </p>
@@ -152,7 +147,7 @@ export const LandingPage = () => {
             <p>
               Low ping means fun times. We provide locations
               around the globe to provide your players with
-              the lowest possible ping possible.
+              the lowest possible ping.
             </p>
           </div>
         </div>
@@ -167,8 +162,7 @@ export const LandingPage = () => {
             <h2>Free Subdomain</h2>
             <p>
               We provide a free subdomain that points to
-              your server so all your friend can easily join
-              in on the fun.
+              your server, meaning easy and fast access.
             </p>
           </div>
           <div className="col text-center">
@@ -179,11 +173,9 @@ export const LandingPage = () => {
             />
             <h2>Monitoring</h2>
             <p>
-              We have monitoring setup so you can tell when
-              you server is about to reach it's limits.
-              Beautiful graphs displaying CPU and memory
-              usage help you make educated decisions about
-              memory size. backups if you need us to.
+              We have monitor setup, which makes it easier
+              for you to tell when your server is about to
+              reach it's limits.
             </p>
           </div>
 

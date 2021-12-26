@@ -20,7 +20,7 @@ export const Overview = () => {
 
   const deleteServer = async () => {
     const yes = window.confirm(
-      'are you sure you want to delete this server?  all data will be lost'
+      'Are you sure you would like to delete this server? This action is not recoverable, and all data will be lost.'
     );
     if (yes) {
       await deleteServerApi(serverId, authentication.token);
@@ -82,9 +82,8 @@ export const Overview = () => {
         <div className="col-md-8">
           <h5>Restart</h5>
           <p>
-            Did you manually update server files? You may
-            need to manually restart it for your changes to
-            take effect.
+            You may want to restart the server if it is getting laggy
+            or you manually made changes.
           </p>
         </div>
         <div className="col-md-4">
@@ -103,8 +102,7 @@ export const Overview = () => {
         <div className="col-md-8">
           <h5>Power</h5>
           <p>
-            You'll may want to stop your server if you don't
-            want people to connect to it.
+            Shut down your server to prevent more players from joining.
           </p>
         </div>
         <div className="col-md-4">
@@ -139,9 +137,8 @@ export const Overview = () => {
             be able to use your server until the end of your
             subscription period. All your server data will
             be removed at the end of your subsription
-            period, so be sure to download your server files
-            from our service if you plan to use the world at
-            a later point.
+            period. If you'd like to keep them, be sure to download your server files
+            from our service if you plan to use the world in the future.
           </p>
         </div>
         <div className="col-md-4">
