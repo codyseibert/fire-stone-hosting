@@ -33,7 +33,7 @@ export const SideNavigation = ({
         href=""
       >
         <FontAwesomeIcon icon="power-off" />
-        <span className="ps-2">overview</span>
+        <span className="ps-2">Overview</span>
       </NavigationLink>
       <NavigationLink
         onClick={(e) => {
@@ -43,7 +43,7 @@ export const SideNavigation = ({
         href=""
       >
         <FontAwesomeIcon icon="cogs" />
-        <span className="ps-2">configure</span>
+        <span className="ps-2">Configure</span>
       </NavigationLink>
       {/* <br />
       <a
@@ -63,7 +63,7 @@ export const SideNavigation = ({
         href=""
       >
         <FontAwesomeIcon icon="terminal" />
-        <span className="ps-2">terminal</span>
+        <span className="ps-2">Terminal</span>
       </NavigationLink>
       {/* <a
         onClick={e => {
