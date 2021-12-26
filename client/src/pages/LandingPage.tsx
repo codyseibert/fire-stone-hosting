@@ -47,10 +47,10 @@ export const LandingPage = () => {
                   SPECIAL OFFER! 50% off the first month!
                 </SpecialOffer> */}
                 <p>
-                  Our servers start at $3.00 / GB, are fully
-                  customizable, run automated backups,
-                  easily scale up and down, your own
-                  subdomain is included, and more...
+                  Our servers start at $3.00 / GB, They're fully
+                  customizable, able to run automated backups and
+                  easily scale up and down. We also include your own
+                  subdomain, and more...
                 </p>
                 <PrimaryButton
                   className="btn"
@@ -77,8 +77,8 @@ export const LandingPage = () => {
             />
             <h2>Speedy Setup</h2>
             <p>
-              Your server will be fully operational within
-              minutes after your initial purchase.
+              Your server will be fully operational within a few
+              minutes after initial purchase..
             </p>
           </div>
           <div className="col text-center">
@@ -89,10 +89,9 @@ export const LandingPage = () => {
             />
             <h2>Automated Backups</h2>
             <p>
-              We automatically backup your server
-              configuration and installed modifications to
-              allow easy restoration in the future if
-              needed.
+              We automatically backup your server's
+              configurations and installed modifications to
+              allow easy restoration in the future.
             </p>
           </div>
 
@@ -105,8 +104,7 @@ export const LandingPage = () => {
             <h2>DDoS protection</h2>
             <p>
               Our services will mitigate DDoS attacks to
-              help your server stay operational if someone
-              wants to try taking down your server.
+              help your server stay operational.
             </p>
           </div>
         </div>
@@ -121,9 +119,7 @@ export const LandingPage = () => {
             <h2>Full Access to Files</h2>
             <p>
               Easily upload, download, and modify your
-              server files via FTP. You can also do it from
-              our website if installing a FTP client is not
-              your cup of tea.
+              server files via FTP, or our web panel.
             </p>
           </div>
           <div className="col text-center">
@@ -134,7 +130,7 @@ export const LandingPage = () => {
             />
             <h2>Mod & Plugin support</h2>
             <p>
-              We provide support for most major mod systems
+              We provide support for almost all mod systems
               including Paper, Sponge, Spigot and Bukkit.
               Upload any custom modpacks, or use our web
               interface to easily install modpacks on the
@@ -152,7 +148,7 @@ export const LandingPage = () => {
             <p>
               Low ping means fun times. We provide locations
               around the globe to provide your players with
-              the lowest possible ping possible.
+              the lowest ping possible.
             </p>
           </div>
         </div>
@@ -167,8 +163,7 @@ export const LandingPage = () => {
             <h2>Free Subdomain</h2>
             <p>
               We provide a free subdomain that points to
-              your server so all your friend can easily join
-              in on the fun.
+              your server, which means easy access.
             </p>
           </div>
           <div className="col text-center">
@@ -181,9 +176,6 @@ export const LandingPage = () => {
             <p>
               We have monitoring setup so you can tell when
               you server is about to reach it's limits.
-              Beautiful graphs displaying CPU and memory
-              usage help you make educated decisions about
-              memory size. backups if you need us to.
             </p>
           </div>
 
