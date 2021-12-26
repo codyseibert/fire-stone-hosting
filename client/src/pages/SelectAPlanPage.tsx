@@ -54,8 +54,7 @@ export const SelectAPlanPage = () => {
                 <FontAwesomeIcon size="lg" icon="info-circle" />
               </div>
               <div className="col-md-11">
-                The more players or plugins you have, the more memory you will
-                need.
+                You will need more memory for higher player counts and more plugins.
               </div>
             </div>
           </div>
