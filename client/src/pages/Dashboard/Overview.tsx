@@ -83,7 +83,7 @@ export const Overview = () => {
           <h5>Restart</h5>
           <p>
             You may want to restart the server if it is getting laggy
-            or you manually made changes.
+            or you manually made changes to server files.
           </p>
         </div>
         <div className="col-md-4">
@@ -138,7 +138,7 @@ export const Overview = () => {
             subscription period. All your server data will
             be removed at the end of your subsription
             period. If you'd like to keep them, be sure to download your server files
-            from our service if you plan to use the world in the future.
+            from our web interface if you plan to use the world in the future.
           </p>
         </div>
         <div className="col-md-4">
