@@ -1,5 +1,6 @@
 import util from 'util';
 import cp from 'child_process';
+import { startServerCommand } from './startServerCommand';
 
 const exec = util.promisify(cp.exec);
 
@@ -8,5 +9,13 @@ export const restartServerCommand = async ({
 }: {
   serverId: string;
 }) => {
-  return exec(`docker restart mc-${serverId} --time=60`);
+  try {
+    await exec(`docker exec mc-${serverId} mc-send-to-console /stop`);
+  } catch (err) {
+    if (err.message.includes('is not running')) {
+      await startServerCommand({
+        serverId,
+      })
+    }
+  }
 };

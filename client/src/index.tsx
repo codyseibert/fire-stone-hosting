@@ -37,6 +37,7 @@ import {
   faFolderOpen,
   faPlug,
   faNetworkWired,
+  faHeartbeat,
   faGlobe,
   faChartLine,
 } from '@fortawesome/free-solid-svg-icons';
@@ -47,6 +48,7 @@ library.add(
   faSync,
   faExclamationCircle,
   faTape,
+  faHeartbeat,
   faPowerOff,
   faChartBar,
   faCaretLeft,

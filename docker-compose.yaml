@@ -10,9 +10,7 @@ services:
       - POSTGRES_DB=fire-stone-hosting-db
     ports:
       - 5432:5432
-
-    # Uncomment the following block to have persistent data
-    # volumes:
-    #   - pgdata:/var/lib/postgresql/data
-# volumes:
-#   pgdata:
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

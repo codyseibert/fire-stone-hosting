@@ -31,7 +31,7 @@ export const startServerCommand: startServerInterface = async ({
     });
   } catch (error) {
     console.log(`${serverId} - making directory`);
-    await exec(`mkdir -p ${serverVolumePath}`);
+    await exec(`mkdir -m777 -p ${serverVolumePath}`);
   }
 
   try {
@@ -82,6 +82,10 @@ export const startServerCommand: startServerInterface = async ({
     ].join(' ');
     await exec(command);
   } catch (err) {
-    console.log(err);
+    if (err.message.includes('is already in use by container')) {
+      await exec(`docker start ftp-${serverId}`);
+    } else {
+      console.log(err);
+    }
   }
 };

@@ -127,7 +127,7 @@ export const Overview = () => {
         </div>
       </div>
 
-      <div className="row">
+      {/* <div className="row">
         <div className="col-md-8">
           <h5>Subscription</h5>
           <p>
@@ -150,7 +150,7 @@ export const Overview = () => {
             End Subscription
           </button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
