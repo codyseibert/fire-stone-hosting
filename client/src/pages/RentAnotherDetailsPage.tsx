@@ -78,7 +78,7 @@ export const RentAnotherDetailsPage = () => {
 
       <div className="row">
         <div className="col">
-          <button onClick={handleSubmit}>Buy</button>
+          <button onClick={handleSubmit}>Purchase</button>
         </div>
       </div>
     </div>

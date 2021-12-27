@@ -77,8 +77,8 @@ export const LandingPage = () => {
             />
             <h2>Speedy Setup</h2>
             <p>
-              Your server will be fully operational within
-              a few minutes of the initial payment.
+              Your server will be fully operational within a few
+              minutes after initial purchase..
             </p>
           </div>
           <div className="col text-center">
@@ -129,7 +129,7 @@ export const LandingPage = () => {
             />
             <h2>Mod & Plugin support</h2>
             <p>
-              We provide support for almost all major mod systems
+              We provide support for almost all mod systems
               including Paper, Sponge, Spigot and Bukkit.
               Upload any custom modpacks via FTP, or use our web
               interface to easily install modpacks on the

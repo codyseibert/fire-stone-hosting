@@ -391,7 +391,7 @@ export const PaymentDetailsPage = () => {
           type="submit"
           className="btn btn-success mt-4 mb-4"
         >
-          Purchase Your Server
+          Purchase Server
         </button>
       </form>
     </div>
