@@ -10,12 +10,13 @@ export const restartServerCommand = async ({
   serverId: string;
 }) => {
   try {
+    console.log('sending /stop to server');
     await exec(`docker exec mc-${serverId} mc-send-to-console /stop`);
   } catch (err) {
     if (err.message.includes('is not running')) {
       await startServerCommand({
         serverId,
-      })
+      });
     }
   }
 };

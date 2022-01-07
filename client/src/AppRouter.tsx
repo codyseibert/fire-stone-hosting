@@ -13,6 +13,7 @@ import { AuthenticationContext } from './context/AuthenticationContext';
 import { RentAnotherDetailsPage } from './pages/RentAnotherDetailsPage';
 import { PickVersionPage } from './pages/PickVersionPage';
 import { FtpInfo } from './pages/Dashboard/FtpInfo';
+import { Worlds } from './pages/Dashboard/Worlds';
 
 export const AppRouter = () => {
   const { authentication } = useContext(
@@ -50,6 +51,7 @@ export const AppRouter = () => {
         <Route path="logs" element={<Logs />} />
         <Route path="overview" element={<Overview />} />
         <Route path="ftp" element={<FtpInfo />} />
+        <Route path="worlds" element={<Worlds />} />
       </Route>
     </Routes>
   );

@@ -9,11 +9,13 @@ import { stopServerApi } from '../../api/stopServerApi';
 import { startServerApi } from '../../api/startServerApi';
 import { ServerContext } from './context/ServerContext';
 import { restartServerApi } from '../../api/restartServerApi';
+import { NodeContext } from './context/NodeContext';
 
 export const Overview = () => {
   const params = useParams();
   const serverId = params.serverId!;
   const { server, setServer } = useContext(ServerContext)!;
+  const { node } = useContext(NodeContext)!;
   const authentication = useContext(AuthenticationContext)
     ?.authentication!;
   const navigate = useNavigate();
@@ -39,6 +41,7 @@ export const Overview = () => {
   }, [authentication.token, navigate, setServer, serverId]);
 
   if (!server) return null;
+  if (!node) return null;
 
   const stopServer = async () => {
     await stopServerApi({ serverId }, authentication.token);
@@ -79,11 +82,25 @@ export const Overview = () => {
       </div>
 
       <div className="row mb-4">
+        <div className="col">
+          <div className="form-group">
+            <label className="mb-2">Address</label>
+            <input
+              className="form-control"
+              disabled
+              value={`${node.ip}:${server.port}`}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="row mb-4">
         <div className="col-md-8">
           <h5>Restart</h5>
           <p>
-            You may want to restart the server if it is getting laggy
-            or you manually made changes to server files.
+            You may want to restart the server if it is
+            getting laggy or you manually made changes to
+            server files.
           </p>
         </div>
         <div className="col-md-4">
@@ -102,7 +119,8 @@ export const Overview = () => {
         <div className="col-md-8">
           <h5>Power</h5>
           <p>
-            Shut down your server to prevent more players from joining.
+            Shut down your server to prevent more players
+            from joining.
           </p>
         </div>
         <div className="col-md-4">

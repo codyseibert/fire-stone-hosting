@@ -19,6 +19,7 @@ export const startServerCommand: startServerInterface = async ({
   serverId,
 }) => {
   const { memory, port, version } = await getServerProxy({ serverId });
+  console.log(memory, port, version);
 
   const serverVolumePath = path.join(process.env.SERVERS_DIR, `/${serverId}`);
 
@@ -30,7 +31,6 @@ export const startServerCommand: startServerInterface = async ({
       });
     });
   } catch (error) {
-    console.log(`${serverId} - making directory`);
     await exec(`mkdir -m777 -p ${serverVolumePath}`);
   }
 
@@ -55,7 +55,9 @@ export const startServerCommand: startServerInterface = async ({
 
     await exec(command);
   } catch (err) {
+    console.log('container already exists, starting it');
     await exec(`docker start mc-${serverId}`);
+    await exec(`docker update --restart unless-stopped mc-${serverId}`);
   }
 
   const ftpPortMin = (port - 25565) * 10 + 21100 + 1;

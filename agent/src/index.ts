@@ -118,9 +118,10 @@ const startRunningServers = async () => {
   const { stdout } = await exec('docker ps');
 
   for (const server of servers) {
-    const isServerRunningInDocker = stdout.indexOf(server.id) === -1;
+    const isServerRunningInDocker = stdout.indexOf(`mc-${server.id}`) !== -1;
+    const shouldStartServer = server.running && !isServerRunningInDocker;
 
-    if (server.running && isServerRunningInDocker) {
+    if (shouldStartServer) {
       console.time(
         `starting server ${server.id}, ${server.memory}M, P ${server.port}`,
       );

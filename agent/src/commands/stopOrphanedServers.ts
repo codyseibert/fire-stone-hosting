@@ -20,10 +20,14 @@ export const stopOrphanedServers: stopOrphanedServersInterface = async ({
   const runningServerIds = await getRunningContainers();
   const promises = [];
 
+  console.log('runningServerIds', runningServerIds);
   for (const runningId of runningServerIds) {
+    const mcRunningId = `mc-${runningId}`;
+    console.log(mcRunningId);
     if (!expectedServerIds.find(expectedId => expectedId === runningId)) {
       const serverPath = path.join(process.env.SERVERS_DIR, `/${runningId}`);
 
+      console.log('stopping orphaned server', serverPath);
       // eslint-disable-next-line no-await-in-loop
       promises.push(
         exec(`docker stop --time=30 ${runningId}`).then(() =>
