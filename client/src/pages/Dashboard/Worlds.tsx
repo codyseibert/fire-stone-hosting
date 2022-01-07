@@ -17,6 +17,15 @@ const WorldsGrid = styled.div`
   grid-column-gap: 1rem;
 `;
 
+interface IWorldCard {
+  isSelected: boolean;
+}
+
+const WorldCard = styled.div<IWorldCard>`
+  border: ${(props: any) =>
+    props.isSelected ? '1px solid #0d6efd;' : '0'};
+`;
+
 export const Worlds = () => {
   const { server } = useContext(ServerContext)!;
   const { node } = useContext(NodeContext)!;
@@ -86,7 +95,11 @@ export const Worlds = () => {
 
       <WorldsGrid>
         {worlds.map((world) => (
-          <div className="card" key={world}>
+          <WorldCard
+            isSelected={selectedWorld === world}
+            className="card"
+            key={world}
+          >
             <img
               src={worldJpg}
               className="card-img-top"
@@ -107,7 +120,7 @@ export const Worlds = () => {
                 </button>
               )}
             </div>
-          </div>
+          </WorldCard>
         ))}
       </WorldsGrid>
     </div>
